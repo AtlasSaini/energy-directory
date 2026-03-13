@@ -29,7 +29,7 @@ export default async function HomePage() {
 
   const stats = [
     { label: 'Vendors Listed', value: '500+' },
-    { label: 'Energy Categories', value: '15' },
+    { label: 'Energy Categories', value: '23' },
     { label: 'Provinces Covered', value: '13' },
     { label: 'Verified Suppliers', value: '100+' },
   ]
@@ -44,11 +44,14 @@ export default async function HomePage() {
             <span>Canada&apos;s Energy Vendor Directory</span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
-            Find Canadian<br />
-            <span className="text-amber-400">Energy Vendors</span>
+            Canada&apos;s Energy &amp; Resource<br />
+            <span className="text-amber-400">Vendor Directory</span>
           </h1>
+          <p className="text-base text-amber-300/80 font-medium mb-3 tracking-wide">
+            Oil &amp; Gas · Renewables · Carbon &amp; ESG · Power Generation
+          </p>
           <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Connect with trusted suppliers across oil &amp; gas, renewables, pipeline, engineering, and more. Verified vendors, nationwide coverage.
+            Connect with trusted suppliers across oil &amp; gas, renewables, carbon &amp; ESG, power generation, and more. Verified vendors, nationwide coverage.
           </p>
           <SearchBar
             placeholder="Search vendors, services, categories..."

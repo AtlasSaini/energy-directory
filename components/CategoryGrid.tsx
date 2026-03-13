@@ -5,6 +5,7 @@ const CATEGORY_ICONS: Record<string, string> = {
   'oil-gas': '🛢️',
   'renewables': '☀️',
   'solar': '🌞',
+  'solar-wind': '⚡',
   'wind': '💨',
   'hydro': '💧',
   'geothermal': '🌋',
@@ -18,9 +19,14 @@ const CATEGORY_ICONS: Record<string, string> = {
   'engineering': '⚙️',
   'environmental': '🌿',
   'oilfield-services': '🔩',
+  'oilsands': '🏔️',
   'power-generation': '🏭',
   'transmission': '🔌',
   'storage': '🏪',
+  'battery-storage': '🔋',
+  'carbon-esg': '🌱',
+  'lng-gas-processing': '🏗️',
+  'energy-trading-finance': '📈',
   'trading': '📈',
 }
 
