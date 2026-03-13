@@ -1,0 +1,102 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export interface Database {
+  public: {
+    Tables: {
+      vendors: {
+        Row: {
+          id: string
+          name: string
+          slug: string
+          description: string | null
+          province: string | null
+          city: string | null
+          website: string | null
+          phone: string | null
+          email: string | null
+          logo_url: string | null
+          banner_url: string | null
+          photos: string[] | null
+          video_url: string | null
+          tier: 'free' | 'featured' | 'premium'
+          verified: boolean
+          active: boolean
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['vendors']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['vendors']['Insert']>
+      }
+      categories: {
+        Row: {
+          id: string
+          name: string
+          slug: string
+          description: string | null
+          icon: string | null
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['categories']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['categories']['Insert']>
+      }
+      vendor_categories: {
+        Row: {
+          vendor_id: string
+          category_id: string
+        }
+        Insert: Database['public']['Tables']['vendor_categories']['Row']
+        Update: Partial<Database['public']['Tables']['vendor_categories']['Row']>
+      }
+      reviews: {
+        Row: {
+          id: string
+          vendor_id: string
+          reviewer_name: string
+          rating: number
+          comment: string | null
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['reviews']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['reviews']['Insert']>
+      }
+      leads: {
+        Row: {
+          id: string
+          vendor_id: string
+          name: string
+          email: string
+          phone: string | null
+          message: string | null
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['leads']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['leads']['Insert']>
+      }
+      stripe_events: {
+        Row: {
+          id: string
+          stripe_event_id: string
+          type: string
+          data: Json
+          processed: boolean
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['stripe_events']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['stripe_events']['Insert']>
+      }
+    }
+  }
+}
+
+export type Vendor = Database['public']['Tables']['vendors']['Row']
+export type Category = Database['public']['Tables']['categories']['Row']
+export type Review = Database['public']['Tables']['reviews']['Row']
+export type Lead = Database['public']['Tables']['leads']['Row']

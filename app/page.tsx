@@ -1,65 +1,151 @@
-import Image from "next/image";
+import Link from 'next/link'
+import { supabase } from '@/lib/supabase'
+import SearchBar from '@/components/SearchBar'
+import CategoryGrid from '@/components/CategoryGrid'
+import VendorCard from '@/components/VendorCard'
+import type { Vendor, Category } from '@/types/database'
 
-export default function Home() {
+async function getHomeData() {
+  const [categoriesRes, featuredVendorsRes] = await Promise.all([
+    supabase.from('categories').select('*').order('name'),
+    supabase
+      .from('vendors')
+      .select('*')
+      .eq('active', true)
+      .in('tier', ['featured', 'premium'])
+      .limit(8),
+  ])
+
+  return {
+    categories: (categoriesRes.data || []) as Category[],
+    featuredVendors: (featuredVendorsRes.data || []) as Vendor[],
+  }
+}
+
+export const revalidate = 60
+
+export default async function HomePage() {
+  const { categories, featuredVendors } = await getHomeData()
+
+  const stats = [
+    { label: 'Vendors Listed', value: '500+' },
+    { label: 'Energy Categories', value: '15' },
+    { label: 'Provinces Covered', value: '13' },
+    { label: 'Verified Suppliers', value: '100+' },
+  ]
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div>
+      {/* Hero Section */}
+      <section className="bg-[#0a1628] text-white py-20 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-4 py-1.5 text-amber-400 text-sm font-medium mb-6">
+            <span>🇨🇦</span>
+            <span>Canada&apos;s Energy Vendor Directory</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
+            Find Canadian<br />
+            <span className="text-amber-400">Energy Vendors</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+            Connect with trusted suppliers across oil &amp; gas, renewables, pipeline, engineering, and more. Verified vendors, nationwide coverage.
+          </p>
+          <SearchBar
+            placeholder="Search vendors, services, categories..."
+            className="max-w-2xl mx-auto"
+          />
+          <p className="text-gray-400 text-sm mt-4">
+            Try: &quot;Pipeline services Alberta&quot;, &quot;Solar installers BC&quot;, &quot;Oilfield equipment&quot;
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Stats Bar */}
+      <section className="bg-[#0d1f3c] border-b border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            {stats.map((stat) => (
+              <div key={stat.label}>
+                <div className="text-2xl font-extrabold text-amber-400">{stat.value}</div>
+                <div className="text-gray-400 text-sm">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Categories */}
+      <section className="py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-2xl font-bold text-[#0a1628]">Browse by Category</h2>
+              <p className="text-gray-500 text-sm mt-1">Find vendors in your specific energy sector</p>
+            </div>
+          </div>
+          {categories.length > 0 ? (
+            <CategoryGrid categories={categories} />
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {['Oil & Gas', 'Renewables', 'Pipeline', 'Engineering', 'Solar', 'Wind Energy', 'Natural Gas', 'Electrical', 'Drilling', 'Environmental', 'Power Generation', 'Transmission', 'Oilfield Services', 'Geothermal', 'Energy Storage'].map((name) => (
+                <div key={name} className="bg-white border border-gray-200 rounded-xl p-4 text-center h-[100px] flex flex-col items-center justify-center gap-2">
+                  <span className="text-3xl">⚡</span>
+                  <span className="text-sm font-medium text-gray-700">{name}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Featured Vendors */}
+      {featuredVendors.length > 0 && (
+        <section className="py-16 px-4 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-2xl font-bold text-[#0a1628]">Featured Vendors</h2>
+                <p className="text-gray-500 text-sm mt-1">Verified, premium energy suppliers</p>
+              </div>
+              <Link href="/vendors?tier=featured" className="text-amber-600 hover:text-amber-500 font-medium text-sm">
+                View all →
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {featuredVendors.map((vendor) => (
+                <VendorCard key={vendor.id} vendor={vendor} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-[#0a1628] to-[#1a3a6b]">
+        <div className="max-w-3xl mx-auto text-center text-white">
+          <h2 className="text-3xl font-extrabold mb-4">
+            Grow Your Energy Business
+          </h2>
+          <p className="text-gray-300 mb-8 text-lg">
+            Join Canada&apos;s premier energy vendor directory. Get discovered by buyers, operators, and project managers across the country.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/list-your-business"
+              className="bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-bold px-8 py-4 rounded-xl text-lg transition-colors"
+            >
+              List Your Business — Free
+            </Link>
+            <Link
+              href="/vendors"
+              className="border border-white/30 hover:border-white/60 text-white px-8 py-4 rounded-xl text-lg transition-colors"
+            >
+              Browse Directory
+            </Link>
+          </div>
+          <p className="text-gray-400 text-sm mt-4">No credit card required for free listing</p>
+        </div>
+      </section>
     </div>
-  );
+  )
 }
