@@ -35,6 +35,9 @@ export interface Database {
           user_id: string | null
           views: number
           featured_until: string | null
+          data_status: 'current' | 'stale' | 'review_needed' | 'dissolved' | null
+          health_flag: 'dead_link' | 'domain_gone' | 'domain_parked' | 'domain_redirected' | 'timeout' | 'http_error' | 'news_bankruptcy' | 'registry_dissolved' | null
+          last_verified_at: string | null
           created_at: string
           updated_at: string
         }

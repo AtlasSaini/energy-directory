@@ -43,7 +43,7 @@ export default async function HomePage() {
   const { categories, featuredVendors, recentVendors, vendorCount } = await getHomeData()
 
   const stats = [
-    { label: 'Vendors Listed', value: `${vendorCount}+` },
+    { label: 'Vendors Listed', value: `${vendorCount}` },
     { label: 'Energy Categories', value: '23' },
     { label: 'Provinces Covered', value: '13' },
     { label: 'Listed & Searchable', value: 'Free' },
