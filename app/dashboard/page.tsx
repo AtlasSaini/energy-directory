@@ -360,6 +360,41 @@ export default function DashboardPage() {
               )}
             </div>
 
+            {/* Analytics card */}
+            {vendor.tier === 'premium' ? (
+              <div className="bg-gradient-to-br from-[#0a1628] to-[#1a3a6b] text-white rounded-2xl shadow-sm p-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">📊</span>
+                  <h2 className="text-base font-semibold">Analytics</h2>
+                </div>
+                <p className="text-gray-300 text-sm mb-4">
+                  See how many people are finding and viewing your listing.
+                </p>
+                <Link
+                  href="/dashboard/analytics"
+                  className="block w-full text-center bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold py-2.5 rounded-lg text-sm transition-colors"
+                >
+                  View Analytics →
+                </Link>
+              </div>
+            ) : (
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">📊</span>
+                  <h2 className="text-base font-semibold text-gray-900">Analytics</h2>
+                </div>
+                <p className="text-gray-500 text-sm mb-4">
+                  Unlock your analytics dashboard with Premium — see views, search appearances, and category ranking.
+                </p>
+                <Link
+                  href="/list-your-business"
+                  className="block w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 rounded-lg text-sm transition-colors"
+                >
+                  Upgrade to unlock →
+                </Link>
+              </div>
+            )}
+
             {/* Quick links */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
               <h2 className="text-base font-semibold text-gray-900 mb-3">Quick Links</h2>
@@ -371,6 +406,14 @@ export default function DashboardPage() {
                 >
                   <span>🔗</span> View public listing
                 </Link>
+                {vendor.tier === 'premium' && (
+                  <Link
+                    href="/dashboard/analytics"
+                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                  >
+                    <span>📊</span> Analytics
+                  </Link>
+                )}
                 <Link
                   href="/auth/claim"
                   className="flex items-center gap-2 text-sm text-gray-600 hover:text-amber-600 transition-colors"

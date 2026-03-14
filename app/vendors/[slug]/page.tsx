@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Vendor, Category, Review } from '@/types/database'
+import ViewTracker from './ViewTracker'
 
 interface VendorWithDetails extends Vendor {
   categories: Category[]
@@ -74,6 +75,9 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Silent view tracker */}
+      <ViewTracker vendorId={vendor.id} />
+
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-500 mb-6 flex items-center gap-2">
         <Link href="/" className="hover:text-amber-600">Home</Link>
