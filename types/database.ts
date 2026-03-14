@@ -12,11 +12,12 @@ export interface Database {
       vendors: {
         Row: {
           id: string
-          name: string
+          company_name: string
           slug: string
           description: string | null
           province: string | null
           city: string | null
+          address: string | null
           website: string | null
           phone: string | null
           email: string | null
@@ -29,6 +30,11 @@ export interface Database {
           active: boolean
           stripe_customer_id: string | null
           stripe_subscription_id: string | null
+          subscription_status: string | null
+          subscription_expires_at: string | null
+          user_id: string | null
+          views: number
+          featured_until: string | null
           created_at: string
           updated_at: string
         }

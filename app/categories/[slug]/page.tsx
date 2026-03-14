@@ -31,6 +31,7 @@ async function getCategoryData(slug: string) {
       .in('id', vendorIds)
       .eq('active', true)
       .order('tier', { ascending: false })
+      .order('company_name')
     vendors = (data || []) as Vendor[]
   }
 

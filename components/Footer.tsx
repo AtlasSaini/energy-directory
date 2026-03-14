@@ -36,12 +36,14 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/list-your-business" className="hover:text-amber-400 transition-colors">List Your Business</Link></li>
               <li><Link href="/list-your-business#pricing" className="hover:text-amber-400 transition-colors">Pricing</Link></li>
+              <li><Link href="/terms" className="hover:text-amber-400 transition-colors">Terms of Service</Link></li>
+              <li><Link href="/privacy" className="hover:text-amber-400 transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm">
-          <p>&copy; {new Date().getFullYear()} EnergyDirectory.ca — All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} EnergyDirectory.ca — Saini Private Capital Ltd. — GST# 738605831 RT0001</p>
           <p>Built for Canadian Energy 🇨🇦</p>
         </div>
       </div>

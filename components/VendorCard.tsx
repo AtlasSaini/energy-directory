@@ -41,14 +41,14 @@ export default function VendorCard({ vendor }: VendorCardProps) {
             <div className="w-12 h-12 rounded-lg border-2 border-white shadow-sm bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
               {vendor.logo_url ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={vendor.logo_url} alt={vendor.name} className="w-full h-full object-contain" />
+                <img src={vendor.logo_url} alt={vendor.company_name} className="w-full h-full object-contain" />
               ) : (
-                <span className="text-xl font-bold text-[#0a1628]">{vendor.name.charAt(0)}</span>
+                <span className="text-xl font-bold text-[#0a1628]">{vendor.company_name.charAt(0)}</span>
               )}
             </div>
             <div className="min-w-0 flex-1 pt-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="font-semibold text-[#0a1628] text-sm leading-tight truncate">{vendor.name}</h3>
+                <h3 className="font-semibold text-[#0a1628] text-sm leading-tight truncate">{vendor.company_name}</h3>
                 {vendor.verified && (
                   <span className="text-blue-500" title="Verified">✓</span>
                 )}

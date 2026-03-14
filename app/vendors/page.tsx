@@ -29,12 +29,56 @@ interface SearchParams {
 }
 
 async function getVendors(params: SearchParams) {
+  // If filtering by category, do a two-step join
+  if (params.category) {
+    // Step 1: get the category ID from slug
+    const { data: catData } = await supabase
+      .from('categories')
+      .select('id')
+      .eq('slug', params.category)
+      .single()
+
+    if (!catData) return [] as Vendor[]
+
+    // Step 2: get vendor IDs in that category
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: vcData } = await (supabase as any)
+      .from('vendor_categories')
+      .select('vendor_id')
+      .eq('category_id', catData.id)
+
+    const vendorIds = ((vcData || []) as { vendor_id: string }[]).map((v) => v.vendor_id)
+    if (vendorIds.length === 0) return [] as Vendor[]
+
+    // Step 3: fetch vendors with those IDs + other filters
+    let query = supabase
+      .from('vendors')
+      .select('*')
+      .eq('active', true)
+      .in('id', vendorIds)
+      .order('tier', { ascending: false })
+      .order('company_name')
+
+    if (params.province) {
+      query = query.eq('province', params.province)
+    }
+    if (params.tier && ['featured', 'premium'].includes(params.tier)) {
+      query = query.eq('tier', params.tier)
+    }
+    if (params.q) {
+      query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`)
+    }
+
+    const { data } = await query.limit(48)
+    return (data || []) as Vendor[]
+  }
+
   let query = supabase
     .from('vendors')
     .select('*')
     .eq('active', true)
     .order('tier', { ascending: false })
-    .order('name')
+    .order('company_name')
 
   if (params.province) {
     query = query.eq('province', params.province)
@@ -43,7 +87,7 @@ async function getVendors(params: SearchParams) {
     query = query.eq('tier', params.tier)
   }
   if (params.q) {
-    query = query.or(`name.ilike.%${params.q}%,description.ilike.%${params.q}%`)
+    query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`)
   }
 
   const { data } = await query.limit(48)

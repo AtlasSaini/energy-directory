@@ -80,7 +80,7 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
         <span>/</span>
         <Link href="/vendors" className="hover:text-amber-600">Vendors</Link>
         <span>/</span>
-        <span className="text-gray-800">{vendor.name}</span>
+        <span className="text-gray-800">{vendor.company_name}</span>
       </nav>
 
       {/* Banner */}
@@ -100,14 +100,14 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
               <div className="w-20 h-20 rounded-xl border-4 border-white shadow-md bg-white flex items-center justify-center overflow-hidden flex-shrink-0 lg:-mt-16">
                 {vendor.logo_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={vendor.logo_url} alt={vendor.name} className="w-full h-full object-contain p-1" />
+                  <img src={vendor.logo_url} alt={vendor.company_name} className="w-full h-full object-contain p-1" />
                 ) : (
-                  <span className="text-3xl font-bold text-[#0a1628]">{vendor.name.charAt(0)}</span>
+                  <span className="text-3xl font-bold text-[#0a1628]">{vendor.company_name.charAt(0)}</span>
                 )}
               </div>
               <div className="pt-6 lg:pt-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h1 className="text-2xl font-bold text-[#0a1628]">{vendor.name}</h1>
+                  <h1 className="text-2xl font-bold text-[#0a1628]">{vendor.company_name}</h1>
                   {vendor.verified && (
                     <span className="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full border border-blue-200 font-medium">
                       ✓ Verified

@@ -78,8 +78,14 @@ export default function ListYourBusinessPage() {
             ))}
           </div>
 
-          <p className="text-center text-gray-400 text-sm mt-6">
-            All plans include HST/GST. Cancel anytime. Questions? Email{' '}
+          <p className="text-center text-gray-500 text-sm mt-6 font-medium">
+            All prices in CAD. 5% GST will be added at checkout.
+          </p>
+          <p className="text-center text-gray-400 text-xs mt-1">
+            GST# 738605831 RT0001 — Saini Private Capital Ltd.
+          </p>
+          <p className="text-center text-gray-400 text-sm mt-4">
+            Cancel anytime. Questions? Email{' '}
             <a href="mailto:hello@energydirectory.ca" className="text-amber-600 hover:text-amber-500">
               hello@energydirectory.ca
             </a>
