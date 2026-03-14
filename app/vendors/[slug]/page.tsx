@@ -105,21 +105,16 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
                   <span className="text-3xl font-bold text-[#0a1628]">{vendor.company_name.charAt(0)}</span>
                 )}
               </div>
-              <div className="pt-6 lg:pt-0">
+              <div className="pt-6 lg:pt-0 flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
                   <h1 className="text-2xl font-bold text-[#0a1628]">{vendor.company_name}</h1>
-                  {vendor.verified && (
-                    <span className="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full border border-blue-200 font-medium">
-                      ✓ Verified
-                    </span>
-                  )}
                   {vendor.tier !== 'free' && (
                     <span className={`text-xs px-2 py-0.5 rounded-full border font-medium capitalize ${tierColor}`}>
                       {vendor.tier}
                     </span>
                   )}
                 </div>
-                <div className="flex items-center gap-4 mt-1 text-sm text-gray-500">
+                <div className="flex items-center gap-4 mt-1 text-sm text-gray-500 flex-wrap">
                   {(vendor.city || vendor.province) && (
                     <span className="flex items-center gap-1">
                       📍 {[vendor.city, vendor.province ? PROVINCE_LABELS[vendor.province] || vendor.province : null].filter(Boolean).join(', ')}
@@ -131,6 +126,15 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
                     </span>
                   )}
                 </div>
+                {/* Verified badge — prominent, standalone row */}
+                {vendor.verified && (
+                  <div className="mt-3 inline-flex items-center gap-2 bg-green-50 border border-green-200 text-green-800 text-sm px-4 py-2 rounded-lg font-medium">
+                    <svg className="w-4 h-4 text-green-600 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    Verified Business — domain ownership confirmed
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -234,17 +238,21 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
             )}
           </div>
 
-          {/* CTA */}
-          <div className="bg-[#0a1628] text-white rounded-xl p-5">
-            <h3 className="font-semibold mb-2">Are you this vendor?</h3>
-            <p className="text-gray-300 text-sm mb-4">Claim your listing and upgrade to get more leads.</p>
-            <Link
-              href="/list-your-business"
-              className="block w-full bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold text-sm px-4 py-2.5 rounded-lg text-center transition-colors"
-            >
-              Claim & Upgrade
-            </Link>
-          </div>
+          {/* CTA — only show if not yet claimed */}
+          {!vendor.user_id && (
+            <div className="bg-[#0a1628] text-white rounded-xl p-5">
+              <h3 className="font-semibold mb-2">Are you this vendor?</h3>
+              <p className="text-gray-300 text-sm mb-4">
+                Claim your listing with your company email to get verified and unlock your dashboard.
+              </p>
+              <Link
+                href="/auth/signup"
+                className="block w-full bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold text-sm px-4 py-2.5 rounded-lg text-center transition-colors"
+              >
+                Claim This Listing →
+              </Link>
+            </div>
+          )}
         </aside>
       </div>
     </div>

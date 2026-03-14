@@ -77,14 +77,14 @@ export default function ClaimPage() {
     setSearching(false)
   }
 
-  async function handleClaim(vendorId: string) {
+  async function handleClaim(vendorId: string, domainMatch: boolean) {
     setClaiming(vendorId)
     setClaimError('')
 
     const res = await fetch('/api/vendor/claim', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ vendorId }),
+      body: JSON.stringify({ vendorId, domainMatch }),
     })
 
     const data = await res.json()
@@ -115,7 +115,7 @@ export default function ClaimPage() {
     return map[tier] ?? map.free
   }
 
-  const VendorRow = ({ vendor }: { vendor: Vendor }) => (
+  const VendorRow = ({ vendor, isDomainMatch }: { vendor: Vendor; isDomainMatch: boolean }) => (
     <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-amber-300 transition-colors">
       <div>
         <p className="font-semibold text-gray-900">{vendor.company_name}</p>
@@ -128,9 +128,14 @@ export default function ClaimPage() {
         <span className={`inline-block mt-1 text-xs px-2 py-0.5 rounded-full font-medium ${tierBadge(vendor.tier)}`}>
           {vendor.tier}
         </span>
+        {isDomainMatch && (
+          <span className="inline-block mt-1 ml-2 text-xs px-2 py-0.5 rounded-full font-medium bg-green-100 text-green-700">
+            ✓ Domain match — will be verified
+          </span>
+        )}
       </div>
       <button
-        onClick={() => handleClaim(vendor.id)}
+        onClick={() => handleClaim(vendor.id, isDomainMatch)}
         disabled={claiming === vendor.id}
         className="ml-4 shrink-0 bg-amber-500 hover:bg-amber-400 disabled:bg-amber-300 text-[#0a1628] font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
       >
@@ -181,7 +186,7 @@ export default function ClaimPage() {
             </p>
             <div className="space-y-3">
               {autoMatches.map((v) => (
-                <VendorRow key={v.id} vendor={v} />
+                <VendorRow key={v.id} vendor={v} isDomainMatch={true} />
               ))}
             </div>
             <div className="mt-4 pt-4 border-t border-gray-100">
@@ -219,7 +224,7 @@ export default function ClaimPage() {
           {searchResults.length > 0 && (
             <div className="space-y-3">
               {searchResults.map((v) => (
-                <VendorRow key={v.id} vendor={v} />
+                <VendorRow key={v.id} vendor={v} isDomainMatch={false} />
               ))}
             </div>
           )}
