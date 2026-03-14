@@ -43,7 +43,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm">
-          <p>&copy; {new Date().getFullYear()} EnergyDirectory.ca — Saini Private Capital Ltd. — GST# 738605831 RT0001</p>
+          <p>&copy; {new Date().getFullYear()} EnergyDirectory.ca — GST# 738605831 RT0001</p>
           <p>Built for Canadian Energy 🇨🇦</p>
         </div>
       </div>

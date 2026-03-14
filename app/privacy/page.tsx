@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export const metadata = {
   title: 'Privacy Policy | EnergyDirectory.ca',
-  description: 'Privacy Policy for EnergyDirectory.ca, operated by Saini Private Capital Ltd. PIPEDA compliant.',
+  description: 'Privacy Policy for EnergyDirectory.ca. PIPEDA compliant.',
 }
 
 export default function PrivacyPage() {
@@ -22,7 +22,7 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-lg font-semibold text-[#0a1628] mb-2">1. Introduction</h2>
           <p>
-            <strong>Saini Private Capital Ltd.</strong> (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;), operator of EnergyDirectory.ca, is committed to protecting the privacy of individuals in accordance with the <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA) and applicable Alberta privacy legislation.
+            <strong>EnergyDirectory.ca</strong> (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is committed to protecting the privacy of individuals in accordance with the <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA) and applicable Alberta privacy legislation.
           </p>
           <p className="mt-2">
             This Privacy Policy explains how we collect, use, disclose, and safeguard personal information when you use our platform.
@@ -141,7 +141,7 @@ export default function PrivacyPage() {
           <h2 className="text-lg font-semibold text-[#0a1628] mb-2">12. Contact Our Privacy Officer</h2>
           <p>
             For privacy-related questions, concerns, or requests:<br />
-            <strong>Privacy Officer — Saini Private Capital Ltd.</strong><br />
+            <strong>Privacy Officer — EnergyDirectory.ca</strong><br />
             32 Massey Place SW, Calgary, AB T2V 2G3<br />
             Email: <a href="mailto:atlas.commandnode@gmail.com" className="text-amber-600 hover:text-amber-500">atlas.commandnode@gmail.com</a>
           </p>

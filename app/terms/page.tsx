@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export const metadata = {
   title: 'Terms of Service | EnergyDirectory.ca',
-  description: 'Terms of Service for EnergyDirectory.ca, operated by Saini Private Capital Ltd.',
+  description: 'Terms of Service for EnergyDirectory.ca.',
 }
 
 export default function TermsPage() {
@@ -22,7 +22,7 @@ export default function TermsPage() {
         <section>
           <h2 className="text-lg font-semibold text-[#0a1628] mb-2">1. About Us</h2>
           <p>
-            EnergyDirectory.ca (&ldquo;the Directory&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is operated by <strong>Saini Private Capital Ltd.</strong>, a corporation registered in Alberta, Canada (GST# 738605831 RT0001), located at 32 Massey Place SW, Calgary, AB T2V 2G3. By accessing or using this website, you agree to these Terms of Service.
+            EnergyDirectory.ca (&ldquo;the Directory&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is operated by <strong>EnergyDirectory.ca</strong> (GST# 738605831 RT0001), registered in Alberta, Canada. By accessing or using this website, you agree to these Terms of Service.
           </p>
         </section>
 
@@ -82,7 +82,7 @@ export default function TermsPage() {
         <section>
           <h2 className="text-lg font-semibold text-[#0a1628] mb-2">7. Intellectual Property</h2>
           <p>
-            All content on EnergyDirectory.ca, including design, code, and editorial content, is the property of Saini Private Capital Ltd. or its licensors. You may not reproduce, distribute, or create derivative works without our written consent. By submitting content (logos, descriptions, photos), you grant us a non-exclusive licence to display that content on the platform.
+            All content on EnergyDirectory.ca, including design, code, and editorial content, is the property of EnergyDirectory.ca or its licensors. You may not reproduce, distribute, or create derivative works without our written consent. By submitting content (logos, descriptions, photos), you grant us a non-exclusive licence to display that content on the platform.
           </p>
         </section>
 
@@ -130,7 +130,7 @@ export default function TermsPage() {
           <h2 className="text-lg font-semibold text-[#0a1628] mb-2">13. Contact</h2>
           <p>
             For questions about these Terms, contact us at:<br />
-            <strong>Saini Private Capital Ltd.</strong><br />
+            <strong>EnergyDirectory.ca</strong><br />
             32 Massey Place SW, Calgary, AB T2V 2G3<br />
             Email: <a href="mailto:atlas.commandnode@gmail.com" className="text-amber-600 hover:text-amber-500">atlas.commandnode@gmail.com</a>
           </p>

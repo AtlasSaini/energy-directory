@@ -82,7 +82,7 @@ export default function ListYourBusinessPage() {
             All prices in CAD. 5% GST will be added at checkout.
           </p>
           <p className="text-center text-gray-400 text-xs mt-1">
-            GST# 738605831 RT0001 — Saini Private Capital Ltd.
+            GST# 738605831 RT0001
           </p>
           <p className="text-center text-gray-400 text-sm mt-4">
             Cancel anytime. Questions? Email{' '}
