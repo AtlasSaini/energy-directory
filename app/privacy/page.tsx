@@ -142,7 +142,7 @@ export default function PrivacyPage() {
           <p>
             For privacy-related questions, concerns, or requests:<br />
             <strong>Privacy Officer — EnergyDirectory.ca</strong><br />
-            32 Massey Place SW, Calgary, AB T2V 2G3<br />
+            Calgary, Alberta, Canada<br />
             Email: <a href="mailto:atlas.commandnode@gmail.com" className="text-amber-600 hover:text-amber-500">atlas.commandnode@gmail.com</a>
           </p>
           <p className="mt-2">
