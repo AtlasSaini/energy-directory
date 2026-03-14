@@ -192,16 +192,24 @@ export default function DashboardPage() {
                 {vendor.views.toLocaleString()} total views
               </p>
             </div>
-            <Link
-              href={`/vendors/${vendor.slug}`}
-              target="_blank"
-              className="inline-flex items-center gap-1.5 text-sm text-amber-600 hover:text-amber-500 font-medium border border-amber-200 px-3 py-1.5 rounded-lg hover:bg-amber-50 transition-colors"
-            >
-              View live listing
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </Link>
+            <div className="flex items-center gap-2 flex-wrap">
+              <Link
+                href="/dashboard/leads"
+                className="inline-flex items-center gap-1.5 text-sm bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold px-3 py-1.5 rounded-lg transition-colors"
+              >
+                📋 View Leads
+              </Link>
+              <Link
+                href={`/vendors/${vendor.slug}`}
+                target="_blank"
+                className="inline-flex items-center gap-1.5 text-sm text-amber-600 hover:text-amber-500 font-medium border border-amber-200 px-3 py-1.5 rounded-lg hover:bg-amber-50 transition-colors"
+              >
+                View live listing
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </Link>
+            </div>
           </div>
         </div>
 
@@ -405,6 +413,12 @@ export default function DashboardPage() {
                   className="flex items-center gap-2 text-sm text-gray-600 hover:text-amber-600 transition-colors"
                 >
                   <span>🔗</span> View public listing
+                </Link>
+                <Link
+                  href="/dashboard/leads"
+                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                >
+                  <span>📋</span> RFQ Leads
                 </Link>
                 {vendor.tier === 'premium' && (
                   <Link

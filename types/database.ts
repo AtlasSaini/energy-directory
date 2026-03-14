@@ -98,6 +98,24 @@ export interface Database {
         Insert: Omit<Database['public']['Tables']['stripe_events']['Row'], 'id' | 'created_at'>
         Update: Partial<Database['public']['Tables']['stripe_events']['Insert']>
       }
+      rfq_requests: {
+        Row: {
+          id: string
+          vendor_id: string
+          buyer_name: string
+          buyer_company: string | null
+          buyer_email: string
+          buyer_phone: string | null
+          service_description: string
+          province: string | null
+          timeline: string | null
+          message: string | null
+          status: string
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['rfq_requests']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['rfq_requests']['Insert']>
+      }
     }
   }
 }
@@ -106,3 +124,4 @@ export type Vendor = Database['public']['Tables']['vendors']['Row']
 export type Category = Database['public']['Tables']['categories']['Row']
 export type Review = Database['public']['Tables']['reviews']['Row']
 export type Lead = Database['public']['Tables']['leads']['Row']
+export type RFQRequest = Database['public']['Tables']['rfq_requests']['Row']

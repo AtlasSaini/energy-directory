@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Vendor } from '@/types/database'
+import AddToShortlistButton from './AddToShortlistButton'
 
 interface VendorCardProps {
   vendor: Vendor & { categories?: string[] }
@@ -79,7 +80,7 @@ export default function VendorCard({ vendor }: VendorCardProps) {
 
           {/* Categories */}
           {vendor.categories && vendor.categories.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-auto">
+            <div className="flex flex-wrap gap-1 mt-auto mb-3">
               {vendor.categories.slice(0, 3).map((cat) => (
                 <span key={cat} className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full">
                   {cat}
@@ -90,6 +91,13 @@ export default function VendorCard({ vendor }: VendorCardProps) {
               )}
             </div>
           )}
+
+          {/* Shortlist button */}
+          <div className="mt-auto pt-1">
+            <AddToShortlistButton
+              vendor={{ id: vendor.id, company_name: vendor.company_name, slug: vendor.slug, category: vendor.categories?.[0] }}
+            />
+          </div>
         </div>
       </div>
     </Link>

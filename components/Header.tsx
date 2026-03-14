@@ -25,6 +25,9 @@ export default function Header() {
             <Link href="/vendors" className="hover:text-amber-400 transition-colors">
               Browse Vendors
             </Link>
+            <Link href="/for-buyers" className="hover:text-amber-400 transition-colors">
+              For Buyers
+            </Link>
             <Link href="/vendors?tier=featured" className="hover:text-amber-400 transition-colors">
               Featured
             </Link>
@@ -65,6 +68,13 @@ export default function Header() {
               onClick={() => setMobileOpen(false)}
             >
               Browse Vendors
+            </Link>
+            <Link
+              href="/for-buyers"
+              className="px-3 py-2.5 rounded-lg hover:bg-white/10 transition-colors"
+              onClick={() => setMobileOpen(false)}
+            >
+              For Buyers
             </Link>
             <Link
               href="/vendors?tier=featured"

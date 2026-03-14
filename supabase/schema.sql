@@ -167,3 +167,33 @@ $$ language plpgsql;
 create trigger vendors_updated_at
   before update on vendors
   for each row execute function update_updated_at();
+
+-- ── RFQ Requests ──
+-- MANUAL STEP: Run this in the Supabase Dashboard SQL Editor
+CREATE TABLE IF NOT EXISTS rfq_requests (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  vendor_id UUID REFERENCES vendors(id) ON DELETE CASCADE,
+  buyer_name TEXT NOT NULL,
+  buyer_company TEXT,
+  buyer_email TEXT NOT NULL,
+  buyer_phone TEXT,
+  service_description TEXT NOT NULL,
+  province TEXT,
+  timeline TEXT,
+  message TEXT,
+  status TEXT DEFAULT 'new',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_rfq_vendor_id ON rfq_requests(vendor_id);
+CREATE INDEX IF NOT EXISTS idx_rfq_status ON rfq_requests(status);
+
+-- RLS for rfq_requests
+ALTER TABLE rfq_requests ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Anyone can submit RFQs"
+  ON rfq_requests FOR INSERT WITH CHECK (true);
+CREATE POLICY "Vendors can view own RFQ leads"
+  ON rfq_requests FOR SELECT USING (
+    vendor_id IN (SELECT id FROM vendors WHERE user_id = auth.uid())
+  );
+CREATE POLICY "Service role can manage RFQs"
+  ON rfq_requests FOR ALL USING (true);

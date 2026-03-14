@@ -3,6 +3,8 @@ import { Geist } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { ShortlistProvider } from '@/components/ShortlistProvider'
+import ShortlistButton from '@/components/ShortlistButton'
 
 const geist = Geist({
   variable: '--font-geist',
@@ -30,9 +32,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geist.variable} font-sans antialiased bg-gray-50 min-h-screen flex flex-col`}>
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <ShortlistProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <ShortlistButton />
+        </ShortlistProvider>
       </body>
     </html>
   )

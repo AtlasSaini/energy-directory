@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#0a1628] text-gray-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-3">
@@ -27,6 +27,16 @@ export default function Footer() {
               <li><Link href="/vendors" className="hover:text-amber-400 transition-colors">All Vendors</Link></li>
               <li><Link href="/vendors?tier=featured" className="hover:text-amber-400 transition-colors">Featured Vendors</Link></li>
               <li><Link href="/vendors?tier=premium" className="hover:text-amber-400 transition-colors">Premium Vendors</Link></li>
+            </ul>
+          </div>
+
+          {/* For Buyers */}
+          <div>
+            <h3 className="text-white font-semibold text-sm mb-3">For Buyers</h3>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="/for-buyers" className="hover:text-amber-400 transition-colors">How It Works</Link></li>
+              <li><Link href="/for-buyers#rfq" className="hover:text-amber-400 transition-colors">Send an RFQ</Link></li>
+              <li><Link href="/vendors" className="hover:text-amber-400 transition-colors">Browse Vendors</Link></li>
             </ul>
           </div>
 

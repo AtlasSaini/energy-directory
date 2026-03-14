@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Vendor, Category, Review } from '@/types/database'
 import ViewTracker from './ViewTracker'
+import VendorActions from './VendorActions'
 
 interface VendorWithDetails extends Vendor {
   categories: Category[]
@@ -139,6 +140,11 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
                     Verified Business — domain ownership confirmed
                   </div>
                 )}
+
+                {/* RFQ + Shortlist actions */}
+                <div className="mt-4 flex items-center gap-3 flex-wrap">
+                  <VendorActions vendor={{ id: vendor.id, company_name: vendor.company_name, slug: vendor.slug }} />
+                </div>
               </div>
             </div>
           </div>
