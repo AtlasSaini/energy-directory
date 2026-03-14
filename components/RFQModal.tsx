@@ -249,7 +249,7 @@ export default function RFQModal({ vendors, onClose }: RFQModalProps) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Province</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Where is the work needed? <span className="text-gray-400 font-normal">(Province)</span></label>
                   <select
                     value={form.province}
                     onChange={(e) => setForm({ ...form, province: e.target.value })}

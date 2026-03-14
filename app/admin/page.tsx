@@ -8,6 +8,7 @@
 
 import { createAdminClient } from '@/lib/supabase'
 import BareVendorsTable from './BareVendorsTable'
+import DataHealthSection from './DataHealthSection'
 import type { Vendor } from '@/types/database'
 
 // ─── Quality helpers ─────────────────────────────────────────────────────────
@@ -250,6 +251,9 @@ export default async function AdminPage() {
           </p>
           <BareVendorsTable vendors={bareVendors} />
         </Section>
+
+        {/* Data Health section */}
+        <DataHealthSection />
 
       </div>
     </div>
