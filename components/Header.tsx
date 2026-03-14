@@ -23,13 +23,19 @@ export default function Header() {
             <Link href="/vendors?tier=featured" className="hover:text-amber-400 transition-colors">
               Featured
             </Link>
+            <Link href="/auth/login" className="hover:text-amber-400 transition-colors">
+              Sign In
+            </Link>
             <Link href="/list-your-business" className="bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold px-4 py-2 rounded-lg transition-colors">
               List Your Business
             </Link>
           </nav>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <Link href="/auth/login" className="text-sm text-gray-300 hover:text-white transition-colors">
+              Sign In
+            </Link>
             <Link href="/list-your-business" className="bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold px-3 py-1.5 rounded-lg text-sm transition-colors">
               List Business
             </Link>
