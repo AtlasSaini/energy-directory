@@ -26,9 +26,13 @@ interface SearchParams {
   category?: string
   tier?: string
   page?: string
+  quality?: string
 }
 
 async function getVendors(params: SearchParams) {
+  // Quality filter: when ?quality=full, only show vendors with website OR description
+  const qualityCurated = params.quality === 'full'
+
   // If filtering by category, do a two-step join
   if (params.category) {
     // Step 1: get the category ID from slug
@@ -68,6 +72,9 @@ async function getVendors(params: SearchParams) {
     if (params.q) {
       query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`)
     }
+    if (qualityCurated) {
+      query = query.or('website.not.is.null,description.not.is.null')
+    }
 
     const { data } = await query.limit(48)
     return (data || []) as Vendor[]
@@ -88,6 +95,9 @@ async function getVendors(params: SearchParams) {
   }
   if (params.q) {
     query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`)
+  }
+  if (qualityCurated) {
+    query = query.or('website.not.is.null,description.not.is.null')
   }
 
   const { data } = await query.limit(48)
@@ -113,9 +123,39 @@ export default async function VendorsPage({
   ])
 
   const activeFilters = [params.province, params.category, params.tier, params.q].filter(Boolean).length
+  const isCuratedView = params.quality === 'full'
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+      {/* Claim banner — shown on full unfiltered list to drive vendor registrations */}
+      {!isCuratedView && !params.q && !params.province && !params.category && !params.tier && (
+        <div className="mb-5 flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-5 py-3">
+          <p className="text-sm text-amber-800">
+            <span className="font-semibold">Is your business listed here?</span>{' '}
+            Claim your listing to add your website, description, and contact info — it&apos;s free.
+          </p>
+          <Link
+            href="/auth/claim"
+            className="ml-4 shrink-0 text-sm font-semibold text-amber-700 hover:text-amber-600 underline underline-offset-2"
+          >
+            Claim it →
+          </Link>
+        </div>
+      )}
+
+      {/* Curated view banner */}
+      {isCuratedView && (
+        <div className="mb-5 flex items-center justify-between bg-blue-50 border border-blue-200 rounded-xl px-5 py-3">
+          <p className="text-sm text-blue-800">
+            <span className="font-semibold">Curated view</span> — showing vendors with at least a website or description.
+          </p>
+          <Link href="/vendors" className="ml-4 shrink-0 text-sm font-medium text-blue-600 hover:text-blue-500">
+            Show all →
+          </Link>
+        </div>
+      )}
+
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-[#0a1628] mb-1">Energy Vendor Directory</h1>

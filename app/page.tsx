@@ -14,7 +14,11 @@ async function getHomeData() {
       .eq('active', true)
       .in('tier', ['featured', 'premium'])
       .limit(8),
-    supabase.from('vendors').select('id', { count: 'exact', head: true }).eq('active', true),
+    supabase
+      .from('vendors')
+      .select('id', { count: 'exact', head: true })
+      .eq('active', true)
+      .or('website.not.is.null,description.not.is.null'), // display-ready vendors only
     supabase
       .from('vendors')
       .select('*')
