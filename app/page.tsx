@@ -6,7 +6,7 @@ import VendorCard from '@/components/VendorCard'
 import type { Vendor, Category } from '@/types/database'
 
 async function getHomeData() {
-  const [categoriesRes, featuredVendorsRes] = await Promise.all([
+  const [categoriesRes, featuredVendorsRes, countRes, recentVendorsRes] = await Promise.all([
     supabase.from('categories').select('*').order('name'),
     supabase
       .from('vendors')
@@ -14,24 +14,35 @@ async function getHomeData() {
       .eq('active', true)
       .in('tier', ['featured', 'premium'])
       .limit(8),
+    supabase.from('vendors').select('id', { count: 'exact', head: true }).eq('active', true),
+    supabase
+      .from('vendors')
+      .select('*')
+      .eq('active', true)
+      .order('created_at', { ascending: false })
+      .limit(8),
   ])
+
+  const vendorCount = countRes.count || 365
 
   return {
     categories: (categoriesRes.data || []) as Category[],
     featuredVendors: (featuredVendorsRes.data || []) as Vendor[],
+    recentVendors: (recentVendorsRes.data || []) as Vendor[],
+    vendorCount,
   }
 }
 
-export const revalidate = 60
+export const revalidate = 3600
 
 export default async function HomePage() {
-  const { categories, featuredVendors } = await getHomeData()
+  const { categories, featuredVendors, recentVendors, vendorCount } = await getHomeData()
 
   const stats = [
-    { label: 'Vendors Listed', value: '500+' },
+    { label: 'Vendors Listed', value: `${vendorCount}+` },
     { label: 'Energy Categories', value: '23' },
     { label: 'Provinces Covered', value: '13' },
-    { label: 'Verified Suppliers', value: '100+' },
+    { label: 'Listed & Searchable', value: 'Free' },
   ]
 
   return (
@@ -101,8 +112,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Featured Vendors */}
-      {featuredVendors.length > 0 && (
+      {/* Featured Vendors or Recently Added */}
+      {featuredVendors.length > 0 ? (
         <section className="py-16 px-4 bg-white">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between mb-8">
@@ -121,7 +132,26 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
-      )}
+      ) : recentVendors.length > 0 ? (
+        <section className="py-16 px-4 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-2xl font-bold text-[#0a1628]">Recently Added Vendors</h2>
+                <p className="text-gray-500 text-sm mt-1">Newly listed energy suppliers</p>
+              </div>
+              <Link href="/vendors" className="text-amber-600 hover:text-amber-500 font-medium text-sm">
+                View all →
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {recentVendors.map((vendor) => (
+                <VendorCard key={vendor.id} vendor={vendor} />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* CTA Section */}
       <section className="py-20 px-4 bg-gradient-to-br from-[#0a1628] to-[#1a3a6b]">
