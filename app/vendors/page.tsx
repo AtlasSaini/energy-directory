@@ -1,4 +1,5 @@
-import { supabase } from '@/lib/supabase'
+import { createAdminClient } from '@/lib/supabase'
+const supabase = createAdminClient()
 import VendorCard from '@/components/VendorCard'
 import SearchBar from '@/components/SearchBar'
 import Link from 'next/link'
@@ -27,6 +28,15 @@ interface SearchParams {
   tier?: string
   page?: string
   quality?: string
+}
+
+function buildQueryString(params: Record<string, string | undefined>) {
+  const search = new URLSearchParams()
+  for (const [key, value] of Object.entries(params)) {
+    if (value === undefined || value === null) continue
+    search.set(key, value)
+  }
+  return search.toString()
 }
 
 async function getVendors(params: SearchParams) {
@@ -188,7 +198,7 @@ export default async function VendorsPage({
                 ].map(({ value, label }) => (
                   <Link
                     key={value}
-                    href={`/vendors?${new URLSearchParams({ ...params, tier: value, province: params.province || '' }).toString()}`}
+                    href={`/vendors?${buildQueryString({ ...params, tier: value, province: params.province || '' })}`}
                     className={`block text-sm px-3 py-2 rounded-lg transition-colors ${
                       (params.tier || '') === value
                         ? 'bg-[#0a1628] text-white'
@@ -206,7 +216,7 @@ export default async function VendorsPage({
               <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Province</h3>
               <div className="space-y-1">
                 <Link
-                  href={`/vendors?${new URLSearchParams({ ...params, province: '' }).toString()}`}
+                  href={`/vendors?${buildQueryString({ ...params, province: '' })}`}
                   className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${!params.province ? 'bg-[#0a1628] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
                 >
                   All Provinces
@@ -214,7 +224,7 @@ export default async function VendorsPage({
                 {PROVINCES.map(({ code, name }) => (
                   <Link
                     key={code}
-                    href={`/vendors?${new URLSearchParams({ ...params, province: code }).toString()}`}
+                    href={`/vendors?${buildQueryString({ ...params, province: code })}`}
                     className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${params.province === code ? 'bg-[#0a1628] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
                   >
                     {name}
@@ -229,7 +239,7 @@ export default async function VendorsPage({
                 <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Category</h3>
                 <div className="space-y-1">
                   <Link
-                    href={`/vendors?${new URLSearchParams({ ...params, category: '' }).toString()}`}
+                    href={`/vendors?${buildQueryString({ ...params, category: '' })}`}
                     className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${!params.category ? 'bg-[#0a1628] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
                   >
                     All Categories
@@ -237,7 +247,7 @@ export default async function VendorsPage({
                   {categories.map((cat) => (
                     <Link
                       key={cat.id}
-                      href={`/vendors?${new URLSearchParams({ ...params, category: cat.slug }).toString()}`}
+                      href={`/vendors?${buildQueryString({ ...params, category: cat.slug })}`}
                       className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${params.category === cat.slug ? 'bg-[#0a1628] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
                     >
                       {cat.name}
