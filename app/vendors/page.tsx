@@ -1,5 +1,4 @@
 import { createAdminClient } from '@/lib/supabase'
-const supabase = createAdminClient()
 import VendorCard from '@/components/VendorCard'
 import SearchBar from '@/components/SearchBar'
 import Link from 'next/link'
@@ -21,6 +20,7 @@ const PROVINCES = [
   { code: 'NU', name: 'Nunavut' },
 ]
 
+
 interface SearchParams {
   q?: string
   province?: string
@@ -40,6 +40,7 @@ function buildQueryString(params: Record<string, string | undefined>) {
 }
 
 async function getVendors(params: SearchParams) {
+  const supabase = createAdminClient()
   // Quality filter: when ?quality=full, only show vendors with website OR description
   const qualityCurated = params.quality === 'full'
 
@@ -108,6 +109,7 @@ async function getVendors(params: SearchParams) {
 }
 
 async function getCategories() {
+  const supabase = createAdminClient()
   const { data } = await supabase.from('categories').select('*').order('name')
   return (data || []) as Category[]
 }
