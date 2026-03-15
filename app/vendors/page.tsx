@@ -33,7 +33,7 @@ async function getVendors(params: SearchParams) {
   // Quality filter: when ?quality=full, only show vendors with website OR description
   const qualityCurated = params.quality === 'full'
 
-  // If filtering by category, use a proper join via vendor_categories
+  // If filtering by category, use an inner join from vendors table
   if (params.category) {
     // Get category ID from slug
     const { data: catData } = await supabase
@@ -44,32 +44,33 @@ async function getVendors(params: SearchParams) {
 
     if (!catData) return [] as Vendor[]
 
-    // Use join query — avoids URL-length limits of .in() with many IDs
+    // Query vendors with inner join on vendor_categories — no URL length issues
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let query = (supabase as any)
-      .from('vendor_categories')
-      .select('vendors!inner(*)')
-      .eq('category_id', catData.id)
-      .eq('vendors.active', true)
-      .order('vendors.tier', { ascending: false })
-      .order('vendors.company_name')
+      .from('vendors')
+      .select('*, vendor_categories!inner(category_id)')
+      .eq('vendor_categories.category_id', catData.id)
+      .eq('active', true)
+      .order('tier', { ascending: false })
+      .order('company_name')
 
     if (params.province) {
-      query = query.eq('vendors.province', params.province)
+      query = query.eq('province', params.province)
     }
     if (params.tier && ['featured', 'premium'].includes(params.tier)) {
-      query = query.eq('vendors.tier', params.tier)
+      query = query.eq('tier', params.tier)
     }
     if (params.q) {
-      query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`, { foreignTable: 'vendors' })
+      query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`)
     }
     if (qualityCurated) {
-      query = query.or('website.not.is.null,description.not.is.null', { foreignTable: 'vendors' })
+      query = query.or('website.not.is.null,description.not.is.null')
     }
 
     const { data } = await query.limit(48)
     if (!data) return [] as Vendor[]
-    return data.map((row: { vendors: Vendor }) => row.vendors).filter(Boolean) as Vendor[]
+    // Strip the joined vendor_categories field from each vendor object
+    return data.map(({ vendor_categories: _vc, ...vendor }: { vendor_categories: unknown } & Vendor) => vendor) as Vendor[]
   }
 
   let query = supabase
