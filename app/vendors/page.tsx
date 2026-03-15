@@ -33,9 +33,9 @@ async function getVendors(params: SearchParams) {
   // Quality filter: when ?quality=full, only show vendors with website OR description
   const qualityCurated = params.quality === 'full'
 
-  // If filtering by category, do a two-step join
+  // If filtering by category, use a proper join via vendor_categories
   if (params.category) {
-    // Step 1: get the category ID from slug
+    // Get category ID from slug
     const { data: catData } = await supabase
       .from('categories')
       .select('id')
@@ -44,40 +44,32 @@ async function getVendors(params: SearchParams) {
 
     if (!catData) return [] as Vendor[]
 
-    // Step 2: get vendor IDs in that category
+    // Use join query — avoids URL-length limits of .in() with many IDs
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: vcData } = await (supabase as any)
+    let query = (supabase as any)
       .from('vendor_categories')
-      .select('vendor_id')
+      .select('vendors!inner(*)')
       .eq('category_id', catData.id)
-
-    const vendorIds = ((vcData || []) as { vendor_id: string }[]).map((v) => v.vendor_id)
-    if (vendorIds.length === 0) return [] as Vendor[]
-
-    // Step 3: fetch vendors with those IDs + other filters
-    let query = supabase
-      .from('vendors')
-      .select('*')
-      .eq('active', true)
-      .in('id', vendorIds)
-      .order('tier', { ascending: false })
-      .order('company_name')
+      .eq('vendors.active', true)
+      .order('vendors.tier', { ascending: false })
+      .order('vendors.company_name')
 
     if (params.province) {
-      query = query.eq('province', params.province)
+      query = query.eq('vendors.province', params.province)
     }
     if (params.tier && ['featured', 'premium'].includes(params.tier)) {
-      query = query.eq('tier', params.tier)
+      query = query.eq('vendors.tier', params.tier)
     }
     if (params.q) {
-      query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`)
+      query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`, { foreignTable: 'vendors' })
     }
     if (qualityCurated) {
-      query = query.or('website.not.is.null,description.not.is.null')
+      query = query.or('website.not.is.null,description.not.is.null', { foreignTable: 'vendors' })
     }
 
     const { data } = await query.limit(48)
-    return (data || []) as Vendor[]
+    if (!data) return [] as Vendor[]
+    return data.map((row: { vendors: Vendor }) => row.vendors).filter(Boolean) as Vendor[]
   }
 
   let query = supabase
