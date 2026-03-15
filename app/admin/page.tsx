@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 /**
  * /admin — Vendor Data Quality Dashboard
  *
