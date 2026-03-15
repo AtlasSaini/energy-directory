@@ -1,11 +1,12 @@
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
+import { createAdminClient } from '@/lib/supabase'
 import SearchBar from '@/components/SearchBar'
 import CategoryGrid from '@/components/CategoryGrid'
 import VendorCard from '@/components/VendorCard'
 import type { Vendor, Category } from '@/types/database'
 
 async function getHomeData() {
+  const supabase = createAdminClient()
   const [categoriesRes, featuredVendorsRes, countRes, recentVendorsRes] = await Promise.all([
     supabase.from('categories').select('*').order('name'),
     supabase

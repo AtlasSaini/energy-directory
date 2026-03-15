@@ -1,10 +1,12 @@
-import { supabase } from '@/lib/supabase'
+import { createAdminClient } from '@/lib/supabase'
 import VendorCard from '@/components/VendorCard'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Vendor, Category } from '@/types/database'
 
 async function getCategoryData(slug: string) {
+  const supabase = createAdminClient()
+
   const { data: categoryData } = await supabase
     .from('categories')
     .select('*')
@@ -14,28 +16,20 @@ async function getCategoryData(slug: string) {
   const category = categoryData as Category | null
   if (!category) return null
 
-  // Get vendors in this category via join
+  // Use admin client + inner join — anon key blocked by RLS on vendor_categories
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: vcRaw } = await (supabase as any)
-    .from('vendor_categories')
-    .select('vendor_id')
-    .eq('category_id', category.id)
+  const { data: vcData } = await (supabase as any)
+    .from('vendors')
+    .select('*, vendor_categories!inner(category_id)')
+    .eq('vendor_categories.category_id', category.id)
+    .eq('active', true)
+    .order('tier', { ascending: false })
+    .order('company_name')
 
-  const vcData = (vcRaw || []) as { vendor_id: string }[]
-  let vendors: Vendor[] = []
-  if (vcData.length > 0) {
-    const vendorIds = vcData.map((vc) => vc.vendor_id)
-    const { data } = await supabase
-      .from('vendors')
-      .select('*')
-      .in('id', vendorIds)
-      .eq('active', true)
-      .order('tier', { ascending: false })
-      .order('company_name')
-    vendors = (data || []) as Vendor[]
-  }
+  const vendors: Vendor[] = (vcData || []).map(
+    ({ vendor_categories: _vc, ...vendor }: { vendor_categories: unknown } & Vendor) => vendor
+  )
 
-  // Get all categories for sidebar
   const { data: allCategories } = await supabase
     .from('categories')
     .select('*')
