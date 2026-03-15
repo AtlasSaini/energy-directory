@@ -39,73 +39,57 @@ function buildQueryString(params: Record<string, string | undefined>) {
   return search.toString()
 }
 
-async function getVendors(params: SearchParams) {
-  const supabase = createAdminClient()
-  // Quality filter: when ?quality=full, only show vendors with website OR description
-  const qualityCurated = params.quality === 'full'
+const PAGE_SIZE = 48
 
-  // If filtering by category, use an inner join from vendors table
+async function getVendors(params: SearchParams): Promise<{ vendors: Vendor[]; total: number }> {
+  const supabase = createAdminClient()
+  const qualityCurated = params.quality === 'full'
+  const page = Math.max(1, parseInt(params.page || '1', 10))
+  const offset = (page - 1) * PAGE_SIZE
+
   if (params.category) {
-    // Get category ID from slug
     const { data: catData } = await supabase
       .from('categories')
       .select('id')
       .eq('slug', params.category)
       .single()
 
-    if (!catData) return [] as Vendor[]
+    if (!catData) return { vendors: [], total: 0 }
 
-    // Query vendors with inner join on vendor_categories — no URL length issues
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let query = (supabase as any)
       .from('vendors')
-      .select('*, vendor_categories!inner(category_id)')
+      .select('*, vendor_categories!inner(category_id)', { count: 'exact' })
       .eq('vendor_categories.category_id', catData.id)
       .eq('active', true)
       .order('tier', { ascending: false })
       .order('company_name')
 
-    if (params.province) {
-      query = query.eq('province', params.province)
-    }
-    if (params.tier && ['featured', 'premium'].includes(params.tier)) {
-      query = query.eq('tier', params.tier)
-    }
-    if (params.q) {
-      query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`)
-    }
-    if (qualityCurated) {
-      query = query.or('website.not.is.null,description.not.is.null')
-    }
+    if (params.province) query = query.eq('province', params.province)
+    if (params.tier && ['featured', 'premium'].includes(params.tier)) query = query.eq('tier', params.tier)
+    if (params.q) query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`)
+    if (qualityCurated) query = query.or('website.not.is.null,description.not.is.null')
 
-    const { data } = await query.limit(48)
-    if (!data) return [] as Vendor[]
-    // Strip the joined vendor_categories field from each vendor object
-    return data.map(({ vendor_categories: _vc, ...vendor }: { vendor_categories: unknown } & Vendor) => vendor) as Vendor[]
+    const { data, count } = await query.range(offset, offset + PAGE_SIZE - 1)
+    if (!data) return { vendors: [], total: 0 }
+    const vendors = data.map(({ vendor_categories: _vc, ...vendor }: { vendor_categories: unknown } & Vendor) => vendor) as Vendor[]
+    return { vendors, total: count ?? 0 }
   }
 
   let query = supabase
     .from('vendors')
-    .select('*')
+    .select('*', { count: 'exact' })
     .eq('active', true)
     .order('tier', { ascending: false })
     .order('company_name')
 
-  if (params.province) {
-    query = query.eq('province', params.province)
-  }
-  if (params.tier && ['featured', 'premium'].includes(params.tier)) {
-    query = query.eq('tier', params.tier)
-  }
-  if (params.q) {
-    query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`)
-  }
-  if (qualityCurated) {
-    query = query.or('website.not.is.null,description.not.is.null')
-  }
+  if (params.province) query = query.eq('province', params.province)
+  if (params.tier && ['featured', 'premium'].includes(params.tier)) query = query.eq('tier', params.tier)
+  if (params.q) query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`)
+  if (qualityCurated) query = query.or('website.not.is.null,description.not.is.null')
 
-  const { data } = await query.limit(48)
-  return (data || []) as Vendor[]
+  const { data, count } = await query.range(offset, offset + PAGE_SIZE - 1)
+  return { vendors: (data || []) as Vendor[], total: count ?? 0 }
 }
 
 async function getCategories() {
@@ -123,11 +107,13 @@ export default async function VendorsPage({
   searchParams: Promise<SearchParams>
 }) {
   const params = await searchParams
-  const [vendors, categories] = await Promise.all([
+  const [{ vendors, total }, categories] = await Promise.all([
     getVendors(params),
     getCategories(),
   ])
 
+  const page = Math.max(1, parseInt(params.page || '1', 10))
+  const totalPages = Math.ceil(total / PAGE_SIZE)
   const activeFilters = [params.province, params.category, params.tier, params.q].filter(Boolean).length
   const isCuratedView = params.quality === 'full'
 
@@ -166,7 +152,7 @@ export default async function VendorsPage({
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-[#0a1628] mb-1">Energy Vendor Directory</h1>
         <p className="text-gray-500 text-sm">
-          {vendors.length > 0 ? `${vendors.length} vendor${vendors.length !== 1 ? 's' : ''} found` : 'Browse Canadian energy vendors'}
+          {total > 0 ? `${total} vendor${total !== 1 ? 's' : ''} found${totalPages > 1 ? ` — page ${page} of ${totalPages}` : ''}` : 'Browse Canadian energy vendors'}
           {params.q && ` for "${params.q}"`}
           {params.province && ` in ${PROVINCES.find(p => p.code === params.province)?.name || params.province}`}
         </p>
@@ -265,11 +251,38 @@ export default async function VendorsPage({
         {/* Vendor Grid */}
         <div className="flex-1 min-w-0">
           {vendors.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-              {vendors.map((vendor) => (
-                <VendorCard key={vendor.id} vendor={vendor} />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                {vendors.map((vendor) => (
+                  <VendorCard key={vendor.id} vendor={vendor} />
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="mt-8 flex items-center justify-center gap-2">
+                  {page > 1 && (
+                    <Link
+                      href={`/vendors?${buildQueryString({ ...params, page: String(page - 1) })}`}
+                      className="px-4 py-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
+                    >
+                      ← Previous
+                    </Link>
+                  )}
+                  <span className="px-4 py-2 text-sm text-gray-500">
+                    Page {page} of {totalPages}
+                  </span>
+                  {page < totalPages && (
+                    <Link
+                      href={`/vendors?${buildQueryString({ ...params, page: String(page + 1) })}`}
+                      className="px-4 py-2 text-sm font-medium rounded-lg bg-[#0a1628] text-white hover:bg-[#0d1f3c] transition-colors"
+                    >
+                      Next →
+                    </Link>
+                  )}
+                </div>
+              )}
+            </>
           ) : (
             <div className="bg-white border border-gray-200 rounded-xl p-12 text-center">
               <div className="text-4xl mb-4">🔍</div>
