@@ -118,7 +118,7 @@ export default function RFQModal({ vendors, onClose }: RFQModalProps) {
         <div className="bg-[#0a1628] text-white px-6 py-5 rounded-t-2xl">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 className="text-lg font-bold">Send Request for Quote</h2>
+              <h2 className="text-lg font-bold">Send an Inquiry</h2>
               <p className="text-gray-300 text-sm mt-0.5">
                 Sending to {vendors.length} vendor{vendors.length !== 1 ? 's' : ''}
               </p>

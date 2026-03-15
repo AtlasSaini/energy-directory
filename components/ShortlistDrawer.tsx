@@ -114,7 +114,7 @@ export default function ShortlistDrawer({ isOpen, onClose }: ShortlistDrawerProp
               onClick={() => setShowRFQ(true)}
               className="w-full bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-bold py-3 rounded-lg transition-colors text-sm"
             >
-              Send RFQ to All ({shortlist.length}) →
+              Send Inquiry to All ({shortlist.length}) →
             </button>
             <button
               onClick={clearShortlist}

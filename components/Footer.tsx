@@ -35,7 +35,7 @@ export default function Footer() {
             <h3 className="text-white font-semibold text-sm mb-3">For Buyers</h3>
             <ul className="space-y-2 text-sm">
               <li><Link href="/for-buyers" className="hover:text-amber-400 transition-colors">How It Works</Link></li>
-              <li><Link href="/for-buyers#rfq" className="hover:text-amber-400 transition-colors">Send an RFQ</Link></li>
+              <li><Link href="/for-buyers#rfq" className="hover:text-amber-400 transition-colors">Send an Inquiry</Link></li>
               <li><Link href="/vendors" className="hover:text-amber-400 transition-colors">Browse Vendors</Link></li>
             </ul>
           </div>

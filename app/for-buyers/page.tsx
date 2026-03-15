@@ -109,7 +109,7 @@ export default function ForBuyersPage() {
                   'Verified Canadian vendors only',
                   '23 energy categories covered',
                   'Oil & Gas, Renewables, Carbon & ESG, Power Generation',
-                  'Send RFQs to multiple vendors in one step',
+                  'Send inquiries to multiple vendors in one step',
                   'Vendors respond directly to your email',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
@@ -133,7 +133,7 @@ export default function ForBuyersPage() {
                     <span key={v} className="bg-white/10 text-white text-xs px-2 py-0.5 rounded-full border border-white/20">{v}</span>
                   ))}
                 </div>
-                <div className="text-sm font-semibold">Send Request for Quote</div>
+                <div className="text-sm font-semibold">Send an Inquiry</div>
               </div>
               <div className="space-y-2">
                 <div className="h-8 bg-gray-100 rounded-lg" />
