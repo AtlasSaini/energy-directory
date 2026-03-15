@@ -76,6 +76,25 @@ async function getVendors(params: SearchParams): Promise<{ vendors: Vendor[]; to
     return { vendors, total: count ?? 0 }
   }
 
+  // When a search query is present, also look up vendors in categories matching that query
+  // e.g. searching "Carbon & ESG Services" should return vendors in that category
+  let categoryVendorIds: string[] = []
+  if (params.q) {
+    const { data: matchingCats } = await supabase
+      .from('categories')
+      .select('id')
+      .ilike('name', `%${params.q}%`)
+
+    if (matchingCats && matchingCats.length > 0) {
+      const catIds = matchingCats.map((c: { id: string }) => c.id)
+      const { data: links } = await supabase
+        .from('vendor_categories')
+        .select('vendor_id')
+        .in('category_id', catIds)
+      categoryVendorIds = (links || []).map((l: { vendor_id: string }) => l.vendor_id)
+    }
+  }
+
   let query = supabase
     .from('vendors')
     .select('*', { count: 'exact' })
@@ -85,7 +104,17 @@ async function getVendors(params: SearchParams): Promise<{ vendors: Vendor[]; to
 
   if (params.province) query = query.eq('province', params.province)
   if (params.tier && ['featured', 'premium'].includes(params.tier)) query = query.eq('tier', params.tier)
-  if (params.q) query = query.or(`company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`)
+
+  if (params.q) {
+    const textFilter = `company_name.ilike.%${params.q}%,description.ilike.%${params.q}%`
+    if (categoryVendorIds.length > 0) {
+      // Include vendors matching the text OR vendors in matching categories
+      query = query.or(`${textFilter},id.in.(${categoryVendorIds.join(',')})`)
+    } else {
+      query = query.or(textFilter)
+    }
+  }
+
   if (qualityCurated) query = query.or('website.not.is.null,description.not.is.null')
 
   const { data, count } = await query.range(offset, offset + PAGE_SIZE - 1)
