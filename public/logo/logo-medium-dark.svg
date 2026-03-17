@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="194" height="52" viewBox="0 0 194 52" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="11" width="38" height="8" rx="4" fill="#f59e0b"/>
+          <rect x="0" y="25" width="29" height="8" rx="4" fill="white"/>
+          <rect x="0" y="39" width="20" height="8" rx="4" fill="white" opacity="0.35"/>
+          <text x="50" y="33" font-family="'Arial Black',sans-serif" font-weight="900" font-size="30" fill="white" letter-spacing="-0.5">ENERGY</text>
+          <text x="52" y="47" font-family="Arial,sans-serif" font-weight="400" font-size="10" fill="#94a3b8" letter-spacing="5">DIRECTORY</text>
+        </svg>

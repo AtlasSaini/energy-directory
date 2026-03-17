@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 
 export default function Header() {
@@ -11,13 +12,14 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center">
-              <span className="text-[#0a1628] font-bold text-sm">⚡</span>
-            </div>
-            <span className="font-bold text-lg tracking-tight">
-              Energy<span className="text-amber-400">Directory</span>.ca
-            </span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo/logo-medium-dark.svg"
+              alt="Energy Directory"
+              width={194}
+              height={52}
+              priority
+            />
           </Link>
 
           {/* Desktop Nav */}

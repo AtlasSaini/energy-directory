@@ -15,12 +15,21 @@ export const metadata: Metadata = {
   title: 'EnergyDirectory.ca — Canada\'s Energy Vendor Directory',
   description: 'Find trusted Canadian energy sector vendors. Oil & gas, renewables, pipeline, engineering, and more. Browse verified suppliers across Canada.',
   keywords: 'energy vendors Canada, oil gas suppliers, renewable energy companies, Canadian energy directory',
+  icons: {
+    icon: [
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logo/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/logo/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+    ],
+    apple: { url: '/apple-touch-icon.png', sizes: '180x180' },
+  },
   openGraph: {
     title: 'EnergyDirectory.ca — Canada\'s Energy Vendor Directory',
     description: 'Find trusted Canadian energy sector vendors.',
     url: 'https://energydirectory.ca',
     siteName: 'EnergyDirectory.ca',
     type: 'website',
+    images: [{ url: '/logo/logo-primary-light.svg' }],
   },
 }
 
