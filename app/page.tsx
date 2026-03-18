@@ -57,17 +57,17 @@ export default async function HomePage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-4 py-1.5 text-amber-400 text-sm font-medium mb-6">
             <span>🇨🇦</span>
-            <span>Canada&apos;s Energy Vendor Directory</span>
+            <span>Canada&apos;s Largest Energy &amp; Mining Directory</span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
-            Canada&apos;s Energy &amp; Resource<br />
+            Canada&apos;s Energy &amp; Mining<br />
             <span className="text-amber-400">Vendor Directory</span>
           </h1>
           <p className="text-base text-amber-300/80 font-medium mb-3 tracking-wide">
-            Oil &amp; Gas · Renewables · Carbon &amp; ESG · Power Generation
+            Oil &amp; Gas · Renewables · Mining · Carbon &amp; ESG · Power Generation
           </p>
           <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Connect with trusted suppliers across oil &amp; gas, renewables, carbon &amp; ESG, power generation, and more. Verified vendors, nationwide coverage.
+            The most comprehensive directory of Canadian energy and mining vendors. Verified suppliers across every sector — nationwide coverage.
           </p>
           <SearchBar
             placeholder="Search vendors, services, categories..."
