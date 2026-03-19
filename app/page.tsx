@@ -103,7 +103,7 @@ export default async function HomePage() {
             </div>
           </div>
           {categories.length > 0 ? (
-            <CategoryGrid categories={categories} />
+            <CategoryGrid categories={categories} grouped={true} />
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {['Oil & Gas', 'Renewables', 'Pipeline', 'Engineering', 'Solar', 'Wind Energy', 'Natural Gas', 'Electrical', 'Drilling', 'Environmental', 'Power Generation', 'Transmission', 'Oilfield Services', 'Geothermal', 'Energy Storage'].map((name) => (
