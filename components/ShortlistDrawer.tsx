@@ -68,7 +68,7 @@ export default function ShortlistDrawer({ isOpen, onClose }: ShortlistDrawerProp
               </div>
               <h3 className="font-semibold text-gray-700 mb-2">Your shortlist is empty</h3>
               <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
-                Add vendors to your shortlist to send a group RFQ in one step.
+                Add vendors to your shortlist to send a group inquiry in one step.
               </p>
             </div>
           ) : (

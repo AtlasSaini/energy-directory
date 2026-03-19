@@ -15,6 +15,9 @@ interface ShortlistContextType {
   removeFromShortlist: (vendorId: string) => void
   clearShortlist: () => void
   isInShortlist: (vendorId: string) => boolean
+  openDrawer: () => void
+  drawerOpen: boolean
+  setDrawerOpen: (open: boolean) => void
 }
 
 const ShortlistContext = createContext<ShortlistContextType | null>(null)
@@ -25,6 +28,8 @@ const MAX_SHORTLIST = 10
 export function ShortlistProvider({ children }: { children: ReactNode }) {
   const [shortlist, setShortlist] = useState<ShortlistVendor[]>([])
   const [hydrated, setHydrated] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const openDrawer = useCallback(() => setDrawerOpen(true), [])
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -54,7 +59,10 @@ export function ShortlistProvider({ children }: { children: ReactNode }) {
     setShortlist((prev) => {
       if (prev.length >= MAX_SHORTLIST) return prev
       if (prev.some((v) => v.id === vendor.id)) return prev
-      return [...prev, vendor]
+      const next = [...prev, vendor]
+      // Auto-open drawer when first vendor is added
+      if (prev.length === 0) setTimeout(() => setDrawerOpen(true), 100)
+      return next
     })
   }, [])
 
@@ -77,6 +85,9 @@ export function ShortlistProvider({ children }: { children: ReactNode }) {
       removeFromShortlist,
       clearShortlist,
       isInShortlist,
+      openDrawer,
+      drawerOpen,
+      setDrawerOpen,
     }}>
       {children}
     </ShortlistContext.Provider>

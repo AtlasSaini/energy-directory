@@ -1,17 +1,15 @@
 'use client'
 
-import { useState } from 'react'
 import { useShortlist } from './ShortlistProvider'
 import ShortlistDrawer from './ShortlistDrawer'
 
 export default function ShortlistButton() {
-  const { shortlist } = useShortlist()
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const { shortlist, drawerOpen, setDrawerOpen } = useShortlist()
   const count = shortlist.length
 
   return (
     <>
-      {/* Floating button — hidden on mobile when empty */}
+      {/* Floating button — always visible on desktop, visible on mobile when shortlist has items */}
       <button
         onClick={() => setDrawerOpen(true)}
         aria-label={`My Shortlist${count > 0 ? ` (${count})` : ''}`}
@@ -22,7 +20,6 @@ export default function ShortlistButton() {
             ? 'bg-amber-500 hover:bg-amber-400 text-[#0a1628]'
             : 'bg-slate-700 hover:bg-slate-600 text-white'
           }
-          ${count === 0 ? 'hidden sm:flex' : 'flex'}
         `}
       >
         <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -30,10 +27,7 @@ export default function ShortlistButton() {
         </svg>
         <span className="hidden sm:inline">My Shortlist</span>
         {count > 0 && (
-          <span className={`
-            flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold
-            ${count > 0 ? 'bg-[#0a1628] text-amber-400' : 'bg-gray-600 text-white'}
-          `}>
+          <span className="flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold bg-[#0a1628] text-amber-400">
             {count}
           </span>
         )}
