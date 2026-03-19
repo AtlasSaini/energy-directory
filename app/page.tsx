@@ -45,7 +45,7 @@ export default async function HomePage() {
 
   const stats = [
     { label: 'Vendors Listed', value: `${vendorCount}` },
-    { label: 'Energy Categories', value: '23' },
+    { label: 'Categories', value: `${categories.length}` },
     { label: 'Provinces Covered', value: '13' },
     { label: 'Listed & Searchable', value: 'Free' },
   ]
