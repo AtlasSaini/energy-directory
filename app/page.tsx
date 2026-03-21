@@ -55,13 +55,9 @@ export default async function HomePage() {
       {/* Hero Section */}
       <section className="bg-[#0a1628] text-white py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-4 py-1.5 text-amber-400 text-sm font-medium mb-6">
-            <span>🇨🇦</span>
-            <span>Canada&apos;s Largest Energy &amp; Mining Directory</span>
-          </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
-            Canada&apos;s Energy &amp; Mining<br />
-            <span className="text-amber-400">Vendor Directory</span>
+            Canada&apos;s Largest Energy<br />
+            <span className="text-amber-400">&amp; Mining Directory</span>
           </h1>
           <p className="text-base text-amber-300/80 font-medium mb-3 tracking-wide">
             Oil &amp; Gas · Renewables · Mining · Carbon &amp; ESG · Power Generation
