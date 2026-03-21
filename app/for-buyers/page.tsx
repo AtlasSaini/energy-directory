@@ -1,9 +1,20 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { createClient } from '@/lib/supabase-server'
 
 export const metadata: Metadata = {
   title: 'For Buyers — Find Energy Vendors Fast | EnergyDirectory.ca',
   description: 'Browse Canada\'s largest energy vendor directory. Shortlist the best fits. Send one inquiry to multiple vendors at once — free, no account required.',
+}
+
+async function getCategoryCount(): Promise<number> {
+  try {
+    const supabase = createClient()
+    const { count } = await supabase.from('categories').select('*', { count: 'exact', head: true })
+    return count ?? 35
+  } catch {
+    return 35
+  }
 }
 
 const CATEGORIES = [
@@ -17,7 +28,8 @@ const CATEGORIES = [
   { name: 'Health & Safety', slug: 'health-safety', icon: '🔒' },
 ]
 
-export default function ForBuyersPage() {
+export default async function ForBuyersPage() {
+  const categoryCount = await getCategoryCount()
   return (
     <div className="min-h-screen">
       {/* Hero */}
@@ -107,7 +119,7 @@ export default function ForBuyersPage() {
                 {[
                   'Free to use — no account required',
                   'Verified Canadian vendors only',
-                  '23 energy categories covered',
+                  `${categoryCount} energy categories covered`,
                   'Oil & Gas, Renewables, Carbon & ESG, Power Generation',
                   'Send inquiries to multiple vendors in one step',
                   'Vendors respond directly to your email',
@@ -178,7 +190,7 @@ export default function ForBuyersPage() {
               href="/vendors"
               className="text-amber-600 hover:text-amber-500 font-medium text-sm"
             >
-              View all 23 categories →
+              View all {categoryCount} categories →
             </Link>
           </div>
         </div>
