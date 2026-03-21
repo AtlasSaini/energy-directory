@@ -143,7 +143,7 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
 
                 {/* RFQ + Shortlist actions */}
                 <div className="mt-4 flex items-center gap-3 flex-wrap">
-                  <VendorActions vendor={{ id: vendor.id, company_name: vendor.company_name, slug: vendor.slug }} />
+                  <VendorActions vendor={{ id: vendor.id, company_name: vendor.company_name, slug: vendor.slug }} isClaimed={!!vendor.user_id} />
                 </div>
               </div>
             </div>

@@ -7,7 +7,7 @@ import { PLANS } from '@/lib/stripe'
 const FAQS = [
   {
     q: 'How long does it take to get listed?',
-    a: 'Free listings are approved within 24 hours. Featured and Premium listings are approved within 2 hours and go live immediately after payment.',
+    a: 'Your business is likely already in our directory. Search for it and claim your listing in minutes. Once claimed and verified, your listing goes live immediately.',
   },
   {
     q: 'Can I upgrade or downgrade later?',
@@ -15,15 +15,19 @@ const FAQS = [
   },
   {
     q: 'What categories can I list in?',
-    a: 'We have 23 energy sector categories including Oil & Gas, Renewables, Solar & Wind, Battery Storage, Carbon & ESG, Power Generation, LNG & Gas Processing, Oilsands, Geothermal, Energy Trading & Finance, and more.',
+    a: 'We have 35 categories across energy and mining — including Oil & Gas, Renewables, Solar & Wind, Battery Storage, Carbon & ESG, Power Generation, LNG, Oilsands, Gold Mining, Copper & Base Metals, Uranium, Potash, Lithium & Battery Metals, Mining Services, and more.',
   },
   {
     q: 'Is there a contract?',
     a: 'No long-term contracts. Monthly plans are billed month-to-month. Annual plans save you ~17% vs monthly.',
   },
   {
-    q: 'How do I receive leads?',
-    a: 'Leads are sent directly to your email and stored in your vendor dashboard. Premium vendors get priority placement and receive more leads.',
+    q: 'How do I receive inquiries?',
+    a: 'Inquiries are sent directly to your email and stored in your vendor dashboard. Basic plans receive up to 10 inquiries/month. Featured plans receive unlimited inquiries.',
+  },
+  {
+    q: 'What is the verified badge?',
+    a: 'The verified badge confirms your company email domain matches your listed website. It builds buyer trust and is included with all paid plans.',
   },
 ]
 
