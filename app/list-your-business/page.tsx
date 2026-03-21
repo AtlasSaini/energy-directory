@@ -15,7 +15,7 @@ const FAQS = [
   },
   {
     q: 'What categories can I list in?',
-    a: 'We have 35 categories across energy and mining â€” including Oil & Gas, Renewables, Solar & Wind, Battery Storage, Carbon & ESG, Power Generation, LNG, Oilsands, Gold Mining, Copper & Base Metals, Uranium, Potash, Lithium & Battery Metals, Mining Services, and more.',
+    a: 'We have 35 categories across energy and mining — including Oil & Gas, Renewables, Solar & Wind, Battery Storage, Carbon & ESG, Power Generation, LNG, Oilsands, Gold Mining, Copper & Base Metals, Uranium, Potash, Lithium & Battery Metals, Mining Services, and more.',
   },
   {
     q: 'Is there a contract?',
@@ -47,7 +47,7 @@ export default function ListYourBusinessPage() {
             <span className="text-amber-400">EnergyDirectory.ca</span>
           </h1>
           <p className="text-gray-300 text-lg max-w-xl mx-auto">
-            Get discovered by buyers, project managers, and operators across Canada&apos;s full energy sector â€” Oil &amp; Gas, Renewables, Carbon &amp; ESG, Power Generation, Oilsands, Geothermal, LNG, and more. Start free â€” upgrade when you&apos;re ready.
+            Get discovered by buyers, project managers, and operators across Canada&apos;s full energy sector — Oil &amp; Gas, Renewables, Carbon &amp; ESG, Power Generation, Oilsands, Geothermal, LNG, and more. Start free — upgrade when you&apos;re ready.
           </p>
         </div>
       </section>
