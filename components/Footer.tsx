@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 
 export default function Footer() {
   return (
@@ -19,7 +19,7 @@ export default function Footer() {
               Canada&apos;s largest energy and mining directory. Connecting buyers with trusted suppliers across oil &amp; gas, renewables, and mining.
             </p>
             <p className="text-sm mt-3">
-              <a href="mailto:atlas.commandnode@gmail.com" className="hover:text-amber-400 transition-colors">Contact Us</a>
+              <a href="mailto:support@energydirectory.ca" className="hover:text-amber-400 transition-colors">Contact Us</a>
             </p>
           </div>
 
