@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'For Buyers — Find Energy Vendors Fast | EnergyDirectory.ca',
-  description: 'Browse Canada\'s largest energy vendor directory. Shortlist the best fits. Send one RFQ to multiple vendors at once — free, no account required.',
+  description: 'Browse Canada\'s largest energy vendor directory. Shortlist the best fits. Send one inquiry to multiple vendors at once — free, no account required.',
 }
 
 const CATEGORIES = [
@@ -33,7 +33,7 @@ export default function ForBuyersPage() {
           </h1>
           <p className="text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto mb-10">
             Browse Canada&apos;s largest energy vendor directory. Shortlist the best fits.
-            Send one RFQ to multiple vendors at once.
+            Send one inquiry to multiple vendors at once.
           </p>
           <Link
             href="/vendors"
@@ -45,7 +45,7 @@ export default function ForBuyersPage() {
       </section>
 
       {/* How it works */}
-      <section id="rfq" className="py-20 px-4 bg-white">
+      <section id="how-it-works" className="py-20 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <h2 className="text-3xl font-bold text-[#0a1628] mb-3">How It Works</h2>
@@ -68,8 +68,8 @@ export default function ForBuyersPage() {
               {
                 step: '03',
                 icon: '📨',
-                title: 'Send One RFQ to All',
-                desc: 'Fill out one request form. All shortlisted vendors receive it simultaneously. No phone tag, no email chains. Just results.',
+                title: 'Send One Inquiry to All',
+                desc: 'Fill out one form. All shortlisted vendors receive it simultaneously. No phone tag, no email chains. Just results.',
               },
             ].map((item) => (
               <div key={item.step} className="relative">
