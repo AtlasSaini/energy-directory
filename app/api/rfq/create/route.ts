@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase-server'
 
 interface RFQPayload {
   vendorIds: string[]
@@ -11,6 +12,14 @@ interface RFQPayload {
   province?: string
   timeline?: string
   message?: string
+}
+
+// Monthly inquiry limits by tier
+const INQUIRY_LIMITS: Record<string, number> = {
+  free: 5,
+  basic: 10,
+  featured: Infinity,
+  premium: Infinity,
 }
 
 export async function POST(req: NextRequest) {
@@ -49,10 +58,62 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Please enter a valid email address' }, { status: 400 })
     }
 
-    // Limit to 10 vendors
-    const limitedVendorIds = vendorIds.slice(0, 10)
-
     const supabase = createAdminClient()
+    const authClient = await createClient()
+    const { data: { user } } = await authClient.auth.getUser()
+
+    // Anonymous users must sign up to send inquiries
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Please create a free account to send inquiries.', code: 'auth_required' },
+        { status: 401 }
+      )
+    }
+
+    // Get the buyer's vendor profile to check their tier
+    const { data: buyerVendor } = await supabase
+      .from('vendors')
+      .select('tier, subscription_status')
+      .eq('user_id', user.id)
+      .single()
+
+    const tier = buyerVendor?.tier ?? 'free'
+    const limit = INQUIRY_LIMITS[tier] ?? 5
+
+    if (limit !== Infinity) {
+      // Count inquiries sent this month
+      const startOfMonth = new Date()
+      startOfMonth.setDate(1)
+      startOfMonth.setHours(0, 0, 0, 0)
+
+      const { count } = await supabase
+        .from('rfq_requests')
+        .select('id', { count: 'exact', head: true })
+        .eq('buyer_email', buyerEmail.trim().toLowerCase())
+        .gte('created_at', startOfMonth.toISOString())
+
+      const used = count ?? 0
+
+      if (used >= limit) {
+        const tierLabel = tier === 'free' ? 'Free' : tier.charAt(0).toUpperCase() + tier.slice(1)
+        const upgradeMsg = tier === 'free' || tier === 'basic'
+          ? ' Upgrade to send more.'
+          : ''
+        return NextResponse.json(
+          {
+            error: `You've reached your ${tierLabel} plan limit of ${limit} inquiries this month.${upgradeMsg}`,
+            code: 'limit_reached',
+            limit,
+            used,
+            tier,
+          },
+          { status: 429 }
+        )
+      }
+    }
+
+    // Limit to 10 vendors per submission
+    const limitedVendorIds = vendorIds.slice(0, 10)
 
     // Insert one RFQ row per vendor
     const rows = limitedVendorIds.map((vendorId) => ({

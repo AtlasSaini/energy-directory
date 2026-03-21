@@ -52,6 +52,8 @@ export default function RFQModal({ vendors, onClose }: RFQModalProps) {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
+  const [authRequired, setAuthRequired] = useState(false)
+  const [limitReached, setLimitReached] = useState<{limit: number; tier: string} | null>(null)
 
   // Close on escape
   useEffect(() => {
@@ -92,6 +94,14 @@ export default function RFQModal({ vendors, onClose }: RFQModalProps) {
       const data = await res.json()
 
       if (!res.ok) {
+        if (data.code === 'auth_required') {
+          setAuthRequired(true)
+          return
+        }
+        if (data.code === 'limit_reached') {
+          setLimitReached({ limit: data.limit, tier: data.tier })
+          return
+        }
         setError(data.error || 'Failed to submit. Please try again.')
         return
       }
@@ -166,6 +176,58 @@ export default function RFQModal({ vendors, onClose }: RFQModalProps) {
                 onClick={onClose}
                 className="mt-6 bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold px-6 py-2.5 rounded-lg transition-colors text-sm"
               >
+                Close
+              </button>
+            </div>
+          ) : authRequired ? (
+            <div className="text-center py-8">
+              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-[#0a1628] mb-2">Create a Free Account</h3>
+              <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                A free account is required to send inquiries. It takes less than a minute.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <a
+                  href="/auth/signup"
+                  className="bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold px-6 py-2.5 rounded-lg transition-colors text-sm text-center"
+                >
+                  Create Free Account
+                </a>
+                <a
+                  href="/auth/login"
+                  className="border border-gray-300 hover:border-gray-400 text-gray-700 font-medium px-6 py-2.5 rounded-lg transition-colors text-sm text-center"
+                >
+                  Sign In
+                </a>
+              </div>
+            </div>
+          ) : limitReached ? (
+            <div className="text-center py-8">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-[#0a1628] mb-2">Monthly Limit Reached</h3>
+              <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                You've used all {limitReached.limit} inquiries on your {limitReached.tier} plan this month.
+                {limitReached.tier !== 'featured' && limitReached.tier !== 'premium' && (
+                  <> Upgrade to send more.</>
+                )}
+              </p>
+              {limitReached.tier !== 'featured' && limitReached.tier !== 'premium' && (
+                <a
+                  href="/list-your-business"
+                  className="bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold px-6 py-2.5 rounded-lg transition-colors text-sm inline-block"
+                >
+                  View Plans
+                </a>
+              )}
+              <button onClick={onClose} className="mt-3 block mx-auto text-sm text-gray-500 hover:text-gray-700">
                 Close
               </button>
             </div>

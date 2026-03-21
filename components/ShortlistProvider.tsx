@@ -15,6 +15,7 @@ interface ShortlistContextType {
   removeFromShortlist: (vendorId: string) => void
   clearShortlist: () => void
   isInShortlist: (vendorId: string) => boolean
+  isAtAnonLimit: () => boolean
   openDrawer: () => void
   drawerOpen: boolean
   setDrawerOpen: (open: boolean) => void
@@ -24,12 +25,28 @@ const ShortlistContext = createContext<ShortlistContextType | null>(null)
 
 const STORAGE_KEY = 'energydirectory_shortlist'
 const MAX_SHORTLIST = 10
+const MAX_SHORTLIST_ANON = 3
 
 export function ShortlistProvider({ children }: { children: ReactNode }) {
   const [shortlist, setShortlist] = useState<ShortlistVendor[]>([])
   const [hydrated, setHydrated] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const openDrawer = useCallback(() => setDrawerOpen(true), [])
+
+  // Check auth state
+  useEffect(() => {
+    import('@/lib/supabase-browser').then(({ createClient }) => {
+      const supabase = createClient()
+      supabase.auth.getUser().then(({ data: { user } }) => {
+        setIsLoggedIn(!!user)
+      })
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        setIsLoggedIn(!!session?.user)
+      })
+      return () => subscription.unsubscribe()
+    })
+  }, [])
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -55,16 +72,21 @@ export function ShortlistProvider({ children }: { children: ReactNode }) {
     }
   }, [shortlist, hydrated])
 
+  const isAtAnonLimit = useCallback(() => {
+    return !isLoggedIn && shortlist.length >= MAX_SHORTLIST_ANON
+  }, [isLoggedIn, shortlist.length])
+
   const addToShortlist = useCallback((vendor: ShortlistVendor) => {
     setShortlist((prev) => {
-      if (prev.length >= MAX_SHORTLIST) return prev
+      const effectiveMax = isLoggedIn ? MAX_SHORTLIST : MAX_SHORTLIST_ANON
+      if (prev.length >= effectiveMax) return prev
       if (prev.some((v) => v.id === vendor.id)) return prev
       const next = [...prev, vendor]
       // Auto-open drawer when first vendor is added
       if (prev.length === 0) setTimeout(() => setDrawerOpen(true), 100)
       return next
     })
-  }, [])
+  }, [isLoggedIn])
 
   const removeFromShortlist = useCallback((vendorId: string) => {
     setShortlist((prev) => prev.filter((v) => v.id !== vendorId))
@@ -85,6 +107,7 @@ export function ShortlistProvider({ children }: { children: ReactNode }) {
       removeFromShortlist,
       clearShortlist,
       isInShortlist,
+      isAtAnonLimit,
       openDrawer,
       drawerOpen,
       setDrawerOpen,
