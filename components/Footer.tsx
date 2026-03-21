@@ -16,7 +16,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm leading-relaxed max-w-xs">
-              Canada&apos;s largest energy and mining vendor directory. Connecting buyers with trusted suppliers across oil &amp; gas, renewables, and mining.
+              Canada&apos;s largest energy and mining directory. Connecting buyers with trusted suppliers across oil &amp; gas, renewables, and mining.
             </p>
             <p className="text-sm mt-3">
               <a href="mailto:atlas.commandnode@gmail.com" className="hover:text-amber-400 transition-colors">Contact Us</a>
