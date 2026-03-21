@@ -9,6 +9,13 @@ const PROVINCES = [
   'AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'NT', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT',
 ]
 
+type Category = {
+  id: string
+  name: string
+  slug: string
+  sector?: string
+}
+
 type Vendor = {
   id: string
   company_name: string
@@ -47,6 +54,13 @@ export default function DashboardPage() {
   const [saving, setSaving] = useState(false)
   const [saveSuccess, setSaveSuccess] = useState(false)
   const [saveError, setSaveError] = useState('')
+
+  // Category picker state
+  const [allCategories, setAllCategories] = useState<Category[]>([])
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([])
+  const [savingCategories, setSavingCategories] = useState(false)
+  const [categorySaveSuccess, setCategorySaveSuccess] = useState(false)
+  const [categorySaveError, setCategorySaveError] = useState('')
 
   const [form, setForm] = useState({
     description: '',
@@ -88,6 +102,17 @@ export default function DashboardPage() {
       province: vendorData.province ?? '',
     })
 
+    // Load categories
+    const { data: cats } = await supabase.from('categories').select('id, name, slug, sector').order('name')
+    setAllCategories((cats as Category[]) || [])
+
+    // Load current category selections
+    const catRes = await fetch('/api/vendor/categories')
+    if (catRes.ok) {
+      const { categoryIds } = await catRes.json()
+      setSelectedCategoryIds(categoryIds || [])
+    }
+
     setLoading(false)
   }, [router])
 
@@ -120,6 +145,41 @@ export default function DashboardPage() {
 
     // Update local state
     setVendor((v) => v ? { ...v, ...form } : v)
+  }
+
+  async function handleSaveCategories() {
+    if (selectedCategoryIds.length === 0) {
+      setCategorySaveError('Please select at least 1 category.')
+      return
+    }
+    setSavingCategories(true)
+    setCategorySaveSuccess(false)
+    setCategorySaveError('')
+
+    const res = await fetch('/api/vendor/categories', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ categoryIds: selectedCategoryIds }),
+    })
+
+    const data = await res.json()
+    setSavingCategories(false)
+
+    if (!res.ok) {
+      setCategorySaveError(data.error ?? 'Failed to save categories')
+      return
+    }
+
+    setCategorySaveSuccess(true)
+    setTimeout(() => setCategorySaveSuccess(false), 3000)
+  }
+
+  function toggleCategory(id: string) {
+    setSelectedCategoryIds(prev => {
+      if (prev.includes(id)) return prev.filter(c => c !== id)
+      if (prev.length >= 2) return prev // max 2
+      return [...prev, id]
+    })
   }
 
   async function handleSignOut() {
@@ -298,6 +358,78 @@ export default function DashboardPage() {
                 {saving ? 'Saving…' : 'Save Changes'}
               </button>
             </form>
+          </div>
+
+          {/* Category picker */}
+          <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-1">Your Categories</h2>
+            <p className="text-sm text-gray-500 mb-4">Select up to 2 categories that best describe your business. <span className="font-medium text-amber-600">{selectedCategoryIds.length}/2 selected</span></p>
+
+            {categorySaveError && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{categorySaveError}</div>
+            )}
+            {categorySaveSuccess && (
+              <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">✓ Categories saved</div>
+            )}
+
+            {/* Energy categories */}
+            {allCategories.filter(c => c.sector !== 'mining').length > 0 && (
+              <div className="mb-4">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">⚡ Energy</p>
+                <div className="flex flex-wrap gap-2">
+                  {allCategories.filter(c => c.sector !== 'mining').map(cat => (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => toggleCategory(cat.id)}
+                      className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
+                        selectedCategoryIds.includes(cat.id)
+                          ? 'bg-amber-500 border-amber-500 text-[#0a1628] font-semibold'
+                          : selectedCategoryIds.length >= 2
+                          ? 'bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed'
+                          : 'bg-white border-gray-200 text-gray-600 hover:border-amber-300 hover:text-amber-700'
+                      }`}
+                    >
+                      {cat.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Mining categories */}
+            {allCategories.filter(c => c.sector === 'mining').length > 0 && (
+              <div className="mb-4">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">⛏️ Mining</p>
+                <div className="flex flex-wrap gap-2">
+                  {allCategories.filter(c => c.sector === 'mining').map(cat => (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => toggleCategory(cat.id)}
+                      className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
+                        selectedCategoryIds.includes(cat.id)
+                          ? 'bg-amber-500 border-amber-500 text-[#0a1628] font-semibold'
+                          : selectedCategoryIds.length >= 2
+                          ? 'bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed'
+                          : 'bg-white border-gray-200 text-gray-600 hover:border-amber-300 hover:text-amber-700'
+                      }`}
+                    >
+                      {cat.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <button
+              type="button"
+              onClick={handleSaveCategories}
+              disabled={savingCategories || selectedCategoryIds.length === 0}
+              className="mt-2 bg-amber-500 hover:bg-amber-400 disabled:bg-amber-300 text-[#0a1628] font-semibold px-6 py-2.5 rounded-lg transition-colors text-sm"
+            >
+              {savingCategories ? 'Saving…' : 'Save Categories'}
+            </button>
           </div>
 
           {/* Subscription panel */}
