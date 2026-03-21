@@ -90,8 +90,8 @@ export default function ListYourBusinessPage() {
           </p>
           <p className="text-center text-gray-400 text-sm mt-4">
             Cancel anytime. Questions? Email{' '}
-            <a href="mailto:hello@energydirectory.ca" className="text-amber-600 hover:text-amber-500">
-              hello@energydirectory.ca
+            <a href="mailto:support@energydirectory.ca" className="text-amber-600 hover:text-amber-500">
+              support@energydirectory.ca
             </a>
           </p>
         </div>
