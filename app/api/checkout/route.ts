@@ -1,9 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 
+const PRICE_MAP: Record<string, { monthly: string; annual: string }> = {
+  basic: {
+    monthly: process.env.STRIPE_PRICE_BASIC_MONTHLY || '',
+    annual: process.env.STRIPE_PRICE_BASIC_ANNUAL || '',
+  },
+  featured: {
+    monthly: process.env.STRIPE_PRICE_FEATURED_MONTHLY || '',
+    annual: process.env.STRIPE_PRICE_FEATURED_ANNUAL || '',
+  },
+  premium: {
+    monthly: process.env.STRIPE_PRICE_PREMIUM_MONTHLY || '',
+    annual: process.env.STRIPE_PRICE_PREMIUM_ANNUAL || '',
+  },
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const { priceId, vendorId } = await req.json()
+    const { priceId: rawPriceId, plan, billing, vendorId } = await req.json()
+
+    // Support both legacy priceId and new plan+billing approach
+    let priceId = rawPriceId
+    if (!priceId && plan && billing) {
+      priceId = PRICE_MAP[plan]?.[billing]
+    }
 
     if (!priceId) {
       return NextResponse.json({ error: 'Price ID required' }, { status: 400 })

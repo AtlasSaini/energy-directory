@@ -4,6 +4,7 @@
 export const PLANS = {
   free: {
     name: 'Free',
+    planKey: undefined,
     price: { monthly: 0, annual: 0 },
     features: [
       'Unclaimed listing visible in directory',
@@ -15,6 +16,7 @@ export const PLANS = {
   },
   basic: {
     name: 'Basic',
+    planKey: 'basic',
     price: { monthly: 19, annual: 190 },
     features: [
       'Claim & manage your listing',
@@ -28,6 +30,7 @@ export const PLANS = {
   },
   featured: {
     name: 'Featured',
+    planKey: 'featured',
     price: { monthly: 49, annual: 490 },
     features: [
       'Everything in Basic',
@@ -42,6 +45,7 @@ export const PLANS = {
   },
   premium: {
     name: 'Premium',
+    planKey: 'premium',
     price: { monthly: 99, annual: 990 },
     features: [
       'Everything in Featured',

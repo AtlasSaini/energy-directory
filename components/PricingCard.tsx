@@ -1,14 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface PricingPlan {
   name: string
+  planKey?: string
   price: { monthly: number; annual: number }
   features: string[]
   cta: string
   highlighted: boolean
-  priceId?: { monthly: string; annual: string }
 }
 
 interface PricingCardProps {
@@ -18,22 +19,29 @@ interface PricingCardProps {
 
 export default function PricingCard({ plan, billing }: PricingCardProps) {
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
   const price = plan.price[billing]
   const annualMonthly = billing === 'annual' && price > 0 ? Math.round(price / 12) : null
 
-  const handleCheckout = async () => {
-    if (!plan.priceId) return
+  const handleClick = async () => {
+    // Free plan — go to claim flow
+    if (price === 0 || !plan.planKey) {
+      router.push('/vendors')
+      return
+    }
+
     setLoading(true)
     try {
-      const priceId = plan.priceId[billing]
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ priceId }),
+        body: JSON.stringify({ plan: plan.planKey, billing }),
       })
       const data = await res.json()
       if (data.url) {
         window.location.href = data.url
+      } else {
+        console.error('Checkout error:', data.error)
       }
     } catch (err) {
       console.error('Checkout error:', err)
@@ -95,13 +103,11 @@ export default function PricingCard({ plan, billing }: PricingCardProps) {
       </ul>
 
       <button
-        onClick={handleCheckout}
+        onClick={handleClick}
         disabled={loading}
         className={`w-full py-3 px-6 rounded-xl font-semibold text-sm transition-all disabled:opacity-60 ${
           plan.highlighted
             ? 'bg-amber-500 hover:bg-amber-400 text-[#0a1628]'
-            : plan.name === 'Free'
-            ? 'bg-[#0a1628] hover:bg-[#0d1f3c] text-white'
             : 'bg-[#0a1628] hover:bg-[#0d1f3c] text-white'
         }`}
       >
