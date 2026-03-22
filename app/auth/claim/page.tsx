@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase-browser'
-import { extractDomain } from '@/lib/free-email-domains'
+import { extractDomain, isFreeEmailDomain } from '@/lib/free-email-domains'
 
 type Vendor = {
   id: string
@@ -37,9 +37,9 @@ export default function ClaimPage() {
     }
     setUser({ id: authUser.id, email: authUser.email ?? '' })
 
-    // Auto-match by domain
+    // Auto-match by domain (skip free/personal email providers — they'd false-match vendor websites)
     const domain = extractDomain(authUser.email ?? '')
-    if (domain) {
+    if (domain && !isFreeEmailDomain(authUser.email ?? '')) {
       const { data: matches } = await supabase
         .from('vendors')
         .select('id, company_name, slug, city, province, website, tier, user_id')
