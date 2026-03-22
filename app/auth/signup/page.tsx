@@ -109,6 +109,7 @@ export default function SignupPage() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex mb-6">
             <Image src="/logo/logo-medium-light.svg" alt="Energy Directory" width={160} height={43} />
+          </Link>
           <h1 className="text-2xl font-bold text-gray-900">Create your account</h1>
           <p className="text-gray-500 mt-1 text-sm">
             Use your company email to verify your business
