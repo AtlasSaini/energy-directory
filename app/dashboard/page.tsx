@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase-browser'
 
 const PROVINCES = [
@@ -218,13 +219,13 @@ export default function DashboardPage() {
       {/* Top bar */}
       <div className="bg-[#0a1628] text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-amber-500 rounded-full flex items-center justify-center">
-              <span className="text-[#0a1628] font-bold text-xs">⚡</span>
-            </div>
-            <span className="font-bold text-sm">
-              Energy<span className="text-amber-400">Directory</span>.ca
-            </span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo/logo-medium-dark.svg"
+              alt="Energy Directory"
+              width={160}
+              height={43}
+            />
           </Link>
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-400 hidden sm:block">{userEmail}</span>

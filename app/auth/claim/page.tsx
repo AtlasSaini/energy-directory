@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase-browser'
 import { extractDomain, isFreeEmailDomain } from '@/lib/free-email-domains'
 
@@ -148,13 +149,8 @@ export default function ClaimPage() {
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center">
-              <span className="text-[#0a1628] font-bold text-sm">⚡</span>
-            </div>
-            <span className="font-bold text-lg text-[#0a1628]">
-              Energy<span className="text-amber-500">Directory</span>.ca
-            </span>
+          <Link href="/" className="inline-flex mb-6">
+            <Image src="/logo/logo-medium-light.svg" alt="Energy Directory" width={160} height={43} />
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">Claim Your Listing</h1>
           <p className="text-gray-500 mt-1 text-sm">

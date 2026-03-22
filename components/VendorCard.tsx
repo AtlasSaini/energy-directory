@@ -8,7 +8,7 @@ interface VendorCardProps {
 
 const TIER_BADGES = {
   premium: { label: 'Premium', classes: 'bg-amber-100 text-amber-800 border border-amber-300' },
-  featured: { label: 'Featured', classes: 'bg-blue-100 text-blue-800 border border-blue-200' },
+  featured: { label: '⭐ Featured', classes: 'bg-amber-500 text-[#0a1628] border border-amber-400 font-semibold' },
   free: { label: null, classes: '' },
 }
 
@@ -25,7 +25,7 @@ export default function VendorCard({ vendor }: VendorCardProps) {
 
   return (
     <Link href={`/vendors/${vendor.slug}`}>
-      <div className={`bg-white rounded-xl border transition-all hover:shadow-md h-full flex flex-col ${isPremium ? 'border-amber-300 shadow-amber-50 shadow-sm' : isFeatured ? 'border-blue-200' : 'border-gray-200'}`}>
+      <div className={`rounded-xl border transition-all hover:shadow-lg h-full flex flex-col ${isPremium ? 'bg-white border-amber-300 shadow-amber-50 shadow-sm' : isFeatured ? 'bg-amber-50 border-amber-300 shadow-amber-100 shadow-md ring-1 ring-amber-200' : 'bg-white border-gray-200 hover:shadow-md'}`}>
         {/* Banner */}
         {vendor.banner_url ? (
           <div className="h-24 rounded-t-xl overflow-hidden">

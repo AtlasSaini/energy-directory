@@ -1,4 +1,5 @@
 ﻿import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Footer() {
   return (
@@ -7,13 +8,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 bg-amber-500 rounded-full flex items-center justify-center">
-                <span className="text-[#0a1628] font-bold text-xs">⚡</span>
-              </div>
-              <span className="font-bold text-white">
-                Energy<span className="text-amber-400">Directory</span>.ca
-              </span>
+            <div className="mb-3">
+              <Image
+                src="/logo/logo-medium-dark.svg"
+                alt="Energy Directory"
+                width={160}
+                height={43}
+              />
             </div>
             <p className="text-sm leading-relaxed max-w-xs">
               Canada&apos;s largest energy and mining directory. Connecting buyers with trusted suppliers across oil &amp; gas, renewables, and mining.
@@ -29,7 +30,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/vendors" className="hover:text-amber-400 transition-colors">All Vendors</Link></li>
               <li><Link href="/vendors?tier=featured" className="hover:text-amber-400 transition-colors">Featured Vendors</Link></li>
-              <li><Link href="/vendors?tier=premium" className="hover:text-amber-400 transition-colors">Premium Vendors</Link></li>
+              {/* Premium Vendors link hidden until Premium tier launches */}
             </ul>
           </div>
 
