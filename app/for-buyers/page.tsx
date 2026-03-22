@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { createClient } from '@/lib/supabase-server'
+import { createAdminClient } from '@/lib/supabase'
 
 export const metadata: Metadata = {
   title: 'For Buyers — Find Energy Vendors Fast | EnergyDirectory.ca',
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 async function getCategoryCount(): Promise<number> {
   try {
-    const supabase = createClient()
+    const supabase = createAdminClient()
     const { count } = await supabase.from('categories').select('*', { count: 'exact', head: true })
     return count ?? 35
   } catch {
@@ -148,12 +148,29 @@ export default async function ForBuyersPage() {
                 <div className="text-sm font-semibold">Send an Inquiry</div>
               </div>
               <div className="space-y-2">
-                <div className="h-8 bg-gray-100 rounded-lg" />
-                <div className="h-8 bg-gray-100 rounded-lg" />
-                <div className="h-16 bg-gray-100 rounded-lg" />
+                {[{ label: 'Your Name', ph: 'Jane Smith' }, { label: 'Email Address', ph: 'jane@company.com' }].map(f => (
+                  <div key={f.label}>
+                    <div className="text-xs text-gray-500 mb-1 font-medium">{f.label}</div>
+                    <div className="h-8 bg-gray-100 rounded-lg flex items-center px-3">
+                      <span className="text-xs text-gray-400">{f.ph}</span>
+                    </div>
+                  </div>
+                ))}
+                <div>
+                  <div className="text-xs text-gray-500 mb-1 font-medium">What do you need?</div>
+                  <div className="h-16 bg-gray-100 rounded-lg flex items-start px-3 pt-2">
+                    <span className="text-xs text-gray-400">Describe the service or project…</span>
+                  </div>
+                </div>
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="h-8 bg-gray-100 rounded-lg" />
-                  <div className="h-8 bg-gray-100 rounded-lg" />
+                  {[{ label: 'Province', ph: 'Alberta' }, { label: 'Timeline', ph: 'Q2 2026' }].map(f => (
+                    <div key={f.label}>
+                      <div className="text-xs text-gray-500 mb-1 font-medium">{f.label}</div>
+                      <div className="h-8 bg-gray-100 rounded-lg flex items-center px-3">
+                        <span className="text-xs text-gray-400">{f.ph}</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
                 <div className="h-10 bg-amber-500 rounded-lg flex items-center justify-center">
                   <span className="text-[#0a1628] text-xs font-bold">Send Request to 3 Vendors</span>

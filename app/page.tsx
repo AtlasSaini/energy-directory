@@ -13,7 +13,7 @@ async function getHomeData() {
       .from('vendors')
       .select('*')
       .eq('active', true)
-      .in('tier', ['featured', 'premium'])
+      .in('tier', ['featured'])
       .limit(8),
     supabase
       .from('vendors')
@@ -120,7 +120,7 @@ export default async function HomePage() {
             <div className="flex items-center justify-between mb-8">
               <div>
                 <h2 className="text-2xl font-bold text-[#0a1628]">Featured Vendors</h2>
-                <p className="text-gray-500 text-sm mt-1">Verified, premium energy suppliers</p>
+                <p className="text-gray-500 text-sm mt-1">Top-rated Canadian energy suppliers</p>
               </div>
               <Link href="/vendors?tier=featured" className="text-amber-600 hover:text-amber-500 font-medium text-sm">
                 View all →

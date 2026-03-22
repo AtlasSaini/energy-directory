@@ -81,6 +81,13 @@ export default function DashboardPage() {
 
     setUserEmail(user.email ?? '')
 
+    // Admin users go straight to /admin — they don't have vendor listings
+    const adminCheck = await fetch('/api/auth/is-admin')
+    if (adminCheck.ok) {
+      const { isAdmin } = await adminCheck.json()
+      if (isAdmin) { router.push('/admin'); return }
+    }
+
     const { data: vendorData } = await supabase
       .from('vendors')
       .select('id, company_name, slug, description, website, phone, email, city, province, tier, verified, subscription_status, subscription_expires_at, stripe_customer_id, views')
