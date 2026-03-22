@@ -15,7 +15,7 @@ const FAQS = [
   },
   {
     q: 'What categories can I list in?',
-    a: 'We have 35 categories across energy and mining - including Oil & Gas, Renewables, Solar & Wind, Battery Storage, Carbon & ESG, Power Generation, LNG, Oilsands, Gold Mining, Copper & Base Metals, Uranium, Potash, Lithium & Battery Metals, Mining Services, and more.',
+    a: 'We have 36 categories across energy and mining - including Exploration & Production, Oil & Gas, Renewables, Solar & Wind, Battery Storage, Carbon & ESG, Power Generation, LNG, Oilsands, Gold Mining, Copper & Base Metals, Uranium, Potash, Lithium & Battery Metals, Mining Services, and more.',
   },
   {
     q: 'Is there a contract?',
