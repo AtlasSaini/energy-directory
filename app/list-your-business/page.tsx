@@ -97,6 +97,35 @@ export default function ListYourBusinessPage() {
         </div>
       </section>
 
+      {/* Premium value section */}
+      <section className="py-14 px-4 bg-[#0a1628] text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-block bg-amber-500 text-[#0a1628] text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wide">Premium</div>
+          <h2 className="text-2xl font-bold mb-3">Maximum Visibility. Measurable Results.</h2>
+          <p className="text-gray-300 mb-10 max-w-xl mx-auto text-sm">
+            Premium puts you at the top — homepage featured placement, priority search results, and a full analytics dashboard so you can see exactly who&apos;s looking at your listing.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
+            <div className="bg-white/5 rounded-xl p-6 border border-white/10">
+              <div className="text-2xl mb-3">🏆</div>
+              <h3 className="font-semibold mb-2 text-amber-400">Top of Every List</h3>
+              <p className="text-gray-400 text-sm">Your listing appears above Featured and Basic vendors in search results and category pages. Buyers see you first.</p>
+            </div>
+            <div className="bg-white/5 rounded-xl p-6 border border-white/10">
+              <div className="text-2xl mb-3">🏠</div>
+              <h3 className="font-semibold mb-2 text-amber-400">Homepage Placement</h3>
+              <p className="text-gray-400 text-sm">Featured on the EnergyDirectory.ca homepage — visible to every buyer who visits the site, not just those searching your category.</p>
+            </div>
+            <div className="bg-white/5 rounded-xl p-6 border border-white/10">
+              <div className="text-2xl mb-3">📊</div>
+              <h3 className="font-semibold mb-2 text-amber-400">Analytics Dashboard</h3>
+              <p className="text-gray-400 text-sm">See profile views, inquiry volume, and search appearances. Export your leads to CSV. Know exactly what&apos;s working.</p>
+            </div>
+          </div>
+          <p className="text-gray-500 text-xs mt-8">Premium is available by invitation during our launch period. <a href="mailto:support@energydirectory.ca" className="text-amber-400 hover:text-amber-300">Contact us</a> to learn more.</p>
+        </div>
+      </section>
+
       {/* Trust signals */}
       <section className="py-12 px-4 bg-white border-y border-gray-200">
         <div className="max-w-4xl mx-auto">
