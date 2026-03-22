@@ -218,7 +218,6 @@ export default async function VendorsPage({
               <div className="space-y-1.5">
                 {[
                   { value: '', label: 'All Vendors' },
-                  { value: 'premium', label: '⭐ Premium' },
                   { value: 'featured', label: '✨ Featured' },
                 ].map(({ value, label }) => (
                   <Link

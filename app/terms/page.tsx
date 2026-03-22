@@ -72,7 +72,7 @@ export default function TermsPage() {
 
         <section>
           <h2 className="text-lg font-semibold text-[#0a1628] mb-2">5. Paid Subscriptions</h2>
-          <p>We offer Basic, Featured, and Premium listing plans on a monthly or annual subscription basis.</p>
+          <p>We offer Basic and Featured listing plans on a monthly or annual subscription basis.</p>
 
           <p className="mt-3 font-medium text-gray-800">Billing and Taxes</p>
           <ul className="list-disc pl-5 mt-1 space-y-1">

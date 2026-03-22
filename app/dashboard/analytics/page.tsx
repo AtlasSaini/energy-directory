@@ -237,27 +237,27 @@ export default function AnalyticsDashboardPage() {
         </div>
 
         {/* Non-premium gate */}
-        {vendor.tier !== 'premium' && (
+        {!['featured', 'premium'].includes(vendor.tier) && (
           <div className="bg-white border border-amber-200 rounded-2xl p-8 text-center shadow-sm">
             <div className="text-4xl mb-4">📊</div>
             <h2 className="text-xl font-bold text-[#0a1628] mb-2">
-              Analytics are available on Premium
+              Analytics are available on Featured
             </h2>
             <p className="text-gray-600 mb-6 max-w-md mx-auto">
-              Upgrade to Premium to unlock your analytics dashboard — see how many people are
+              Upgrade to Featured to unlock your analytics dashboard — see how many people are
               finding and viewing your listing, and get actionable tips to grow faster.
             </p>
             <Link
               href="/list-your-business"
               className="inline-block bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold px-6 py-3 rounded-xl transition-colors"
             >
-              Upgrade to Premium — $79/mo →
+              Upgrade to Featured — $49/mo →
             </Link>
           </div>
         )}
 
-        {/* Premium analytics */}
-        {vendor.tier === 'premium' && (
+        {/* Featured/Premium analytics */}
+        {['featured', 'premium'].includes(vendor.tier) && (
           <>
             {/* Always-visible listing status bar */}
             <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">

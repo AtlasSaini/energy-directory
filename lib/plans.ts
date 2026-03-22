@@ -43,20 +43,8 @@ export const PLANS = {
     cta: 'Get Featured',
     highlighted: true,
   },
-  premium: {
-    name: 'Premium',
-    planKey: 'premium',
-    price: { monthly: 99, annual: 990 },
-    features: [
-      'Everything in Featured',
-      'Homepage featured placement',
-      'Top of category results',
-      'Leads export (CSV)',
-      'Priority support',
-    ],
-    cta: 'Go Premium',
-    highlighted: false,
-  },
+  // Premium is shelved until traffic justifies it — do not expose publicly
+  // premium: { ... }
 }
 
 export type PlanKey = keyof typeof PLANS

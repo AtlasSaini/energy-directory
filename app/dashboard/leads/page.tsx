@@ -129,7 +129,7 @@ export default function LeadsPage() {
     )
   }
 
-  const isPremium = vendor?.tier === 'premium'
+  const isPremium = vendor?.tier === 'premium' || vendor?.tier === 'featured'
   const newCount = leads.filter((l) => l.status === 'new').length
 
   if (loading) {
@@ -192,7 +192,7 @@ export default function LeadsPage() {
             <div className="flex items-center gap-3">
               <span className="text-2xl">⭐</span>
               <div>
-                <p className="font-semibold text-sm">Upgrade to Premium for full lead details</p>
+                <p className="font-semibold text-sm">Upgrade to Featured for full lead details</p>
                 <p className="text-gray-300 text-xs mt-0.5">See buyer email, phone, and full message. Respond directly.</p>
               </div>
             </div>

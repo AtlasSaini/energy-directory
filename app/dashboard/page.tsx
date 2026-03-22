@@ -485,19 +485,7 @@ export default function DashboardPage() {
                 </div>
               )}
 
-              {vendor.tier === 'featured' && (
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <p className="text-sm text-gray-600 mb-3">
-                    Upgrade to Premium for maximum visibility and full lead capture.
-                  </p>
-                  <Link
-                    href="/list-your-business"
-                    className="block w-full text-center bg-purple-600 hover:bg-purple-500 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors"
-                  >
-                    Upgrade to Premium ↑
-                  </Link>
-                </div>
-              )}
+              {/* Premium upsell hidden until traffic justifies it */}
             </div>
 
             {/* Analytics card */}
@@ -524,13 +512,13 @@ export default function DashboardPage() {
                   <h2 className="text-base font-semibold text-gray-900">Analytics</h2>
                 </div>
                 <p className="text-gray-500 text-sm mb-4">
-                  Unlock your analytics dashboard with Premium — see views, search appearances, and category ranking.
+                  Analytics are available on Featured and above — see views, search appearances, and category ranking.
                 </p>
                 <Link
                   href="/list-your-business"
                   className="block w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 rounded-lg text-sm transition-colors"
                 >
-                  Upgrade to unlock →
+                  Upgrade to Featured →
                 </Link>
               </div>
             )}
