@@ -1,41 +1,18 @@
-﻿'use client'
+import { createAdminClient } from '@/lib/supabase'
+import ListYourBusinessClient from '@/components/ListYourBusinessClient'
 
-import { useState } from 'react'
-import PricingCard from '@/components/PricingCard'
-import { PLANS } from '@/lib/plans'
+export const revalidate = 3600 // re-fetch category count at most once per hour
 
-const FAQS = [
-  {
-    q: 'How long does it take to get listed?',
-    a: 'Your business is likely already in our directory. Search for it and claim your listing in minutes. Once claimed and verified, your listing goes live immediately.',
-  },
-  {
-    q: 'Can I upgrade or downgrade later?',
-    a: 'Yes, you can upgrade or downgrade your plan at any time. Changes take effect at the start of your next billing cycle.',
-  },
-  {
-    q: 'What categories can I list in?',
-    a: 'We have 36 categories across energy and mining - including Exploration & Production, Oil & Gas, Renewables, Solar & Wind, Battery Storage, Carbon & ESG, Power Generation, LNG, Oilsands, Gold Mining, Copper & Base Metals, Uranium, Potash, Lithium & Battery Metals, Mining Services, and more.',
-  },
-  {
-    q: 'Is there a contract?',
-    a: 'No long-term contracts. Monthly plans are billed month-to-month. Annual plans save you ~17% vs monthly.',
-  },
-  {
-    q: 'How do I receive inquiries?',
-    a: 'Inquiries are sent directly to your email and stored in your vendor dashboard. Basic plans receive up to 10 inquiries/month. Featured plans receive unlimited inquiries.',
-  },
-  {
-    q: 'What is the verified badge?',
-    a: 'The verified badge confirms your company email domain matches your listed website. It builds buyer trust and is included with all paid plans.',
-  },
-]
+async function getCategoryCount() {
+  const supabase = createAdminClient()
+  const { count } = await supabase
+    .from('categories')
+    .select('*', { count: 'exact', head: true })
+  return count ?? 0
+}
 
-export default function ListYourBusinessPage() {
-  const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly')
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
-
-  const plans = Object.values(PLANS)
+export default async function ListYourBusinessPage() {
+  const categoryCount = await getCategoryCount()
 
   return (
     <div>
@@ -52,128 +29,7 @@ export default function ListYourBusinessPage() {
         </div>
       </section>
 
-      {/* Pricing */}
-      <section className="py-16 px-4" id="pricing">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold text-[#0a1628] mb-4">Choose Your Plan</h2>
-
-            {/* Billing toggle */}
-            <div className="inline-flex items-center bg-gray-100 rounded-xl p-1 gap-1">
-              <button
-                onClick={() => setBilling('monthly')}
-                className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${billing === 'monthly' ? 'bg-white text-[#0a1628] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-              >
-                Monthly
-              </button>
-              <button
-                onClick={() => setBilling('annual')}
-                className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${billing === 'annual' ? 'bg-white text-[#0a1628] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-              >
-                Annual
-                <span className="ml-1.5 bg-green-100 text-green-700 text-xs px-1.5 py-0.5 rounded-full">Save 17%</span>
-              </button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch py-6">
-            {plans.map((plan) => (
-              <PricingCard key={plan.name} plan={plan} billing={billing} />
-            ))}
-          </div>
-
-          <p className="text-center text-gray-500 text-sm mt-6 font-medium">
-            All prices in CAD. 5% GST will be added at checkout.
-          </p>
-          <p className="text-center text-gray-400 text-xs mt-1">
-            GST# 738605831 RT0001
-          </p>
-          <p className="text-center text-gray-400 text-sm mt-4">
-            Cancel anytime. Questions? Email{' '}
-            <a href="mailto:support@energydirectory.ca" className="text-amber-600 hover:text-amber-500">
-              support@energydirectory.ca
-            </a>
-          </p>
-        </div>
-      </section>
-
-      {/* Premium value section */}
-      <section className="py-14 px-4 bg-[#0a1628] text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block bg-amber-500 text-[#0a1628] text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wide">Premium</div>
-          <h2 className="text-2xl font-bold mb-3">Maximum Visibility. Measurable Results.</h2>
-          <p className="text-gray-300 mb-10 max-w-xl mx-auto text-sm">
-            Premium puts you at the top — homepage featured placement, priority search results, and a full analytics dashboard so you can see exactly who&apos;s looking at your listing.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
-            <div className="bg-white/5 rounded-xl p-6 border border-white/10">
-              <div className="text-2xl mb-3">🏆</div>
-              <h3 className="font-semibold mb-2 text-amber-400">Top of Every List</h3>
-              <p className="text-gray-400 text-sm">Your listing appears above Featured and Basic vendors in search results and category pages. Buyers see you first.</p>
-            </div>
-            <div className="bg-white/5 rounded-xl p-6 border border-white/10">
-              <div className="text-2xl mb-3">🏠</div>
-              <h3 className="font-semibold mb-2 text-amber-400">Homepage Placement</h3>
-              <p className="text-gray-400 text-sm">Featured on the EnergyDirectory.ca homepage — visible to every buyer who visits the site, not just those searching your category.</p>
-            </div>
-            <div className="bg-white/5 rounded-xl p-6 border border-white/10">
-              <div className="text-2xl mb-3">📊</div>
-              <h3 className="font-semibold mb-2 text-amber-400">Analytics Dashboard</h3>
-              <p className="text-gray-400 text-sm">See profile views, inquiry volume, and search appearances. Export your leads to CSV. Know exactly what&apos;s working.</p>
-            </div>
-          </div>
-          <p className="text-gray-500 text-xs mt-8">Premium is available by invitation during our launch period. <a href="mailto:support@energydirectory.ca" className="text-amber-400 hover:text-amber-300">Contact us</a> to learn more.</p>
-        </div>
-      </section>
-
-      {/* Trust signals */}
-      <section className="py-12 px-4 bg-white border-y border-gray-200">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-3xl mb-2">🇨🇦</div>
-              <h3 className="font-semibold text-[#0a1628] mb-1">Canada-Focused</h3>
-              <p className="text-gray-500 text-sm">Built for Canada&apos;s energy and mining sector — every province, every category.</p>
-            </div>
-            <div>
-              <div className="text-3xl mb-2">✅</div>
-              <h3 className="font-semibold text-[#0a1628] mb-1">Quality Listings</h3>
-              <p className="text-gray-500 text-sm">Every visible listing has a verified website or phone number. No ghost companies.</p>
-            </div>
-            <div>
-              <div className="text-3xl mb-2">📈</div>
-              <h3 className="font-semibold text-[#0a1628] mb-1">Real Leads</h3>
-              <p className="text-gray-500 text-sm">Buyers use our directory to find and contact vendors. Inquiries go straight to your inbox.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-16 px-4">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#0a1628] text-center mb-8">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {FAQS.map((faq, i) => (
-              <div key={i} className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full text-left px-5 py-4 flex items-center justify-between gap-4"
-                >
-                  <span className="font-medium text-[#0a1628] text-sm">{faq.q}</span>
-                  <span className="text-gray-400 flex-shrink-0">{openFaq === i ? '−' : '+'}</span>
-                </button>
-                {openFaq === i && (
-                  <div className="px-5 pb-4 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
-                    {faq.a}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ListYourBusinessClient categoryCount={categoryCount} />
     </div>
   )
 }
-
