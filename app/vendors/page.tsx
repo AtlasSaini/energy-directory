@@ -72,7 +72,10 @@ async function getVendors(params: SearchParams): Promise<{ vendors: Vendor[]; to
 
     const { data, count } = await query.range(offset, offset + PAGE_SIZE - 1)
     if (!data) return { vendors: [], total: 0 }
-    const vendors = data.map(({ vendor_categories: _vc, ...vendor }: { vendor_categories: unknown } & Vendor) => vendor) as Vendor[]
+    const tierRank: Record<string, number> = { premium: 0, featured: 1, basic: 2, free: 3 }
+    const vendors = data
+      .map(({ vendor_categories: _vc, ...vendor }: { vendor_categories: unknown } & Vendor) => vendor)
+      .sort((a: Vendor, b: Vendor) => (tierRank[a.tier] ?? 4) - (tierRank[b.tier] ?? 4) || a.company_name.localeCompare(b.company_name)) as Vendor[]
     return { vendors, total: count ?? 0 }
   }
 
@@ -118,7 +121,11 @@ async function getVendors(params: SearchParams): Promise<{ vendors: Vendor[]; to
   if (qualityCurated) query = query.or('website.not.is.null,description.not.is.null')
 
   const { data, count } = await query.range(offset, offset + PAGE_SIZE - 1)
-  return { vendors: (data || []) as Vendor[], total: count ?? 0 }
+  const tierRank: Record<string, number> = { premium: 0, featured: 1, basic: 2, free: 3 }
+  const sorted = (data || []).sort((a: Vendor, b: Vendor) =>
+    (tierRank[a.tier] ?? 4) - (tierRank[b.tier] ?? 4) || a.company_name.localeCompare(b.company_name)
+  )
+  return { vendors: sorted as Vendor[], total: count ?? 0 }
 }
 
 async function getCategories() {

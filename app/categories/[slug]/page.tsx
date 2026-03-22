@@ -26,9 +26,13 @@ async function getCategoryData(slug: string) {
     .order('tier', { ascending: false })
     .order('company_name')
 
-  const vendors: Vendor[] = (vcData || []).map(
-    ({ vendor_categories: _vc, ...vendor }: { vendor_categories: unknown } & Vendor) => vendor
-  )
+  const tierRank: Record<string, number> = { premium: 0, featured: 1, basic: 2, free: 3 }
+  const vendors: Vendor[] = (vcData || [])
+    .map(({ vendor_categories: _vc, ...vendor }: { vendor_categories: unknown } & Vendor) => vendor)
+    .sort((a: Vendor, b: Vendor) =>
+      (tierRank[a.tier] ?? 4) - (tierRank[b.tier] ?? 4) ||
+      a.company_name.localeCompare(b.company_name)
+    )
 
   const { data: allCategories } = await supabase
     .from('categories')
