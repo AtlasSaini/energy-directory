@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase-browser'
 
 interface PricingPlan {
   name: string
@@ -19,14 +20,27 @@ interface PricingCardProps {
 
 export default function PricingCard({ plan, billing }: PricingCardProps) {
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const router = useRouter()
   const price = plan.price[billing]
   const annualMonthly = billing === 'annual' && price > 0 ? Math.round(price / 12) : null
 
   const handleClick = async () => {
-    // Free plan — go to claim flow
+    setError(null)
+
+    // Free plan — go to signup to claim listing
     if (price === 0 || !plan.planKey) {
-      router.push('/vendors')
+      router.push('/auth/signup')
+      return
+    }
+
+    // Paid plan — check auth first
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+      // Redirect to signup with plan params so we can resume after auth
+      router.push(`/auth/signup?next=/list-your-business&plan=${plan.planKey}&billing=${billing}`)
       return
     }
 
@@ -41,9 +55,10 @@ export default function PricingCard({ plan, billing }: PricingCardProps) {
       if (data.url) {
         window.location.href = data.url
       } else {
-        console.error('Checkout error:', data.error)
+        setError(data.error || 'Something went wrong. Please try again.')
       }
     } catch (err) {
+      setError('Connection error. Please try again.')
       console.error('Checkout error:', err)
     } finally {
       setLoading(false)
@@ -101,6 +116,12 @@ export default function PricingCard({ plan, billing }: PricingCardProps) {
           </li>
         ))}
       </ul>
+
+      {error && (
+        <p className={`text-xs mb-3 text-center ${plan.highlighted ? 'text-red-300' : 'text-red-500'}`}>
+          {error}
+        </p>
+      )}
 
       <button
         onClick={handleClick}

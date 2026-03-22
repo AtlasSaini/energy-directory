@@ -104,17 +104,17 @@ export default function ListYourBusinessPage() {
             <div>
               <div className="text-3xl mb-2">🇨🇦</div>
               <h3 className="font-semibold text-[#0a1628] mb-1">Canada-Focused</h3>
-              <p className="text-gray-500 text-sm">Built specifically for the Canadian energy market. All 13 provinces and territories.</p>
+              <p className="text-gray-500 text-sm">Built for Canada&apos;s energy and mining sector — every province, every category.</p>
             </div>
             <div>
               <div className="text-3xl mb-2">✅</div>
-              <h3 className="font-semibold text-[#0a1628] mb-1">Verified Listings</h3>
-              <p className="text-gray-500 text-sm">Every listing is reviewed for accuracy. Buyers trust our directory.</p>
+              <h3 className="font-semibold text-[#0a1628] mb-1">Quality Listings</h3>
+              <p className="text-gray-500 text-sm">Every visible listing has a verified website or phone number. No ghost companies.</p>
             </div>
             <div>
               <div className="text-3xl mb-2">📈</div>
               <h3 className="font-semibold text-[#0a1628] mb-1">Real Leads</h3>
-              <p className="text-gray-500 text-sm">Connect with decision-makers actively seeking energy services.</p>
+              <p className="text-gray-500 text-sm">Buyers use our directory to find and contact vendors. Inquiries go straight to your inbox.</p>
             </div>
           </div>
         </div>
@@ -132,7 +132,7 @@ export default function ListYourBusinessPage() {
                   className="w-full text-left px-5 py-4 flex items-center justify-between gap-4"
                 >
                   <span className="font-medium text-[#0a1628] text-sm">{faq.q}</span>
-                  <span className="text-gray-400 flex-shrink-0">{openFaq === i ? 'âˆ'' : '+'}</span>
+                  <span className="text-gray-400 flex-shrink-0">{openFaq === i ? '−' : '+'}</span>
                 </button>
                 {openFaq === i && (
                   <div className="px-5 pb-4 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
