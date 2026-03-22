@@ -45,7 +45,7 @@ export default function ClaimPage() {
         .from('vendors')
         .select('id, company_name, slug, city, province, website, tier, user_id')
         .is('user_id', null)
-        .ilike('website', `%${domain}%`)
+        .or(`website.ilike.%://${domain}/%,website.ilike.%://${domain},website.ilike.%.${domain}/%,website.ilike.%.${domain}`)
         .limit(5)
 
       if (matches && matches.length > 0) {
@@ -236,12 +236,23 @@ export default function ClaimPage() {
           )}
         </div>
 
-        <p className="text-center text-sm text-gray-400 mt-6">
-          Already claimed?{' '}
-          <Link href="/dashboard" className="text-amber-600 hover:underline">
-            Go to dashboard
-          </Link>
-        </p>
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-400 mb-3">
+            Already claimed?{' '}
+            <Link href="/dashboard" className="text-amber-600 hover:underline">
+              Go to dashboard
+            </Link>
+          </p>
+          <div className="border-t border-gray-200 pt-4">
+            <p className="text-sm text-gray-500 mb-3">Don&apos;t see your company listed?</p>
+            <Link
+              href="/list-your-business"
+              className="inline-block bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+            >
+              + Add New Listing
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   )
