@@ -228,12 +228,7 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
                   <span>{vendor.phone}</span>
                 </a>
               )}
-              {vendor.email && (
-                <a href={`mailto:${vendor.email}`} className="flex items-center gap-2 text-sm text-gray-700 hover:text-[#0a1628] transition-colors">
-                  <span>✉️</span>
-                  <span className="truncate">{vendor.email}</span>
-                </a>
-              )}
+              {/* Email hidden — users must use the inquiry tool */}
             </div>
 
             {vendor.website && (
