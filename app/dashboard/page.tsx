@@ -91,7 +91,7 @@ export default function DashboardPage() {
 
     const { data: vendorData } = await supabase
       .from('vendors')
-      .select('id, company_name, slug, description, website, phone, email, city, province, tier, verified, subscription_status, subscription_expires_at, stripe_customer_id, views')
+      .select('id, company_name, slug, description, website, phone, email, logo_url, city, province, tier, verified, subscription_status, subscription_expires_at, stripe_customer_id, views')
       .eq('user_id', user.id)
       .single()
 
@@ -108,6 +108,7 @@ export default function DashboardPage() {
       phone: vendorData.phone ?? '',
       city: vendorData.city ?? '',
       province: vendorData.province ?? '',
+      logo_url: vendorData.logo_url ?? '',
     })
 
     // Load categories
@@ -298,6 +299,23 @@ export default function DashboardPage() {
             )}
 
             <form onSubmit={handleSave} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Logo URL</label>
+                <div className="flex items-center gap-3">
+                  {form.logo_url && (
+                    <img src={form.logo_url} alt="Logo preview" className="w-12 h-12 object-contain rounded border border-gray-200 bg-gray-50 p-1 flex-shrink-0" />
+                  )}
+                  <input
+                    type="url"
+                    value={form.logo_url || ''}
+                    onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
+                    placeholder="https://yourcompany.com/logo.png"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm"
+                  />
+                </div>
+                <p className="text-xs text-gray-400 mt-1">Paste a direct link to your logo image (PNG, SVG, or JPG recommended)</p>
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                 <textarea

@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { description, website, phone, city, province } = body
+    const { description, website, phone, city, province, logo_url } = body
 
     // Ensure the vendor belongs to this user
     const admin = createAdminClient()
@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
         phone,
         city,
         province,
+        logo_url: logo_url || null,
         updated_at: new Date().toISOString(),
       })
       .eq('id', vendor.id)
