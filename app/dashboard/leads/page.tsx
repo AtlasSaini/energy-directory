@@ -75,7 +75,7 @@ export default function LeadsPage() {
 
     setVendor(vendorData as Vendor)
 
-    // Get RFQ leads for this vendor
+    // Get Inquiries for this vendor
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { data: leadsData } = await (supabase as any)
       .from('rfq_requests')
@@ -153,7 +153,7 @@ export default function LeadsPage() {
           </Link>
           <nav className="flex items-center gap-4 text-sm">
             <Link href="/dashboard" className="text-gray-300 hover:text-white transition-colors">Dashboard</Link>
-            <Link href="/dashboard/leads" className="text-amber-400 font-medium">Leads</Link>
+            <Link href="/dashboard/leads" className="text-amber-400 font-medium">Inquiries</Link>
           </nav>
         </div>
       </div>
@@ -163,7 +163,7 @@ export default function LeadsPage() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
-              RFQ Leads
+              Inquiries
               {newCount > 0 && (
                 <span className="bg-amber-500 text-[#0a1628] text-xs font-bold px-2.5 py-1 rounded-full">
                   {newCount} new
@@ -209,9 +209,9 @@ export default function LeadsPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <h3 className="font-semibold text-gray-700 mb-2">No leads yet</h3>
+            <h3 className="font-semibold text-gray-700 mb-2">No inquiries yet</h3>
             <p className="text-gray-500 text-sm max-w-sm mx-auto">
-              Your listing is live and getting discovered. When buyers send an RFQ, it will appear here.
+              Your listing is live and getting discovered. When buyers send an inquiry, it will appear here.
             </p>
           </div>
         ) : (
@@ -283,7 +283,7 @@ export default function LeadsPage() {
                           <div>
                             <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Email</p>
                             <a
-                              href={`mailto:${lead.buyer_email}?subject=Re: Your RFQ to ${vendor.company_name}`}
+                              href={`mailto:${lead.buyer_email}?subject=Re: Your inquiry to ${vendor.company_name}`}
                               className="text-amber-600 hover:text-amber-500 text-sm font-medium"
                               onClick={(e) => e.stopPropagation()}
                             >
@@ -318,7 +318,7 @@ export default function LeadsPage() {
                       <div className="flex items-center gap-3 pt-1">
                         {isPremium && (
                           <a
-                            href={`mailto:${lead.buyer_email}?subject=Re: Your RFQ to ${vendor.company_name}&body=Hi ${lead.buyer_name},%0A%0AThank you for your request. I'd be happy to discuss your needs further.%0A%0ABest regards,%0A${vendor.company_name}`}
+                            href={`mailto:${lead.buyer_email}?subject=Re: Your inquiry to ${vendor.company_name}&body=Hi ${lead.buyer_name},%0A%0AThank you for your request. I'd be happy to discuss your needs further.%0A%0ABest regards,%0A${vendor.company_name}`}
                             className="inline-flex items-center gap-1.5 bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
                             onClick={(e) => e.stopPropagation()}
                           >
@@ -345,3 +345,4 @@ export default function LeadsPage() {
     </div>
   )
 }
+
