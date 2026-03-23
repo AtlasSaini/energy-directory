@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import ConditionalLayout from '@/components/ConditionalLayout'
 import { ShortlistProvider } from '@/components/ShortlistProvider'
 import ShortlistButton from '@/components/ShortlistButton'
 
@@ -42,9 +41,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geist.variable} font-sans antialiased bg-gray-50 min-h-screen flex flex-col`}>
         <ShortlistProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <ConditionalLayout>
+            <main className="flex-1">{children}</main>
+          </ConditionalLayout>
           <ShortlistButton />
         </ShortlistProvider>
       </body>

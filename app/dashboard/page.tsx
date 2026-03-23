@@ -265,7 +265,7 @@ export default function DashboardPage() {
                 href="/dashboard/leads"
                 className="inline-flex items-center gap-1.5 text-sm bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold px-3 py-1.5 rounded-lg transition-colors"
               >
-                📋 View Leads
+                📋 View Inquiries
               </Link>
               <Link
                 href={`/vendors/${vendor.slug}`}
@@ -326,7 +326,7 @@ export default function DashboardPage() {
                     type="tel"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    placeholder="+1 (403) 555-0100"
+                    placeholder="Phone number (optional)"
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm"
                   />
                 </div>
