@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase-browser'
+import LogoUpload from '@/components/LogoUpload'
 
 const PROVINCES = [
   'AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'NT', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT',
@@ -299,22 +300,10 @@ export default function DashboardPage() {
             )}
 
             <form onSubmit={handleSave} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Logo URL</label>
-                <div className="flex items-center gap-3">
-                  {form.logo_url && (
-                    <img src={form.logo_url} alt="Logo preview" className="w-12 h-12 object-contain rounded border border-gray-200 bg-gray-50 p-1 flex-shrink-0" />
-                  )}
-                  <input
-                    type="url"
-                    value={form.logo_url || ''}
-                    onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
-                    placeholder="https://yourcompany.com/logo.png"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm"
-                  />
-                </div>
-                <p className="text-xs text-gray-400 mt-1">Paste a direct link to your logo image (PNG, SVG, or JPG recommended)</p>
-              </div>
+              <LogoUpload
+                currentUrl={form.logo_url || undefined}
+                onUpload={(url) => setForm({ ...form, logo_url: url })}
+              />
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
