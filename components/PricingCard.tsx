@@ -44,12 +44,19 @@ export default function PricingCard({ plan, billing }: PricingCardProps) {
       return
     }
 
+    // Get the user's vendor ID to pass to checkout
+    const { data: vendor } = await supabase
+      .from('vendors')
+      .select('id')
+      .eq('user_id', user.id)
+      .single()
+
     setLoading(true)
     try {
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: plan.planKey, billing }),
+        body: JSON.stringify({ plan: plan.planKey, billing, vendorId: vendor?.id || '' }),
       })
       const data = await res.json()
       if (data.url) {

@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
           quantity: 1,
         },
       ],
-      success_url: `${siteUrl}/list-your-business?success=1&session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${siteUrl}/dashboard?upgraded=1`,
       cancel_url: `${siteUrl}/list-your-business?canceled=1`,
       metadata: {
         vendorId: vendorId || '',
