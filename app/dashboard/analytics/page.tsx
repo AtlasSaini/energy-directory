@@ -264,7 +264,7 @@ export default function AnalyticsDashboardPage() {
                     Active
                   </span>
                   <span className="text-gray-300">|</span>
-                  <span className="text-amber-700 font-medium">⭐ Premium</span>
+                  <span className="text-amber-700 font-medium">{vendor.tier === 'premium' ? '⭐ Premium' : '⭐ Featured'}</span>
                   <span className="text-gray-300">|</span>
                   {vendor.verified ? (
                     <span className="text-green-700 font-medium">✓ Verified</span>
