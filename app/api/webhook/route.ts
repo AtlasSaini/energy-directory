@@ -44,6 +44,10 @@ export async function POST(req: NextRequest) {
           const subscription = await stripe.subscriptions.retrieve(session.subscription as string)
           const priceId = subscription.items.data[0]?.price.id
 
+          const BASIC_PRICES = [
+            process.env.STRIPE_PRICE_BASIC_MONTHLY,
+            process.env.STRIPE_PRICE_BASIC_ANNUAL,
+          ]
           const FEATURED_PRICES = [
             process.env.STRIPE_PRICE_FEATURED_MONTHLY,
             process.env.STRIPE_PRICE_FEATURED_ANNUAL,
@@ -57,6 +61,8 @@ export async function POST(req: NextRequest) {
             ? 'premium'
             : FEATURED_PRICES.includes(priceId)
             ? 'featured'
+            : BASIC_PRICES.includes(priceId)
+            ? 'basic'
             : 'free'
 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -75,6 +81,10 @@ export async function POST(req: NextRequest) {
         const subscription = event.data.object as Stripe.Subscription
         const priceId = subscription.items.data[0]?.price.id
 
+        const BASIC_PRICES = [
+          process.env.STRIPE_PRICE_BASIC_MONTHLY,
+          process.env.STRIPE_PRICE_BASIC_ANNUAL,
+        ]
         const FEATURED_PRICES = [
           process.env.STRIPE_PRICE_FEATURED_MONTHLY,
           process.env.STRIPE_PRICE_FEATURED_ANNUAL,
@@ -88,6 +98,8 @@ export async function POST(req: NextRequest) {
           ? 'premium'
           : FEATURED_PRICES.includes(priceId)
           ? 'featured'
+          : BASIC_PRICES.includes(priceId)
+          ? 'basic'
           : 'free'
 
         const isActive = subscription.status === 'active'

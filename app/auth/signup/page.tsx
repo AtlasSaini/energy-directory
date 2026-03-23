@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase-browser'
 import { isFreeEmailDomain } from '@/lib/free-email-domains'
 
@@ -15,6 +16,17 @@ export default function SignupPage() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
+  const [alreadyLoggedIn, setAlreadyLoggedIn] = useState(false)
+  const router = useRouter()
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) setAlreadyLoggedIn(true)
+    }
+    checkAuth()
+  }, [])
 
   const emailDomain = formData.email.includes('@')
     ? formData.email.split('@')[1]
@@ -98,6 +110,29 @@ export default function SignupPage() {
             </button>
             .
           </p>
+        </div>
+      </div>
+    )
+  }
+
+  if (alreadyLoggedIn) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-gray-200 p-8 text-center">
+          <Link href="/" className="inline-flex justify-center mb-6">
+            <Image src="/logo/logo-medium-light.svg" alt="Energy Directory" width={160} height={43} />
+          </Link>
+          <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">👋</div>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">You&apos;re already signed in</h2>
+          <p className="text-gray-500 text-sm mb-6">Go to your dashboard or add a new listing.</p>
+          <div className="flex flex-col gap-3">
+            <Link href="/dashboard" className="block w-full bg-[#0a1628] hover:bg-[#0d1f35] text-white font-semibold py-3 rounded-xl transition-colors text-sm">
+              Go to Dashboard
+            </Link>
+            <Link href="/auth/claim" className="block w-full bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold py-3 rounded-xl transition-colors text-sm">
+              + Add New Listing
+            </Link>
+          </div>
         </div>
       </div>
     )
