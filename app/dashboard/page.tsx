@@ -497,7 +497,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Analytics card */}
-            {vendor.tier === 'premium' ? (
+            {(vendor.tier === 'featured' || vendor.tier === 'premium') ? (
               <div className="bg-gradient-to-br from-[#0a1628] to-[#1a3a6b] text-white rounded-2xl shadow-sm p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xl">📊</span>
@@ -546,9 +546,9 @@ export default function DashboardPage() {
                   href="/dashboard/leads"
                   className="flex items-center gap-2 text-sm text-gray-600 hover:text-amber-600 transition-colors"
                 >
-                  <span>📋</span> RFQ Leads
+                  <span>📋</span> Inquiries
                 </Link>
-                {vendor.tier === 'premium' && (
+                {(vendor.tier === 'featured' || vendor.tier === 'premium') && (
                   <Link
                     href="/dashboard/analytics"
                     className="flex items-center gap-2 text-sm text-gray-600 hover:text-amber-600 transition-colors"
