@@ -73,9 +73,21 @@ async function getVendors(params: SearchParams): Promise<{ vendors: Vendor[]; to
     const { data, count } = await query.range(offset, offset + PAGE_SIZE - 1)
     if (!data) return { vendors: [], total: 0 }
     const tierRank: Record<string, number> = { premium: 0, featured: 1, basic: 2, free: 3 }
-    const vendors = data
+    let vendors = data
       .map(({ vendor_categories: _vc, ...vendor }: { vendor_categories: unknown } & Vendor) => vendor)
       .sort((a: Vendor, b: Vendor) => (tierRank[a.tier] ?? 4) - (tierRank[b.tier] ?? 4) || a.company_name.localeCompare(b.company_name)) as Vendor[]
+
+    // Cap gifted featured vendors at 3 per category — paying vendors (have stripe_subscription_id) are always shown
+    if (!params.tier) {
+      let giftedFeaturedCount = 0
+      vendors = vendors.filter((v: Vendor) => {
+        if (v.tier !== 'featured') return true
+        if (v.stripe_subscription_id) return true // paying — always show
+        giftedFeaturedCount++
+        return giftedFeaturedCount <= 3
+      })
+    }
+
     return { vendors, total: count ?? 0 }
   }
 
