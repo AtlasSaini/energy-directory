@@ -28,15 +28,26 @@ export default function PricingCard({ plan, billing }: PricingCardProps) {
   const handleClick = async () => {
     setError(null)
 
-    // Free plan — go to signup to claim listing
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    // Free plan
     if (price === 0 || !plan.planKey) {
-      router.push('/auth/signup')
+      if (user) {
+        // Already logged in — go to claim or dashboard
+        const { data: vendor } = await supabase
+          .from('vendors')
+          .select('id')
+          .eq('user_id', user.id)
+          .maybeSingle()
+        router.push(vendor ? '/dashboard' : '/auth/claim')
+      } else {
+        router.push('/auth/signup')
+      }
       return
     }
 
-    // Paid plan — check auth first
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    // Paid plan — already fetched user above
 
     if (!user) {
       // Redirect to signup with plan params so we can resume after auth
