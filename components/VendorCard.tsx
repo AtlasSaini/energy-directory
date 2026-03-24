@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { Vendor } from '@/types/database'
 import AddToShortlistButton from './AddToShortlistButton'
+import VendorLogo from './VendorLogo'
 
 interface VendorCardProps {
   vendor: Vendor & { categories?: string[] }
@@ -40,12 +41,7 @@ export default function VendorCard({ vendor }: VendorCardProps) {
           {/* Logo + name row */}
           <div className="flex items-start gap-3 mb-3">
             <div className="w-12 h-12 rounded-lg border-2 border-white shadow-sm bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
-              {vendor.logo_url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={vendor.logo_url} alt={vendor.company_name} className="w-full h-full object-contain" />
-              ) : (
-                <span className="text-xl font-bold text-[#0a1628]">{vendor.company_name.charAt(0)}</span>
-              )}
+              <VendorLogo logoUrl={vendor.logo_url} companyName={vendor.company_name} />
             </div>
             <div className="min-w-0 flex-1 pt-2">
               <div className="flex items-center gap-2 flex-wrap">
