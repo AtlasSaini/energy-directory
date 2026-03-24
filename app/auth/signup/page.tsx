@@ -12,6 +12,7 @@ export default function SignupPage() {
     company_name: '',
     email: '',
     password: '',
+    tender_alerts_consent: false,
   })
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -68,7 +69,11 @@ export default function SignupPage() {
       email,
       password,
       options: {
-        data: { company_name },
+        data: {
+          company_name,
+          tender_alerts_consent: formData.tender_alerts_consent,
+          tender_alerts_consent_date: formData.tender_alerts_consent ? new Date().toISOString() : null,
+        },
         emailRedirectTo: `${window.location.origin}/auth/callback?next=/auth/claim`,
       },
     })
@@ -206,6 +211,19 @@ export default function SignupPage() {
                 required
                 minLength={8}
               />
+            </div>
+
+            <div className="flex items-start gap-3 pt-1">
+              <input
+                type="checkbox"
+                id="tender_alerts_consent"
+                checked={formData.tender_alerts_consent}
+                onChange={(e) => setFormData({ ...formData, tender_alerts_consent: e.target.checked })}
+                className="mt-0.5 h-4 w-4 rounded border-gray-300 text-amber-500 focus:ring-amber-400 cursor-pointer"
+              />
+              <label htmlFor="tender_alerts_consent" className="text-xs text-gray-500 cursor-pointer leading-relaxed">
+                Send me free weekly tender alerts for government contracts relevant to my industry category (Canadian federal &amp; provincial procurement). I can unsubscribe anytime.
+              </label>
             </div>
 
             <button
