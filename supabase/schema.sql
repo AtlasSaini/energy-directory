@@ -1,5 +1,5 @@
 -- energydirectory.ca — Database Schema
--- Saini Private Capital Ltd.
+-- Energy Directory
 -- Created: 2026-03-12
 
 -- ── Extensions ──
