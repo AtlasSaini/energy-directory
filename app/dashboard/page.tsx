@@ -531,7 +531,7 @@ export default function DashboardPage() {
                 </p>
                 <Link
                   href="/list-your-business"
-                  className="block w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 rounded-lg text-sm transition-colors"
+                  className="block w-full text-center bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold py-2.5 rounded-lg text-sm transition-colors"
                 >
                   Upgrade to Featured →
                 </Link>
