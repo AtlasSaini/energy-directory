@@ -300,10 +300,18 @@ export default function DashboardPage() {
             )}
 
             <form onSubmit={handleSave} className="space-y-4">
-              <LogoUpload
-                currentUrl={form.logo_url || undefined}
-                onUpload={(url) => setForm({ ...form, logo_url: url })}
-              />
+              {vendor.tier === 'free' ? (
+                <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center gap-2 bg-gray-50">
+                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">🖼️</div>
+                  <p className="text-sm font-medium text-gray-500 text-center">Logo upload is available on Basic and above</p>
+                  <Link href="/list-your-business" className="text-xs text-amber-600 font-semibold hover:underline">Upgrade to add your logo →</Link>
+                </div>
+              ) : (
+                <LogoUpload
+                  currentUrl={form.logo_url || undefined}
+                  onUpload={(url) => setForm({ ...form, logo_url: url })}
+                />
+              )}
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
