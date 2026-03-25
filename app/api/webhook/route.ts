@@ -65,12 +65,29 @@ export async function POST(req: NextRequest) {
             ? 'basic'
             : 'free'
 
+          // Auto-assign logo from logo.dev if vendor has a website but no logo yet
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const { data: vendorData } = await (supabase.from('vendors') as any)
+            .select('website, logo_url')
+            .eq('id', vendorId)
+            .single()
+
+          const autoLogo = (!vendorData?.logo_url && vendorData?.website)
+            ? (() => {
+                try {
+                  const domain = new URL(vendorData.website).hostname.replace(/^www\./, '')
+                  return `https://img.logo.dev/${domain}?token=pk_GP7ffDQOShW1EB-MVph0fw&size=128`
+                } catch { return null }
+              })()
+            : null
+
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           await (supabase.from('vendors') as any)
             .update({
               tier,
               stripe_customer_id: session.customer as string,
               stripe_subscription_id: session.subscription as string,
+              ...(autoLogo ? { logo_url: autoLogo } : {}),
             })
             .eq('id', vendorId)
         }
