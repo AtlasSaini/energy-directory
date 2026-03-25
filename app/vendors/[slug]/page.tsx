@@ -145,6 +145,18 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
                 <div className="mt-4 flex items-center gap-3 flex-wrap">
                   <VendorActions vendor={{ id: vendor.id, company_name: vendor.company_name, slug: vendor.slug }} isClaimed={!!vendor.user_id} />
                 </div>
+
+                {/* Dispute link — shown on claimed listings */}
+                {vendor.user_id && (
+                  <div className="mt-3">
+                    <a
+                      href={`mailto:support@energydirectory.ca?subject=Listing Dispute: ${encodeURIComponent(vendor.company_name)}&body=I would like to dispute the ownership of the listing for ${encodeURIComponent(vendor.company_name)} (energydirectory.ca/vendors/${vendor.slug}). Please contact me to resolve this.`}
+                      className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      ⚑ Dispute this listing
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </div>
