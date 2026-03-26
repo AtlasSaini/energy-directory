@@ -2,6 +2,7 @@ import { createAdminClient } from '@/lib/supabase'
 import VendorCard from '@/components/VendorCard'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import type { Vendor, Category } from '@/types/database'
 
 async function getCategoryData(slug: string) {
@@ -43,6 +44,46 @@ async function getCategoryData(slug: string) {
     category,
     vendors,
     allCategories: (allCategories || []) as Category[],
+  }
+}
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await params
+  const supabase = createAdminClient()
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: rawData } = await (supabase as any)
+    .from('categories')
+    .select('name, description')
+    .eq('slug', slug)
+    .single()
+  const data = rawData as { name: string; description: string | null } | null
+
+  if (!data) {
+    return {
+      title: 'Category Not Found | Energy Directory',
+    }
+  }
+
+  const title = `${data.name} Companies in Canada | Energy Directory`
+  const description = `Browse ${data.name} companies and suppliers in Canada. Find verified vendors on energydirectory.ca`
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `https://energydirectory.ca/categories/${slug}`,
+      siteName: 'Canadian Energy Directory',
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+    },
   }
 }
 

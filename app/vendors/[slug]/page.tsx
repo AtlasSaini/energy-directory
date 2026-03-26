@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import type { Vendor, Category, Review } from '@/types/database'
 import ViewTracker from './ViewTracker'
 import VendorActions from './VendorActions'
@@ -58,6 +59,57 @@ const PROVINCE_LABELS: Record<string, string> = {
   AB: 'Alberta', BC: 'British Columbia', SK: 'Saskatchewan', MB: 'Manitoba',
   ON: 'Ontario', QC: 'Quebec', NS: 'Nova Scotia', NB: 'New Brunswick',
   PE: 'PEI', NL: 'Newfoundland', YT: 'Yukon', NT: 'Northwest Territories', NU: 'Nunavut',
+}
+
+const PROVINCE_FULL: Record<string, string> = {
+  AB: 'Alberta', BC: 'British Columbia', SK: 'Saskatchewan', MB: 'Manitoba',
+  ON: 'Ontario', QC: 'Quebec', NS: 'Nova Scotia', NB: 'New Brunswick',
+  PE: 'Prince Edward Island', NL: 'Newfoundland and Labrador', YT: 'Yukon',
+  NT: 'Northwest Territories', NU: 'Nunavut',
+}
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await params
+  const vendor = await getVendor(slug)
+
+  if (!vendor) {
+    return {
+      title: 'Vendor Not Found | Canadian Energy Directory',
+    }
+  }
+
+  const title = `${vendor.company_name} | Canadian Energy Directory`
+
+  let description: string
+  if (vendor.description) {
+    description = vendor.description.slice(0, 160)
+  } else {
+    const parts: string[] = []
+    if (vendor.city) parts.push(vendor.city)
+    if (vendor.province) parts.push(PROVINCE_FULL[vendor.province] || vendor.province)
+    if (vendor.categories.length > 0) parts.push(vendor.categories.map((c) => c.name).join(', '))
+    const locationPart = parts.length > 0 ? ` based in ${parts.join(', ')}` : ''
+    description = `${vendor.company_name} is a Canadian energy company${locationPart}. View their profile on energydirectory.ca.`
+  }
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `https://energydirectory.ca/vendors/${slug}`,
+      siteName: 'Canadian Energy Directory',
+      images: vendor.logo_url ? [{ url: vendor.logo_url }] : [],
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+    },
+  }
 }
 
 export const revalidate = 60
@@ -122,7 +174,7 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
                 <div className="flex items-center gap-4 mt-1 text-sm text-gray-500 flex-wrap">
                   {(vendor.city || vendor.province) && (
                     <span className="flex items-center gap-1">
-                      📍 {[vendor.city, vendor.province ? PROVINCE_LABELS[vendor.province] || vendor.province : null].filter(Boolean).join(', ')}
+                      📍 {[vendor.city, vendor.province ? PROVINCE_FULL[vendor.province] || vendor.province : null].filter(Boolean).join(', ')}
                     </span>
                   )}
                   {avgRating !== null && (
