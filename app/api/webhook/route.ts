@@ -94,6 +94,19 @@ export async function POST(req: NextRequest) {
             })
             .eq('id', vendorId)
 
+          // Auto-send Stripe invoice for month 1 (Stripe handles renewals automatically)
+          try {
+            const subscription2 = await stripe.subscriptions.retrieve(session.subscription as string, {
+              expand: ['latest_invoice'],
+            })
+            const latestInvoice = subscription2.latest_invoice as Stripe.Invoice | null
+            if (latestInvoice?.id && latestInvoice.status === 'paid') {
+              await stripe.invoices.sendInvoice(latestInvoice.id)
+            }
+          } catch (invoiceErr) {
+            console.error('Failed to send Stripe invoice:', invoiceErr)
+          }
+
           // Send confirmation email via Resend
           const customerEmail = session.customer_details?.email as string | undefined
           const customerName = (session.customer_details?.name as string | undefined) || 'there'
