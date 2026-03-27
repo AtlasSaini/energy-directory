@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
         vendorId: vendorId || '',
       },
       allow_promotion_codes: true,
-      billing_address_collection: 'required',
+      billing_address_collection: 'auto',
     })
 
     return NextResponse.json({ url: session.url })
