@@ -3,6 +3,9 @@ import { stripe } from '@/lib/stripe'
 import { createAdminClient } from '@/lib/supabase'
 import type { Vendor } from '@/types/database'
 import Stripe from 'stripe'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: NextRequest) {
   const body = await req.text()
@@ -90,6 +93,50 @@ export async function POST(req: NextRequest) {
               ...(autoLogo ? { logo_url: autoLogo } : {}),
             })
             .eq('id', vendorId)
+
+          // Send confirmation email via Resend
+          const customerEmail = session.customer_details?.email as string | undefined
+          const customerName = (session.customer_details?.name as string | undefined) || 'there'
+          const tierLabel = tier.charAt(0).toUpperCase() + tier.slice(1)
+          const tierPrices: Record<string, string> = {
+            basic: '$19/month',
+            featured: '$49/month',
+            premium: '$99/month',
+          }
+          const priceLabel = tierPrices[tier] || ''
+          const dashboardUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard`
+
+          if (customerEmail) {
+            await resend.emails.send({
+              from: 'Energy Directory <support@energydirectory.ca>',
+              to: customerEmail,
+              subject: `Your ${tierLabel} listing is now live — Energy Directory`,
+              html: `
+                <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 560px; margin: 0 auto; color: #1a1a1a;">
+                  <div style="background: #0f172a; padding: 32px; text-align: center; border-radius: 8px 8px 0 0;">
+                    <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700;">Energy Directory</h1>
+                    <p style="color: #94a3b8; margin: 8px 0 0; font-size: 14px;">Canada's Energy Sector Vendor Directory</p>
+                  </div>
+                  <div style="background: #ffffff; padding: 40px 32px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 8px 8px;">
+                    <h2 style="margin: 0 0 16px; font-size: 20px;">You're live, ${customerName}! 🎉</h2>
+                    <p style="color: #475569; line-height: 1.6; margin: 0 0 24px;">
+                      Your <strong>${tierLabel} listing</strong> on Energy Directory is now active. You're now visible to thousands of buyers and procurement teams across Canada's energy sector.
+                    </p>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; margin: 0 0 28px;">
+                      <p style="margin: 0 0 8px; font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Your plan</p>
+                      <p style="margin: 0; font-size: 18px; font-weight: 700; color: #0f172a;">${tierLabel} — ${priceLabel}</p>
+                    </div>
+                    <a href="${dashboardUrl}" style="display: inline-block; background: #0f172a; color: #ffffff; text-decoration: none; padding: 14px 28px; border-radius: 6px; font-weight: 600; font-size: 15px; margin: 0 0 28px;">
+                      View Your Dashboard →
+                    </a>
+                    <p style="color: #94a3b8; font-size: 13px; margin: 24px 0 0; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+                      Questions? Reply to this email or visit <a href="${process.env.NEXT_PUBLIC_SITE_URL}" style="color: #0f172a;">energydirectory.ca</a>
+                    </p>
+                  </div>
+                </div>
+              `,
+            }).catch((err: Error) => console.error('Resend email error:', err))
+          }
         }
         break
       }
