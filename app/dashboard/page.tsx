@@ -94,7 +94,9 @@ export default function DashboardPage() {
       .from('vendors')
       .select('id, company_name, slug, description, website, phone, email, logo_url, city, province, tier, verified, subscription_status, subscription_expires_at, stripe_customer_id, views')
       .eq('user_id', user.id)
-      .single()
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
 
     if (!vendorData) {
       // No claimed listing — send to claim page
