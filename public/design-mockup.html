@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Energy Directory — Design Mockup v2</title>
+  <title>Energy Directory — Design Mockup v3</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -18,18 +18,18 @@
       --accent-hover:  #004FA3;
       --border:        #D2D2D7;
       --energy:        #E8590C;
+      --energy-dark:   #C44A08;
       --radius-sm:     8px;
       --radius-md:     14px;
       --radius-lg:     20px;
       --shadow-sm:     0 2px 8px rgba(0,0,0,0.06);
       --shadow-md:     0 8px 24px rgba(0,0,0,0.10);
-      --shadow-lg:     0 20px 48px rgba(0,0,0,0.12);
+      --shadow-lg:     0 20px 48px rgba(0,0,0,0.14);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 17px; -webkit-font-smoothing: antialiased; }
     body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; }
     a { color: inherit; text-decoration: none; }
-
     .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
 
     /* ── Nav ── */
@@ -46,55 +46,44 @@
       display: flex; align-items: center; justify-content: space-between;
       height: 56px;
     }
-
-    /* ── Logo (Three Bars) ── */
     .nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-    .logo-bars { display: flex; flex-direction: column; gap: 3.5px; justify-content: center; }
+    .logo-bars { display: flex; flex-direction: column; gap: 3.5px; }
     .logo-bar { height: 3px; border-radius: 2px; background: var(--energy); }
     .logo-bar:nth-child(1) { width: 22px; }
-    .logo-bar:nth-child(2) { width: 16px; }
+    .logo-bar:nth-child(2) { width: 15px; }
     .logo-bar:nth-child(3) { width: 19px; }
-    .logo-wordmark {
-      font-size: 16px; font-weight: 700; letter-spacing: -0.02em;
-      color: var(--text-primary); line-height: 1;
-    }
+    .logo-wordmark { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); }
     .logo-wordmark span { color: var(--energy); }
-
     .nav-links { display: flex; gap: 28px; }
     .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-secondary); transition: color 0.15s; }
     .nav-links a:hover { color: var(--text-primary); }
     .btn-nav {
       background: var(--text-primary); color: #fff;
-      font-size: 13px; font-weight: 600;
-      padding: 8px 18px; border-radius: 980px; transition: opacity 0.15s;
+      font-size: 13px; font-weight: 600; padding: 8px 18px;
+      border-radius: 980px; transition: opacity 0.15s;
     }
     .btn-nav:hover { opacity: 0.82; }
 
     /* ── Hero ── */
     .hero {
-      padding: 96px 32px 80px;
-      text-align: center;
+      padding: 96px 32px 80px; text-align: center;
       background: linear-gradient(180deg, #fff 0%, #F5F5F7 100%);
     }
     .hero-label {
-      display: inline-flex; align-items: center; gap: 6px;
+      display: inline-flex; align-items: center; gap: 8px;
       font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
       text-transform: uppercase; color: var(--energy); margin-bottom: 20px;
     }
     .hero-label::before, .hero-label::after {
-      content: ''; display: block; width: 20px; height: 1px; background: var(--energy); opacity: 0.5;
+      content: ''; display: block; width: 20px; height: 1px;
+      background: var(--energy); opacity: 0.4;
     }
-    /* Apple-style: thin display weight for large hero, bold accent word */
     .hero h1 {
-      font-size: clamp(40px, 6vw, 68px);
-      font-weight: 300;
-      letter-spacing: -0.03em;
-      line-height: 1.05; color: var(--text-primary);
-      max-width: 820px; margin: 0 auto 20px;
+      font-size: clamp(40px, 6vw, 68px); font-weight: 300;
+      letter-spacing: -0.03em; line-height: 1.05;
+      color: var(--text-primary); max-width: 820px; margin: 0 auto 20px;
     }
-    .hero h1 strong {
-      font-weight: 800;
-    }
+    .hero h1 strong { font-weight: 800; }
     .hero h1 em { font-style: normal; color: var(--energy); font-weight: 800; }
     .hero-sub {
       font-size: 19px; font-weight: 300; color: var(--text-secondary);
@@ -103,8 +92,7 @@
     .hero-search {
       display: flex; max-width: 580px; margin: 0 auto 16px;
       background: #fff; border: 1px solid var(--border);
-      border-radius: 980px; overflow: hidden;
-      box-shadow: var(--shadow-md);
+      border-radius: 980px; overflow: hidden; box-shadow: var(--shadow-md);
     }
     .hero-search input {
       flex: 1; border: none; outline: none; padding: 16px 24px;
@@ -114,73 +102,111 @@
     .hero-search button {
       background: var(--accent); color: #fff; border: none;
       padding: 12px 28px; margin: 6px; border-radius: 980px;
-      font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
-      transition: background 0.15s;
+      font-family: inherit; font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: background 0.15s;
     }
     .hero-search button:hover { background: var(--accent-hover); }
     .hero-meta { font-size: 13px; color: var(--text-secondary); }
     .hero-meta strong { color: var(--text-primary); }
 
-    /* ── Section ── */
+    /* ── Stats Bar ── */
+    .stats-bar { background: var(--text-primary); padding: 40px 32px; }
+    .stats-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-around; align-items: center;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 36px; font-weight: 800; letter-spacing: -0.02em; color: #fff; display: block; }
+    .stat-label { font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 500; }
+    .stat-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.12); }
+
+    /* ── Sections ── */
     .section-label {
       font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
       text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;
     }
-    .section-title {
-      font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;
-    }
+    .section-title { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
     .section-sub { font-size: 17px; color: var(--text-secondary); margin-bottom: 48px; }
 
     /* ── Sector Grid ── */
     .sectors { padding: 80px 0; }
     .sector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
     .sector-card {
-      background: var(--surface); border-radius: var(--radius-md);
-      padding: 28px 24px; cursor: pointer;
-      transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+      background: var(--surface); border-radius: var(--radius-lg);
+      padding: 32px 28px; cursor: pointer;
       border: 1px solid transparent;
+      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1),
+                  box-shadow 0.22s ease,
+                  background 0.18s ease,
+                  border-color 0.18s ease;
+      display: flex; flex-direction: column; gap: 14px;
     }
     .sector-card:hover {
-      transform: translateY(-3px); box-shadow: var(--shadow-md);
-      border-color: var(--border); background: #fff;
-    }
-    .sector-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-    .sector-icon {
-      width: 44px; height: 44px; border-radius: 12px;
-      background: var(--accent); display: flex; align-items: center;
-      justify-content: center; font-size: 20px; flex-shrink: 0;
-    }
-    .sector-card h3 { font-size: 16px; font-weight: 700; }
-    .sector-card .sector-count { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
-    .subcats { display: flex; flex-wrap: wrap; gap: 6px; }
-    .subcat-pill {
-      font-size: 11px; font-weight: 500; color: var(--text-secondary);
-      background: var(--surface-2); padding: 4px 10px; border-radius: 980px;
-      transition: background 0.15s, color 0.15s;
-    }
-    .sector-card:hover .subcat-pill { background: var(--surface); }
-    .subcat-pill.more { color: var(--accent); background: transparent; }
-    .sector-cta {
-      margin-top: 16px; font-size: 13px; font-weight: 600;
-      color: var(--accent); display: flex; align-items: center; gap: 4px;
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      background: #fff;
+      border-color: var(--border);
     }
 
-    /* ── Vendor Cards ── */
+    /* Icon tile with glass sheen */
+    .sector-icon {
+      width: 60px; height: 60px;
+      border-radius: 16px;
+      background: linear-gradient(160deg, #F07030 0%, #E8590C 40%, #CC4A08 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      box-shadow: 0 4px 16px rgba(232,89,12,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1),
+                  box-shadow 0.22s ease;
+    }
+    /* Glass sheen overlay */
+    .sector-icon::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 50%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 100%);
+      border-radius: 16px 16px 0 0;
+      pointer-events: none;
+    }
+    .sector-card:hover .sector-icon {
+      transform: scale(1.08);
+      box-shadow: 0 8px 24px rgba(232,89,12,0.45), inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+    .sector-icon svg {
+      width: 28px; height: 28px;
+      stroke: #fff; fill: none;
+      stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+      position: relative; z-index: 1;
+      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .sector-card:hover .sector-icon svg { transform: scale(1.05); }
+
+    .sector-card h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+    .sector-card .sector-count { font-size: 13px; color: var(--text-secondary); }
+    .sector-cta {
+      font-size: 13px; font-weight: 600; color: var(--accent);
+      display: flex; align-items: center; gap: 4px; margin-top: auto;
+      opacity: 0; transform: translateY(4px);
+      transition: opacity 0.18s, transform 0.18s;
+    }
+    .sector-card:hover .sector-cta { opacity: 1; transform: translateY(0); }
+
+    /* ── Vendors ── */
     .vendors { padding: 80px 0; background: var(--surface); }
     .vendor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .vendor-card {
       background: #fff; border-radius: var(--radius-lg); padding: 28px;
       box-shadow: var(--shadow-sm); cursor: pointer;
-      transition: transform 0.18s, box-shadow 0.18s;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
       display: flex; flex-direction: column; gap: 14px;
     }
-    .vendor-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .vendor-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
     .vendor-header { display: flex; gap: 14px; align-items: flex-start; }
     .vendor-logo {
       width: 52px; height: 52px; border-radius: 12px;
       background: var(--surface); border: 1px solid var(--border);
       display: flex; align-items: center; justify-content: center;
-      font-size: 24px; flex-shrink: 0;
+      font-size: 22px; flex-shrink: 0;
     }
     .vendor-info h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
     .vendor-badge {
@@ -195,9 +221,9 @@
       text-transform: uppercase; letter-spacing: 0.04em;
     }
     .vendor-sector {
-      display: inline-block; font-size: 12px; font-weight: 500;
-      color: var(--text-secondary); background: var(--surface);
-      padding: 4px 10px; border-radius: 980px;
+      font-size: 12px; font-weight: 500; color: var(--text-secondary);
+      background: var(--surface); padding: 4px 10px;
+      border-radius: 980px; display: inline-block;
     }
     .vendor-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
     .vendor-footer {
@@ -206,20 +232,6 @@
     }
     .vendor-location { font-size: 13px; color: var(--text-secondary); }
     .vendor-cta { font-size: 13px; font-weight: 600; color: var(--accent); }
-
-    /* ── Stats Bar ── */
-    .stats-bar { background: var(--text-primary); padding: 40px 32px; }
-    .stats-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; justify-content: space-around; align-items: center;
-    }
-    .stat { text-align: center; }
-    .stat-num {
-      font-size: 36px; font-weight: 800; letter-spacing: -0.02em;
-      color: #fff; display: block;
-    }
-    .stat-label { font-size: 13px; color: rgba(255,255,255,0.6); font-weight: 500; }
-    .stat-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); }
 
     /* ── Value Props ── */
     .value-props { padding: 96px 0; }
@@ -233,44 +245,35 @@
     .value-item h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
     .value-item p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
 
-    /* ── CTA Strip ── */
+    /* ── CTA ── */
     .cta-strip { background: var(--text-primary); color: #fff; padding: 96px 32px; text-align: center; }
-    .cta-strip h2 {
-      font-size: clamp(32px, 5vw, 48px); font-weight: 300;
-      letter-spacing: -0.02em; margin-bottom: 8px;
-    }
+    .cta-strip h2 { font-size: clamp(32px, 5vw, 48px); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 8px; }
     .cta-strip h2 strong { font-weight: 800; }
-    .cta-strip p {
-      font-size: 18px; color: rgba(255,255,255,0.65);
-      margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto;
-      font-weight: 300;
-    }
+    .cta-strip p { font-size: 18px; color: rgba(255,255,255,0.6); margin: 0 auto 36px; max-width: 480px; font-weight: 300; }
     .btn-white {
       background: #fff; color: var(--text-primary);
-      font-size: 15px; font-weight: 700; padding: 14px 32px; border-radius: 980px;
-      display: inline-block; transition: transform 0.15s, box-shadow 0.15s;
+      font-size: 15px; font-weight: 700; padding: 14px 32px;
+      border-radius: 980px; display: inline-block;
+      transition: transform 0.15s, box-shadow 0.15s;
     }
     .btn-white:hover { transform: scale(1.02); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
     .btn-ghost {
       background: transparent; color: rgba(255,255,255,0.8);
-      font-size: 15px; font-weight: 600; padding: 14px 32px; border-radius: 980px;
-      display: inline-block; margin-left: 12px;
-      border: 1px solid rgba(255,255,255,0.25); transition: border-color 0.15s;
+      font-size: 15px; font-weight: 600; padding: 14px 32px;
+      border-radius: 980px; display: inline-block; margin-left: 12px;
+      border: 1px solid rgba(255,255,255,0.22); transition: border-color 0.15s;
     }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.6); }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.55); }
 
     /* ── Footer ── */
     footer { background: var(--surface); padding: 40px 32px; border-top: 1px solid var(--border); }
-    .footer-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
     .footer-logo { display: flex; align-items: center; gap: 8px; }
     .footer-bars { display: flex; flex-direction: column; gap: 3px; }
     .footer-bar { height: 2.5px; border-radius: 2px; background: var(--energy); }
     .footer-bar:nth-child(1) { width: 18px; }
-    .footer-bar:nth-child(2) { width: 13px; }
-    .footer-bar:nth-child(3) { width: 16px; }
+    .footer-bar:nth-child(2) { width: 12px; }
+    .footer-bar:nth-child(3) { width: 15px; }
     .footer-wordmark { font-size: 14px; font-weight: 700; letter-spacing: -0.02em; }
     .footer-wordmark span { color: var(--energy); }
     .footer-links { display: flex; gap: 24px; }
@@ -313,142 +316,84 @@
   <p class="hero-meta"><strong>4,800+</strong> verified businesses &nbsp;·&nbsp; <strong>36</strong> categories &nbsp;·&nbsp; <strong>10</strong> provinces</p>
 </section>
 
-<!-- Stats Bar -->
+<!-- Stats -->
 <div class="stats-bar">
   <div class="stats-inner">
-    <div class="stat">
-      <span class="stat-num">4,800+</span>
-      <span class="stat-label">Verified Vendors</span>
-    </div>
+    <div class="stat"><span class="stat-num">4,800+</span><span class="stat-label">Verified Vendors</span></div>
     <div class="stat-divider"></div>
-    <div class="stat">
-      <span class="stat-num">36</span>
-      <span class="stat-label">Industry Categories</span>
-    </div>
+    <div class="stat"><span class="stat-num">36</span><span class="stat-label">Industry Categories</span></div>
     <div class="stat-divider"></div>
-    <div class="stat">
-      <span class="stat-num">10</span>
-      <span class="stat-label">Provinces Covered</span>
-    </div>
+    <div class="stat"><span class="stat-num">10</span><span class="stat-label">Provinces Covered</span></div>
     <div class="stat-divider"></div>
-    <div class="stat">
-      <span class="stat-num">#1</span>
-      <span class="stat-label">Canadian Energy Directory</span>
-    </div>
+    <div class="stat"><span class="stat-num">#1</span><span class="stat-label">Canadian Energy Directory</span></div>
   </div>
 </div>
 
-<!-- Sectors with Subcategories -->
+<!-- Sectors -->
 <section class="sectors">
   <div class="container">
     <p class="section-label">Browse by Sector</p>
     <h2 class="section-title">Every corner of the industry.</h2>
-    <p class="section-sub">Select a sector to explore subcategories and filter to exactly what you need.</p>
+    <p class="section-sub">Select a sector to explore subcategories and find exactly what you need.</p>
     <div class="sector-grid">
 
       <div class="sector-card">
-        <div class="sector-top">
-          <div class="sector-icon">⛏️</div>
-          <div>
-            <h3>Drilling &amp; Well Services</h3>
-          </div>
+        <div class="sector-icon">
+          <!-- Drilling derrick -->
+          <svg viewBox="0 0 24 24"><path d="M12 3 L5 20 M12 3 L19 20 M7.5 13 L16.5 13 M12 3 L12 8"/></svg>
         </div>
+        <h3>Drilling &amp; Well Services</h3>
         <p class="sector-count">142 vendors across 6 subcategories</p>
-        <div class="subcats">
-          <span class="subcat-pill">Directional Drilling</span>
-          <span class="subcat-pill">Well Completion</span>
-          <span class="subcat-pill">Cementing</span>
-          <span class="subcat-pill">Wellsite Services</span>
-          <span class="subcat-pill more">+2 more →</span>
-        </div>
         <span class="sector-cta">Browse sector →</span>
       </div>
 
       <div class="sector-card">
-        <div class="sector-top">
-          <div class="sector-icon" style="background:#2D6A4F;">🔬</div>
-          <div>
-            <h3>Engineering &amp; Consulting</h3>
-          </div>
+        <div class="sector-icon">
+          <!-- Engineering compass -->
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2 L12 6 M12 18 L12 22 M2 12 L6 12 M18 12 L22 12"/><path d="M8 8 L5 5 M16 16 L19 19 M16 8 L19 5 M8 16 L5 19"/></svg>
         </div>
+        <h3>Engineering &amp; Consulting</h3>
         <p class="sector-count">183 vendors across 8 subcategories</p>
-        <div class="subcats">
-          <span class="subcat-pill">Environmental</span>
-          <span class="subcat-pill">Geotechnical</span>
-          <span class="subcat-pill">Structural</span>
-          <span class="subcat-pill">Project Management</span>
-          <span class="subcat-pill more">+4 more →</span>
-        </div>
         <span class="sector-cta">Browse sector →</span>
       </div>
 
       <div class="sector-card">
-        <div class="sector-top">
-          <div class="sector-icon" style="background:#7B2D8B;">🔩</div>
-          <div>
-            <h3>Equipment &amp; Machinery</h3>
-          </div>
+        <div class="sector-icon">
+          <!-- Gear -->
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1l2.1-2.1M17 7l2.1-2.1"/></svg>
         </div>
+        <h3>Equipment &amp; Machinery</h3>
         <p class="sector-count">218 vendors across 7 subcategories</p>
-        <div class="subcats">
-          <span class="subcat-pill">Rental</span>
-          <span class="subcat-pill">Sales &amp; Distribution</span>
-          <span class="subcat-pill">Parts &amp; Components</span>
-          <span class="subcat-pill">Maintenance</span>
-          <span class="subcat-pill more">+3 more →</span>
-        </div>
         <span class="sector-cta">Browse sector →</span>
       </div>
 
       <div class="sector-card">
-        <div class="sector-top">
-          <div class="sector-icon" style="background:#B5451B;">⛰️</div>
-          <div>
-            <h3>Mining Services</h3>
-          </div>
+        <div class="sector-icon">
+          <!-- Mountain + pickaxe -->
+          <svg viewBox="0 0 24 24"><path d="M2 20 L8 10 L12 14 L16 8 L22 20 Z"/><path d="M14 4 L18 8 M15.5 4.5 L13 7"/></svg>
         </div>
+        <h3>Mining Services</h3>
         <p class="sector-count">94 vendors across 5 subcategories</p>
-        <div class="subcats">
-          <span class="subcat-pill">Exploration</span>
-          <span class="subcat-pill">Mine Development</span>
-          <span class="subcat-pill">Processing</span>
-          <span class="subcat-pill">Reclamation</span>
-          <span class="subcat-pill more">+1 more →</span>
-        </div>
         <span class="sector-cta">Browse sector →</span>
       </div>
 
       <div class="sector-card">
-        <div class="sector-top">
-          <div class="sector-icon" style="background:#1B7A34;">🌿</div>
-          <div>
-            <h3>Renewable Energy</h3>
-          </div>
+        <div class="sector-icon">
+          <!-- Wind turbine -->
+          <svg viewBox="0 0 24 24"><line x1="12" y1="12" x2="12" y2="22"/><path d="M12 12 L12 4 Q12 2 14 3 L16 8 Q17 10 12 12Z"/><path d="M12 12 L5 16 Q3 17 3 15 L6 10 Q8 8 12 12Z"/><path d="M12 12 L19 8 Q21 7 21 9 L18 14 Q16 16 12 12Z"/><circle cx="12" cy="12" r="1.5" fill="white" stroke="none"/></svg>
         </div>
+        <h3>Renewable Energy</h3>
         <p class="sector-count">97 vendors across 4 subcategories</p>
-        <div class="subcats">
-          <span class="subcat-pill">Wind</span>
-          <span class="subcat-pill">Solar</span>
-          <span class="subcat-pill">Hydrogen</span>
-          <span class="subcat-pill">Energy Storage</span>
-        </div>
         <span class="sector-cta">Browse sector →</span>
       </div>
 
       <div class="sector-card">
-        <div class="sector-top">
-          <div class="sector-icon" style="background:#6B4F12;">🚛</div>
-          <div>
-            <h3>Transportation &amp; Logistics</h3>
-          </div>
+        <div class="sector-icon">
+          <!-- Truck -->
+          <svg viewBox="0 0 24 24"><rect x="1" y="8" width="15" height="10" rx="1"/><path d="M16 11 L19 8 L23 8 L23 18 L16 18"/><circle cx="5.5" cy="18.5" r="1.5"/><circle cx="18.5" cy="18.5" r="1.5"/><line x1="1" y1="12" x2="16" y2="12"/></svg>
         </div>
+        <h3>Transportation &amp; Logistics</h3>
         <p class="sector-count">76 vendors across 4 subcategories</p>
-        <div class="subcats">
-          <span class="subcat-pill">Heavy Haul</span>
-          <span class="subcat-pill">Pipeline Transport</span>
-          <span class="subcat-pill">Fluid Hauling</span>
-          <span class="subcat-pill">Camp Logistics</span>
-        </div>
         <span class="sector-cta">Browse sector →</span>
       </div>
 
@@ -473,7 +418,7 @@
           </div>
           <span class="featured-badge">Featured</span>
         </div>
-        <span class="vendor-sector">Drilling &amp; Well Services › Directional Drilling</span>
+        <span class="vendor-sector">Drilling &amp; Well Services</span>
         <p class="vendor-desc">Full-service drilling contractor operating across Alberta and Saskatchewan with 20+ years in conventional and unconventional plays.</p>
         <div class="vendor-footer">
           <span class="vendor-location">📍 Calgary, AB</span>
@@ -490,7 +435,7 @@
           </div>
           <span class="featured-badge">Featured</span>
         </div>
-        <span class="vendor-sector">Engineering &amp; Consulting › Pipeline Engineering</span>
+        <span class="vendor-sector">Engineering &amp; Consulting</span>
         <p class="vendor-desc">Specializing in pipeline construction, integrity management, and maintenance for oil and gas transmission operators across Western Canada.</p>
         <div class="vendor-footer">
           <span class="vendor-location">📍 Edmonton, AB</span>
@@ -507,7 +452,7 @@
           </div>
           <span class="featured-badge">Featured</span>
         </div>
-        <span class="vendor-sector">Mining Services › Mine Development</span>
+        <span class="vendor-sector">Mining Services</span>
         <p class="vendor-desc">Underground and surface mine development specialists with active operations in BC, Alberta, and the Northwest Territories.</p>
         <div class="vendor-footer">
           <span class="vendor-location">📍 Vancouver, BC</span>
@@ -522,7 +467,7 @@
 <!-- Value Props -->
 <section class="value-props">
   <div class="container">
-    <div style="text-align:center; margin-bottom: 56px;">
+    <div style="text-align:center; margin-bottom:56px;">
       <p class="section-label">Why Energy Directory</p>
       <h2 class="section-title">Built for Canadian energy and mining.</h2>
     </div>
@@ -535,12 +480,12 @@
       <div class="value-item">
         <div class="value-icon">🇨🇦</div>
         <h3>Canadian-First</h3>
-        <p>Built specifically for Canada's energy and mining market — no irrelevant international noise cluttering your search.</p>
+        <p>Built specifically for Canada's energy and mining market — no irrelevant international noise.</p>
       </div>
       <div class="value-item">
         <div class="value-icon">🔍</div>
         <h3>Deep Filtering</h3>
-        <p>Drill down by province, sector, subcategory, company size, and service type to find exactly what you need.</p>
+        <p>Drill down by province, sector, subcategory, and service type to find exactly what you need.</p>
       </div>
     </div>
   </div>
