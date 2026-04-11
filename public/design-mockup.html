@@ -29,13 +29,20 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 17px; -webkit-font-smoothing: antialiased; }
     body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; }
-    /* Global light weight for all body copy */
-    p, span, a, li, td, th, label { font-weight: 300; }
-    /* Headings stay bold */
-    h1 { font-weight: 300; }
-    h2 { font-weight: 700; }
-    h3 { font-weight: 600; }
-    .hero h1 strong, .hero h1 em { font-weight: 800; }
+    /* Font weight system */
+    p, span, a, li, td, th, label, .section-sub, .hero-meta, .hero-sub,
+    .sector-count, .vendor-desc, .vendor-location, .stat-label,
+    .footer-copy, .footer-links a, .nav-links a { font-weight: 300 !important; }
+    h1 { font-weight: 300 !important; }
+    h2 { font-weight: 300 !important; }
+    h3 { font-weight: 500 !important; }
+    .hero h1 strong { font-weight: 800 !important; }
+    .hero h1 em { font-weight: 800 !important; }
+    .section-title { font-weight: 300 !important; }
+    .stat-num { font-weight: 800 !important; }
+    .btn-nav, .btn-white, .btn-ghost { font-weight: 600 !important; }
+    .logo-wordmark { font-weight: 700 !important; }
+    .vendor-badge, .featured-badge, .section-label, .hero-label { font-weight: 600 !important; }
     a { color: inherit; text-decoration: none; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
 
@@ -246,9 +253,12 @@
     .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
     .value-item { text-align: center; }
     .value-icon {
-      width: 64px; height: 64px; border-radius: 18px;
-      background: var(--surface); margin: 0 auto 20px;
-      display: flex; align-items: center; justify-content: center; font-size: 28px;
+      width: 60px; height: 60px; border-radius: 16px;
+      background: linear-gradient(160deg, #F07030 0%, #E8590C 40%, #CC4A08 100%);
+      margin: 0 auto 20px;
+      display: flex; align-items: center; justify-content: center; font-size: 26px;
+      box-shadow: 0 4px 16px rgba(232,89,12,0.25);
+      filter: grayscale(1) brightness(10);
     }
     .value-item h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
     .value-item p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
