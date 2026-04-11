@@ -156,27 +156,34 @@
       border-color: var(--border);
     }
 
-    /* Icon tile — white background, black outline, orange icon */
+    /* Icon tile — orange gradient with glass sheen */
     .sector-icon {
-      width: 54px; height: 54px;
-      border-radius: 14px;
-      background: #FFFFFF;
-      border: 2px solid #1D1D1F;
+      width: 60px; height: 60px;
+      border-radius: 16px;
+      background: linear-gradient(160deg, #F07030 0%, #E8590C 40%, #CC4A08 100%);
       display: flex; align-items: center; justify-content: center;
       position: relative; overflow: hidden;
-      box-shadow: 3px 3px 0px #1D1D1F;
+      box-shadow: 0 4px 16px rgba(232,89,12,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
       transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1),
                   box-shadow 0.22s ease;
     }
+    .sector-icon::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 50%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 100%);
+      border-radius: 16px 16px 0 0;
+      pointer-events: none;
+    }
     .sector-card:hover .sector-icon {
-      transform: scale(1.06) translate(-1px, -1px);
-      box-shadow: 5px 5px 0px #1D1D1F;
+      transform: scale(1.08);
+      box-shadow: 0 8px 24px rgba(232,89,12,0.45), inset 0 1px 0 rgba(255,255,255,0.3);
     }
     .sector-icon-glyph {
-      font-size: 24px;
+      font-size: 26px;
       line-height: 1;
       position: relative; z-index: 1;
-      filter: sepia(1) saturate(5) hue-rotate(340deg) brightness(0.85);
+      opacity: 0.9;
+      filter: grayscale(1) brightness(10);
       transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
     }
     .sector-card:hover .sector-icon-glyph { transform: scale(1.08); }
