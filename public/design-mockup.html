@@ -28,9 +28,13 @@
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 17px; -webkit-font-smoothing: antialiased; }
-    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; font-weight: 300; }
-    .logo-wordmark, .btn-nav, .section-title, .sector-card h3, .vendor-info h3, .value-item h3, .stat-num, .featured-badge, .vendor-badge { font-weight: 700; }
-    .hero h1 { font-weight: 300; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; }
+    /* Global light weight for all body copy */
+    p, span, a, li, td, th, label { font-weight: 300; }
+    /* Headings stay bold */
+    h1 { font-weight: 300; }
+    h2 { font-weight: 700; }
+    h3 { font-weight: 600; }
     .hero h1 strong, .hero h1 em { font-weight: 800; }
     a { color: inherit; text-decoration: none; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
@@ -175,13 +179,15 @@
       transform: scale(1.08);
       box-shadow: 0 8px 24px rgba(232,89,12,0.45), inset 0 1px 0 rgba(255,255,255,0.3);
     }
-    .sector-icon svg {
-      width: 28px; height: 28px;
-      stroke: rgba(255,255,255,0.4); fill: none;
-      stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+    .sector-icon-glyph {
+      font-size: 26px;
+      line-height: 1;
       position: relative; z-index: 1;
+      opacity: 0.55;
+      filter: grayscale(1) brightness(10);
       transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
     }
+    .sector-card:hover .sector-icon-glyph { transform: scale(1.08); }
     .sector-card:hover .sector-icon svg { transform: scale(1.05); }
 
     .sector-card h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
