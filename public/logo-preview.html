@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Energy Directory — Logo Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #F5F5F7; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; gap: 48px; padding: 48px; }
+
+    .preview-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 48px 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 700px;
+    }
+    .preview-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6E6E73;
+    }
+    .divider { width: 100%; height: 1px; background: #E8E8ED; }
+
+    /* ── Logo: Horizontal (primary) ── */
+    .logo-horizontal { display: flex; align-items: center; gap: 12px; }
+    .logo-bars { display: flex; flex-direction: column; gap: 4px; }
+    .logo-bar { height: 4px; border-radius: 2px; background: #E8590C; }
+    .logo-bar-1 { width: 32px; }
+    .logo-bar-2 { width: 22px; }
+    .logo-bar-3 { width: 28px; }
+    .logo-wordmark { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; color: #1D1D1F; line-height: 1; }
+    .logo-wordmark span { color: #E8590C; }
+
+    /* ── Logo: Large ── */
+    .logo-large .logo-bar { height: 6px; border-radius: 3px; }
+    .logo-large .logo-bar-1 { width: 48px; }
+    .logo-large .logo-bar-2 { width: 32px; }
+    .logo-large .logo-bar-3 { width: 40px; }
+    .logo-large .logo-wordmark { font-size: 38px; }
+    .logo-large .logo-bars { gap: 6px; }
+    .logo-large .logo-horizontal { gap: 18px; }
+
+    /* ── Logo: Small ── */
+    .logo-small .logo-bar { height: 2.5px; border-radius: 2px; }
+    .logo-small .logo-bar-1 { width: 20px; }
+    .logo-small .logo-bar-2 { width: 14px; }
+    .logo-small .logo-bar-3 { width: 18px; }
+    .logo-small .logo-wordmark { font-size: 15px; }
+    .logo-small .logo-bars { gap: 3px; }
+    .logo-small .logo-horizontal { gap: 8px; }
+
+    /* ── Logo: Icon only ── */
+    .logo-icon-only { display: flex; flex-direction: column; gap: 5px; }
+    .logo-icon-only .logo-bar { height: 5px; border-radius: 2.5px; background: #E8590C; }
+    .logo-icon-only .bar-1 { width: 40px; }
+    .logo-icon-only .bar-2 { width: 27px; }
+    .logo-icon-only .bar-3 { width: 34px; }
+
+    /* ── Logo: On dark background ── */
+    .dark-card {
+      background: #1D1D1F;
+      border-radius: 20px;
+      padding: 48px 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      width: 100%;
+      max-width: 700px;
+    }
+    .dark-card .preview-label { color: rgba(255,255,255,0.4); }
+    .dark-card .divider { background: rgba(255,255,255,0.1); }
+    .logo-wordmark-light { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; color: #fff; line-height: 1; }
+    .logo-wordmark-light span { color: #E8590C; }
+
+    /* ── Logo: On orange background ── */
+    .orange-card {
+      background: #E8590C;
+      border-radius: 20px;
+      padding: 48px 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      width: 100%;
+      max-width: 700px;
+    }
+    .orange-card .preview-label { color: rgba(255,255,255,0.6); }
+    .orange-card .divider { background: rgba(255,255,255,0.2); }
+    .logo-bars-white .logo-bar { background: #fff; }
+    .logo-wordmark-white { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; color: #fff; line-height: 1; }
+    .logo-wordmark-white span { color: rgba(255,255,255,0.6); }
+
+    .row { display: flex; align-items: center; gap: 48px; flex-wrap: wrap; justify-content: center; }
+  </style>
+</head>
+<body>
+
+  <!-- White background -->
+  <div class="preview-card">
+    <span class="preview-label">Primary — On White</span>
+    <div class="divider"></div>
+
+    <!-- Large -->
+    <div class="logo-large">
+      <div class="logo-horizontal">
+        <div class="logo-bars">
+          <div class="logo-bar logo-bar-1"></div>
+          <div class="logo-bar logo-bar-2"></div>
+          <div class="logo-bar logo-bar-3"></div>
+        </div>
+        <span class="logo-wordmark">Energy<span>Directory</span></span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="row">
+      <!-- Medium -->
+      <div class="logo-horizontal">
+        <div class="logo-bars">
+          <div class="logo-bar logo-bar-1"></div>
+          <div class="logo-bar logo-bar-2"></div>
+          <div class="logo-bar logo-bar-3"></div>
+        </div>
+        <span class="logo-wordmark">Energy<span>Directory</span></span>
+      </div>
+
+      <!-- Small -->
+      <div class="logo-small">
+        <div class="logo-horizontal">
+          <div class="logo-bars">
+            <div class="logo-bar logo-bar-1"></div>
+            <div class="logo-bar logo-bar-2"></div>
+            <div class="logo-bar logo-bar-3"></div>
+          </div>
+          <span class="logo-wordmark">Energy<span>Directory</span></span>
+        </div>
+      </div>
+
+      <!-- Icon only -->
+      <div class="logo-icon-only">
+        <div class="logo-bar bar-1"></div>
+        <div class="logo-bar bar-2"></div>
+        <div class="logo-bar bar-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dark background -->
+  <div class="dark-card">
+    <span class="preview-label">On Dark Background</span>
+    <div class="divider"></div>
+    <div class="logo-horizontal">
+      <div class="logo-bars">
+        <div class="logo-bar logo-bar-1"></div>
+        <div class="logo-bar logo-bar-2"></div>
+        <div class="logo-bar logo-bar-3"></div>
+      </div>
+      <span class="logo-wordmark-light">Energy<span>Directory</span></span>
+    </div>
+  </div>
+
+  <!-- Orange background -->
+  <div class="orange-card">
+    <span class="preview-label">On Orange Background</span>
+    <div class="divider"></div>
+    <div class="logo-horizontal">
+      <div class="logo-bars logo-bars-white">
+        <div class="logo-bar logo-bar-1"></div>
+        <div class="logo-bar logo-bar-2"></div>
+        <div class="logo-bar logo-bar-3"></div>
+      </div>
+      <span class="logo-wordmark-white">Energy<span>Directory</span></span>
+    </div>
+  </div>
+
+</body>
+</html>
