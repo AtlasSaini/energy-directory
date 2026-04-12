@@ -133,6 +133,17 @@
     .vcard-btn { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 7px 12px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.15s; }
     .vcard-btn:hover { background: var(--accent-hover); }
 
+    /* ── How It Works ── */
+    .how-it-works { padding: 96px 0; background: var(--bg); }
+    .hiw-grid { display: flex; align-items: center; gap: 0; }
+    .hiw-step { flex: 1; text-align: center; padding: 0 24px; }
+    .hiw-num { width: 40px; height: 40px; border-radius: 50%; background: rgba(232,89,12,0.10); border: 1.5px solid rgba(232,89,12,0.30); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: var(--energy); margin: 0 auto 20px; }
+    .hiw-icon { width: 64px; height: 64px; border-radius: 16px; background: var(--surface); border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .hiw-icon svg { width: 28px; height: 28px; }
+    .hiw-step h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+    .hiw-step p { font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.65; }
+    .hiw-arrow { font-size: 28px; color: var(--border); flex-shrink: 0; padding-bottom: 40px; }
+
     /* ── Value Props ── */
     .value-props { padding: 96px 0; }
     .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
@@ -153,19 +164,25 @@
     .btn-ghost:hover { border-color: rgba(255,255,255,0.55); }
 
     /* ── Footer ── */
-    footer { background: var(--surface); padding: 40px 32px; border-top: 1px solid var(--border); }
-    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-    .footer-logo { display: flex; align-items: center; gap: 8px; }
+    footer { background: #0A0A0F; padding: 56px 32px 32px; }
+    .footer-top { max-width: 1100px; margin: 0 auto 48px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; }
+    .footer-brand .footer-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
     .footer-bars { display: flex; flex-direction: column; gap: 3px; }
     .footer-bar { height: 2.5px; border-radius: 2px; background: var(--energy); }
     .footer-bar:nth-child(1) { width: 18px; }
     .footer-bar:nth-child(2) { width: 12px; }
     .footer-bar:nth-child(3) { width: 15px; }
-    .footer-wordmark { font-size: 14px; font-weight: 700; letter-spacing: -0.02em; }
+    .footer-wordmark { font-size: 14px; font-weight: 700; letter-spacing: -0.02em; color: #fff; }
     .footer-wordmark span { color: var(--energy); }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { font-size: 13px; font-weight: 300; color: var(--text-secondary); }
-    .footer-copy { font-size: 13px; font-weight: 300; color: var(--text-secondary); }
+    .footer-tagline { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.6; max-width: 200px; }
+    .footer-col h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 16px; letter-spacing: 0.01em; }
+    .footer-col a { display: block; font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.55); margin-bottom: 10px; transition: color 0.15s; }
+    .footer-col a:hover { color: rgba(255,255,255,0.9); }
+    .footer-bottom { max-width: 1100px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.3); }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.3); transition: color 0.15s; }
+    .footer-legal a:hover { color: rgba(255,255,255,0.6); }
   </style>
 </head>
 <body>
@@ -369,6 +386,39 @@
   </div>
 </section>
 
+<!-- How It Works -->
+<section class="how-it-works">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:56px;">
+      <p class="section-label">For Buyers</p>
+      <h2 class="section-title">Find and connect in minutes.</h2>
+      <p class="section-sub">No sign-up required to browse. Send your first request in under 5 minutes.</p>
+    </div>
+    <div class="hiw-grid">
+      <div class="hiw-step">
+        <div class="hiw-num">1</div>
+        <div class="hiw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <h3>Discover</h3>
+        <p>Browse 1,056+ verified vendors across 36 energy and mining categories — filtered by province, sector, and service type.</p>
+      </div>
+      <div class="hiw-arrow">&rarr;</div>
+      <div class="hiw-step">
+        <div class="hiw-num">2</div>
+        <div class="hiw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+        <h3>Shortlist</h3>
+        <p>Save vendors you want to contact to your personal shortlist as you browse — across any category or sector.</p>
+      </div>
+      <div class="hiw-arrow">&rarr;</div>
+      <div class="hiw-step">
+        <div class="hiw-num">3</div>
+        <div class="hiw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
+        <h3>Send &amp; Connect</h3>
+        <p>One form. All vendors notified simultaneously. Get responses fast — without filling out the same form over and over.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Value Props -->
 <section class="value-props">
   <div class="container">
@@ -406,13 +456,43 @@
 
 <!-- Footer -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-logo">
-      <div class="footer-bars"><div class="footer-bar"></div><div class="footer-bar"></div><div class="footer-bar"></div></div>
-      <span class="footer-wordmark">Energy<span>Directory</span></span>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="footer-bars"><div class="footer-bar"></div><div class="footer-bar"></div><div class="footer-bar"></div></div>
+        <span class="footer-wordmark">Energy<span>Directory</span></span>
+      </div>
+      <p class="footer-tagline">Canada’s largest energy and mining vendor directory.</p>
     </div>
-    <div class="footer-links"><a href="#">Browse</a><a href="#">About</a><a href="#">Contact</a><a href="#">Privacy</a></div>
-    <span class="footer-copy">© 2026 Energy Directory. Canada.</span>
+    <div class="footer-col">
+      <h4>Directory</h4>
+      <a href="#">All Vendors</a>
+      <a href="#">Featured Vendors</a>
+      <a href="#">Browse by Sector</a>
+      <a href="#">Browse by Province</a>
+    </div>
+    <div class="footer-col">
+      <h4>For Buyers</h4>
+      <a href="#">How It Works</a>
+      <a href="#">Send an Inquiry</a>
+      <a href="#">Browse Vendors</a>
+      <a href="#">My Shortlist</a>
+    </div>
+    <div class="footer-col">
+      <h4>For Business</h4>
+      <a href="#">List Your Business</a>
+      <a href="#">Pricing</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Energy Directory. All rights reserved.</span>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact</a>
+    </div>
   </div>
 </footer>
 
