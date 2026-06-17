@@ -33,6 +33,21 @@ async function getHomeData() {
 
 export const revalidate = 3600
 
+
+export const metadata = {
+  title: 'Canadian Energy Directory | Find Verified Energy & Mining Vendors',
+  description: 'Canada\'s largest energy sector vendor directory. Find verified oil & gas, mining, pipeline, renewables, and engineering suppliers across Alberta, BC, Saskatchewan and beyond.',
+  keywords: 'Canadian energy directory, energy directory Canada, oil gas vendors Canada, energy suppliers Alberta, mining vendors Canada, pipeline companies Canada, energy directory',
+  openGraph: {
+    title: 'Canadian Energy Directory | Find Verified Energy & Mining Vendors',
+    description: 'Canada\'s largest energy sector vendor directory. Find verified oil & gas, mining, pipeline, renewables, and engineering suppliers.',
+    url: 'https://energydirectory.ca',
+    siteName: 'Canadian Energy Directory',
+  },
+  alternates: {
+    canonical: 'https://energydirectory.ca',
+  },
+}
 export default async function HomePage() {
   const { categories, featuredVendors, vendorCount } = await getHomeData()
 
