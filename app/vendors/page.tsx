@@ -299,7 +299,7 @@ export default async function VendorsPage({
         <div className="flex-1 min-w-0">
           {vendors.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-start">
                 {vendors.map((vendor) => (
                   <VendorCard key={vendor.id} vendor={vendor} />
                 ))}
