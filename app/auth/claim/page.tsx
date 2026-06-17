@@ -1,9 +1,9 @@
-'use client'
+use client'
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
+import Logo from '@/components/Logo'
 import { createClient } from '@/lib/supabase-browser'
 import { extractDomain, isFreeEmailDomain } from '@/lib/free-email-domains'
 
@@ -110,14 +110,14 @@ export default function ClaimPage() {
   const tierBadge = (tier: string) => {
     const map: Record<string, string> = {
       premium: 'bg-purple-100 text-purple-700',
-      featured: 'bg-amber-100 text-amber-700',
+      featured: 'bg-[#E8590C]/10 text-[#E8590C]',
       free: 'bg-gray-100 text-gray-600',
     }
     return map[tier] ?? map.free
   }
 
   const VendorRow = ({ vendor, isDomainMatch }: { vendor: Vendor; isDomainMatch: boolean }) => (
-    <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-amber-300 transition-colors">
+    <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#E8590C]/30 transition-colors">
       <div>
         <p className="font-semibold text-gray-900">{vendor.company_name}</p>
         <p className="text-sm text-gray-500">
@@ -138,7 +138,7 @@ export default function ClaimPage() {
       <button
         onClick={() => handleClaim(vendor.id, isDomainMatch)}
         disabled={claiming === vendor.id}
-        className="ml-4 shrink-0 bg-amber-500 hover:bg-amber-400 disabled:bg-amber-300 text-[#0a1628] font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
+        className="ml-4 shrink-0 bg-[#E8590C] hover:bg-[#CC4A08] disabled:bg-[#E8590C]/50 text-white font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
       >
         {claiming === vendor.id ? 'Claiming…' : 'Claim It'}
       </button>
@@ -150,7 +150,7 @@ export default function ClaimPage() {
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex mb-6">
-            <Image src="/logo/logo-medium-light.svg" alt="Energy Directory" width={160} height={43} />
+            <Logo variant="dark" size="md" />
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">Claim Your Listing</h1>
           <p className="text-gray-500 mt-1 text-sm">
@@ -206,12 +206,12 @@ export default function ClaimPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search company name…"
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm"
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8590C]/20 focus:border-transparent text-sm"
             />
             <button
               type="submit"
               disabled={searching}
-              className="bg-[#0a1628] hover:bg-[#0d1f35] text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+              className="bg-[#1D1D1F] hover:bg-[#2d2d2f] text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
             >
               {searching ? 'Searching…' : 'Search'}
             </button>
@@ -228,7 +228,7 @@ export default function ClaimPage() {
           {searchResults.length === 0 && searchQuery && !searching && (
             <p className="text-sm text-gray-500 text-center py-4">
               No unclaimed listings found for &quot;{searchQuery}&quot;.{' '}
-              <Link href="/list-your-business" className="text-amber-600 hover:underline">
+              <Link href="/list-your-business" className="text-[#E8590C] hover:underline">
                 Add your business
               </Link>{' '}
               instead.
@@ -239,7 +239,7 @@ export default function ClaimPage() {
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-400 mb-3">
             Already claimed?{' '}
-            <Link href="/dashboard" className="text-amber-600 hover:underline">
+            <Link href="/dashboard" className="text-[#E8590C] hover:underline">
               Go to dashboard
             </Link>
           </p>
@@ -247,7 +247,7 @@ export default function ClaimPage() {
             <p className="text-sm text-gray-500 mb-3">Don&apos;t see your company listed?</p>
             <Link
               href="/list-your-business"
-              className="inline-block bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+              className="inline-block bg-[#E8590C] hover:bg-[#CC4A08] text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
             >
               + Add New Listing
             </Link>
