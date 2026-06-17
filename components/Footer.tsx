@@ -15,7 +15,7 @@ export default function Footer() {
               Canada&apos;s largest energy and mining directory. Connecting buyers with trusted suppliers across oil &amp; gas, renewables, and mining.
             </p>
             <p className="text-sm mt-3">
-              <a href="mailto:support@energydirectory.ca" className="hover:text-[#E8590C] transition-colors">Contact Us</a>
+              <a href="mailto:support@energydirectory.ca" className="hover:text-[#E8590C] transition-colors">support@energydirectory.ca</a>
             </p>
           </div>
 
