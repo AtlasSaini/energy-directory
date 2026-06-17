@@ -24,7 +24,7 @@ export default function VendorCard({ vendor }: VendorCardProps) {
   return (
     <Link href={`/vendors/${vendor.slug}`}>
       <div className={`
-        group bg-white rounded-xl border transition-all duration-200 cursor-pointer
+        group bg-white rounded-xl border transition-all duration-200 cursor-pointer h-full
         flex items-center gap-4 p-4
         hover:-translate-y-0.5 hover:shadow-md
         ${isFeatured
