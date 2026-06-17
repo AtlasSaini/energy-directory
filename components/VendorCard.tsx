@@ -8,8 +8,8 @@ interface VendorCardProps {
 }
 
 const TIER_BADGES = {
-  premium: { label: 'Premium', classes: 'bg-amber-100 text-amber-800 border border-amber-300' },
-  featured: { label: '⭐ Featured', classes: 'bg-amber-500 text-[#0a1628] border border-amber-400 font-semibold' },
+  premium: { label: 'Premium', classes: 'bg-[#E8590C]/10 text-[#E8590C] border border-[#E8590C]/30' },
+  featured: { label: '⭐ Featured', classes: 'bg-[#E8590C] text-white border border-[#E8590C] font-semibold' },
   free: { label: null, classes: '' },
 }
 
@@ -26,7 +26,7 @@ export default function VendorCard({ vendor }: VendorCardProps) {
 
   return (
     <Link href={`/vendors/${vendor.slug}`}>
-      <div className={`rounded-xl border transition-all hover:shadow-lg h-full flex flex-col ${isPremium ? 'bg-white border-amber-300 shadow-amber-50 shadow-sm' : isFeatured ? 'bg-amber-50 border-amber-300 shadow-amber-100 shadow-md ring-1 ring-amber-200' : 'bg-white border-gray-200 hover:shadow-md'}`}>
+      <div className={`rounded-xl border transition-all hover:shadow-lg h-full flex flex-col ${isPremium ? 'bg-white border-[#E8590C]/30 shadow-sm' : isFeatured ? 'bg-[#FFF5F0] border-[#E8590C]/30 shadow-md ring-1 ring-[#E8590C]/20' : 'bg-white border-gray-200 hover:shadow-md'}`}>
         {/* Banner */}
         {vendor.banner_url ? (
           <div className="h-24 rounded-t-xl overflow-hidden">
@@ -34,7 +34,7 @@ export default function VendorCard({ vendor }: VendorCardProps) {
             <img src={vendor.banner_url} alt="" className="w-full h-full object-cover" />
           </div>
         ) : (
-          <div className={`h-16 rounded-t-xl ${isPremium ? 'bg-gradient-to-r from-[#0a1628] to-amber-900' : isFeatured ? 'bg-gradient-to-r from-[#0a1628] to-blue-900' : 'bg-gradient-to-r from-[#0a1628] to-slate-700'}`} />
+          <div className={`h-16 rounded-t-xl ${isPremium ? 'bg-gradient-to-r from-[#1D1D1F] to-orange-900' : isFeatured ? 'bg-gradient-to-r from-[#1D1D1F] to-blue-900' : 'bg-gradient-to-r from-[#1D1D1F] to-slate-700'}`} />
         )}
 
         <div className="p-4 flex flex-col flex-1 -mt-4">
@@ -45,7 +45,7 @@ export default function VendorCard({ vendor }: VendorCardProps) {
             </div>
             <div className="min-w-0 flex-1 pt-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="font-semibold text-[#0a1628] text-sm leading-tight truncate">{vendor.company_name}</h3>
+                <h3 className="font-semibold text-[#1D1D1F] text-sm leading-tight truncate">{vendor.company_name}</h3>
                 {vendor.verified && (
                   <span className="text-blue-500" title="Verified">✓</span>
                 )}
