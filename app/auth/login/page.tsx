@@ -1,8 +1,8 @@
-'use client'
+use client'
 
 import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import Logo from '@/components/Logo'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase-browser'
 
@@ -46,7 +46,7 @@ function LoginForm() {
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex mb-6">
-            <Image src="/logo/logo-medium-light.svg" alt="Energy Directory" width={160} height={43} />
+            <Logo variant="dark" size="md" />
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">Sign in to your account</h1>
           <p className="text-gray-500 mt-1 text-sm">Manage your listing on EnergyDirectory.ca</p>
@@ -67,7 +67,7 @@ function LoginForm() {
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="you@yourcompany.com"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8590C] focus:border-transparent text-sm"
                 required
               />
             </div>
@@ -79,13 +79,13 @@ function LoginForm() {
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 placeholder="Your password"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8590C] focus:border-transparent text-sm"
                 required
               />
             </div>
 
             <div className="flex justify-end mb-1">
-              <a href="/auth/forgot-password" className="text-xs text-amber-600 hover:text-amber-500">
+              <a href="/auth/forgot-password" className="text-xs text-[#E8590C] hover:text-[#CC4A08]">
                 Forgot password?
               </a>
             </div>
@@ -93,7 +93,7 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-amber-500 hover:bg-amber-400 disabled:bg-amber-300 text-[#0a1628] font-semibold py-2.5 rounded-lg transition-colors text-sm"
+              className="w-full bg-[#E8590C] hover:bg-[#CC4A08] disabled:bg-[#E8590C]/50 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm"
             >
               {loading ? 'Signing in…' : 'Sign In'}
             </button>
@@ -102,7 +102,7 @@ function LoginForm() {
           <div className="mt-6 pt-6 border-t border-gray-100 text-center space-y-2">
             <p className="text-sm text-gray-500">
               Don&apos;t have an account?{' '}
-              <Link href="/auth/signup" className="text-amber-600 hover:underline font-medium">
+              <Link href="/auth/signup" className="text-[#E8590C] hover:underline font-medium">
                 Create one
               </Link>
             </p>
