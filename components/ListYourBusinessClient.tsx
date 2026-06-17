@@ -1,4 +1,4 @@
-'use client'
+use client'
 
 import { useState } from 'react'
 import PricingCard from '@/components/PricingCard'
@@ -52,17 +52,17 @@ export default function ListYourBusinessClient({ categoryCount }: Props) {
       <section className="py-16 px-4" id="pricing">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold text-[#0a1628] mb-4">Choose Your Plan</h2>
+            <h2 className="text-2xl font-bold text-[#1D1D1F] mb-4">Choose Your Plan</h2>
             <div className="inline-flex items-center bg-gray-100 rounded-xl p-1 gap-1">
               <button
                 onClick={() => setBilling('monthly')}
-                className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${billing === 'monthly' ? 'bg-white text-[#0a1628] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${billing === 'monthly' ? 'bg-white text-[#1D1D1F] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
               >
                 Monthly
               </button>
               <button
                 onClick={() => setBilling('annual')}
-                className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${billing === 'annual' ? 'bg-white text-[#0a1628] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${billing === 'annual' ? 'bg-white text-[#1D1D1F] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
               >
                 Annual
                 <span className="ml-1.5 bg-green-100 text-green-700 text-xs px-1.5 py-0.5 rounded-full">Save 17%</span>
@@ -84,7 +84,7 @@ export default function ListYourBusinessClient({ categoryCount }: Props) {
           </p>
           <p className="text-center text-gray-400 text-sm mt-4">
             Cancel anytime. Questions? Email{' '}
-            <a href="mailto:support@energydirectory.ca" className="text-amber-600 hover:text-amber-500">
+            <a href="mailto:support@energydirectory.ca" className="text-[#E8590C] hover:text-[#CC4A08]">
               support@energydirectory.ca
             </a>
           </p>
@@ -97,17 +97,17 @@ export default function ListYourBusinessClient({ categoryCount }: Props) {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-3xl mb-2">🇨🇦</div>
-              <h3 className="font-semibold text-[#0a1628] mb-1">Canada-Focused</h3>
+              <h3 className="font-semibold text-[#1D1D1F] mb-1">Canada-Focused</h3>
               <p className="text-gray-500 text-sm">Built for Canada&apos;s energy and mining sector — every province, every category.</p>
             </div>
             <div>
               <div className="text-3xl mb-2">✅</div>
-              <h3 className="font-semibold text-[#0a1628] mb-1">Quality Listings</h3>
+              <h3 className="font-semibold text-[#1D1D1F] mb-1">Quality Listings</h3>
               <p className="text-gray-500 text-sm">Every visible listing has a verified website or phone number. No ghost companies.</p>
             </div>
             <div>
               <div className="text-3xl mb-2">📈</div>
-              <h3 className="font-semibold text-[#0a1628] mb-1">Real Leads</h3>
+              <h3 className="font-semibold text-[#1D1D1F] mb-1">Real Leads</h3>
               <p className="text-gray-500 text-sm">Buyers use our directory to find and contact vendors. Inquiries go straight to your inbox.</p>
             </div>
           </div>
@@ -117,7 +117,7 @@ export default function ListYourBusinessClient({ categoryCount }: Props) {
       {/* FAQ */}
       <section className="py-16 px-4">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#0a1628] text-center mb-8">Frequently Asked Questions</h2>
+          <h2 className="text-2xl font-bold text-[#1D1D1F] text-center mb-8">Frequently Asked Questions</h2>
           <div className="space-y-3">
             {FAQS.map((faq, i) => (
               <div key={i} className="bg-white border border-gray-200 rounded-xl overflow-hidden">
@@ -125,7 +125,7 @@ export default function ListYourBusinessClient({ categoryCount }: Props) {
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full text-left px-5 py-4 flex items-center justify-between gap-4"
                 >
-                  <span className="font-medium text-[#0a1628] text-sm">{faq.q}</span>
+                  <span className="font-medium text-[#1D1D1F] text-sm">{faq.q}</span>
                   <span className="text-gray-400 flex-shrink-0">{openFaq === i ? '−' : '+'}</span>
                 </button>
                 {openFaq === i && (
