@@ -42,14 +42,7 @@ export default function VendorCard({ vendor }: VendorCardProps) {
           {/* Name + verified badge */}
           <div className="flex items-center gap-1.5 mb-0.5">
             <h3 className="text-sm font-semibold text-[#1D1D1F] truncate">{vendor.company_name}</h3>
-            {vendor.verified && (
-              <span title="Verified Business" className="flex-shrink-0">
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                  <circle cx="7.5" cy="7.5" r="7.5" fill="#0066CC"/>
-                  <polyline points="4.5,7.5 6.5,9.5 10.5,5.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-                </svg>
-              </span>
-            )}
+
           </div>
           {/* Location */}
           <p className="text-xs text-[#6E6E73] truncate mb-1.5">
@@ -71,6 +64,14 @@ export default function VendorCard({ vendor }: VendorCardProps) {
 
         {/* Right side — badge + cta */}
         <div className="flex flex-col items-end gap-2 flex-shrink-0">
+          {vendor.verified && (
+            <span title="Verified Business">
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                <circle cx="7.5" cy="7.5" r="7.5" fill="#0066CC"/>
+                <polyline points="4.5,7.5 6.5,9.5 10.5,5.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+              </svg>
+            </span>
+          )}
           {isFeatured && (
             <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#E8590C] bg-[#E8590C]/10 px-2 py-0.5 rounded-full border border-[#E8590C]/20">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="#E8590C"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
