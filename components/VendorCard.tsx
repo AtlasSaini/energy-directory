@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import type { Vendor } from '@/types/database'
-import AddToShortlistButton from './AddToShortlistButton'
 import VendorLogo from './VendorLogo'
 
 interface VendorCardProps {
@@ -9,7 +8,7 @@ interface VendorCardProps {
 
 const TIER_BADGES = {
   premium: { label: 'Premium', classes: 'bg-[#E8590C]/10 text-[#E8590C] border border-[#E8590C]/30' },
-  featured: { label: '⭐ Featured', classes: 'bg-[#E8590C] text-white border border-[#E8590C] font-semibold' },
+  featured: { label: 'Featured', classes: 'bg-[#E8590C]/10 text-[#E8590C] border border-[#E8590C]/20' },
   free: { label: null, classes: '' },
 }
 
@@ -20,80 +19,63 @@ const PROVINCE_LABELS: Record<string, string> = {
 }
 
 export default function VendorCard({ vendor }: VendorCardProps) {
-  const badge = TIER_BADGES[vendor.tier]
-  const isPremium = vendor.tier === 'premium'
-  const isFeatured = vendor.tier === 'featured' || isPremium
+  const isFeatured = vendor.tier === 'featured' || vendor.tier === 'premium'
 
   return (
     <Link href={`/vendors/${vendor.slug}`}>
-      <div className={`rounded-xl border transition-all hover:shadow-lg h-full flex flex-col ${isPremium ? 'bg-white border-[#E8590C]/30 shadow-sm' : isFeatured ? 'bg-[#FFF5F0] border-[#E8590C]/30 shadow-md ring-1 ring-[#E8590C]/20' : 'bg-white border-gray-200 hover:shadow-md'}`}>
-        {/* Banner */}
-        {vendor.banner_url ? (
-          <div className="h-24 rounded-t-xl overflow-hidden">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={vendor.banner_url} alt="" className="w-full h-full object-cover" />
-          </div>
-        ) : (
-          <div className={`h-16 rounded-t-xl ${isPremium ? 'bg-gradient-to-r from-[#1D1D1F] to-orange-900' : isFeatured ? 'bg-gradient-to-r from-[#1D1D1F] to-blue-900' : 'bg-gradient-to-r from-[#1D1D1F] to-slate-700'}`} />
-        )}
+      <div className={`
+        group bg-white rounded-xl border transition-all duration-200 cursor-pointer
+        flex items-center gap-4 p-4
+        hover:-translate-y-0.5 hover:shadow-md
+        ${isFeatured
+          ? 'border-l-4 border-l-[#E8590C] border-[#E8590C]/25 shadow-sm'
+          : 'border-[#E8E8ED] hover:border-[#D2D2D7]'
+        }
+      `}>
+        {/* Logo — 44px rounded square */}
+        <div className="w-11 h-11 rounded-xl border border-[#E8E8ED] bg-[#F5F5F7] flex items-center justify-center overflow-hidden flex-shrink-0">
+          <VendorLogo logoUrl={vendor.logo_url} companyName={vendor.company_name} />
+        </div>
 
-        <div className="p-4 flex flex-col flex-1 -mt-4">
-          {/* Logo + name row */}
-          <div className="flex items-start gap-3 mb-3">
-            <div className="w-12 h-12 rounded-lg border-2 border-white shadow-sm bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
-              <VendorLogo logoUrl={vendor.logo_url} companyName={vendor.company_name} />
-            </div>
-            <div className="min-w-0 flex-1 pt-2">
-              <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="font-semibold text-[#1D1D1F] text-sm leading-tight truncate">{vendor.company_name}</h3>
-                {vendor.verified && (
-                  <span className="text-blue-500" title="Verified">✓</span>
-                )}
-              </div>
-              {badge.label && (
-                <span className={`inline-block text-xs px-2 py-0.5 rounded-full font-medium mt-0.5 ${badge.classes}`}>
-                  {badge.label}
-                </span>
-              )}
-            </div>
+        {/* Info — flex-1 */}
+        <div className="flex-1 min-w-0">
+          {/* Name + verified badge */}
+          <div className="flex items-center gap-1.5 mb-0.5">
+            <h3 className="text-sm font-semibold text-[#1D1D1F] truncate">{vendor.company_name}</h3>
+            {vendor.verified && (
+              <span title="Verified Business" className="flex-shrink-0">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                  <circle cx="7.5" cy="7.5" r="7.5" fill="#0066CC"/>
+                  <polyline points="4.5,7.5 6.5,9.5 10.5,5.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                </svg>
+              </span>
+            )}
           </div>
-
           {/* Location */}
-          {(vendor.city || vendor.province) && (
-            <p className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              {[vendor.city, vendor.province ? PROVINCE_LABELS[vendor.province] || vendor.province : null].filter(Boolean).join(', ')}
-            </p>
-          )}
-
-          {/* Description */}
-          {vendor.description && (
-            <p className="text-gray-600 text-sm line-clamp-2 flex-1 mb-3">{vendor.description}</p>
-          )}
-
-          {/* Categories */}
+          <p className="text-xs text-[#6E6E73] truncate mb-1.5">
+            {[vendor.city, vendor.province ? (PROVINCE_LABELS[vendor.province] || vendor.province) : null].filter(Boolean).join(', ') || 'Canada'}
+          </p>
+          {/* Category pills — max 2 */}
           {vendor.categories && vendor.categories.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-auto mb-3">
-              {vendor.categories.slice(0, 3).map((cat) => (
-                <span key={cat} className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full">
-                  {cat}
-                </span>
+            <div className="flex gap-1 flex-wrap">
+              {vendor.categories.slice(0, 2).map(cat => (
+                <span key={cat} className="text-xs bg-[#F5F5F7] text-[#6E6E73] px-2 py-0.5 rounded-full whitespace-nowrap">{cat}</span>
               ))}
-              {vendor.categories.length > 3 && (
-                <span className="text-xs text-gray-400">+{vendor.categories.length - 3} more</span>
-              )}
             </div>
           )}
+        </div>
 
-          {/* Shortlist button */}
-          <div className="mt-auto pt-1">
-            <AddToShortlistButton
-              vendor={{ id: vendor.id, company_name: vendor.company_name, slug: vendor.slug, category: vendor.categories?.[0] }}
-            />
-          </div>
+        {/* Right side — badge + cta */}
+        <div className="flex flex-col items-end gap-2 flex-shrink-0">
+          {isFeatured && (
+            <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#E8590C] bg-[#E8590C]/10 px-2 py-0.5 rounded-full border border-[#E8590C]/20">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="#E8590C"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
+              Featured
+            </span>
+          )}
+          <span className={`text-xs font-semibold ${isFeatured ? 'text-[#E8590C]' : 'text-[#6E6E73] group-hover:text-[#1D1D1F]'} transition-colors whitespace-nowrap`}>
+            View →
+          </span>
         </div>
       </div>
     </Link>
