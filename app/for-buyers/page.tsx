@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
 import { createAdminClient } from '@/lib/supabase'
 
 export const metadata: Metadata = {
-  title: 'For Buyers — Find Energy Vendors Fast | EnergyDirectory.ca',
-  description: 'Browse Canada\'s largest energy vendor directory. Shortlist the best fits. Send one inquiry to multiple vendors at once — free, no account required.',
+  title: 'For Buyers - Find Energy Vendors Fast | EnergyDirectory.ca',
+  description: 'Browse Canada\'s largest energy vendor directory. Shortlist the best fits. Send one inquiry to multiple vendors at once - free, no account required.',
 }
 
 async function getCategoryCount(): Promise<number> {
@@ -18,14 +18,14 @@ async function getCategoryCount(): Promise<number> {
 }
 
 const CATEGORIES = [
-  { name: 'Drilling & Completions', slug: 'drilling-completions', icon: '🛢️' },
-  { name: 'Engineering & Consulting', slug: 'engineering-consulting', icon: '⚙️' },
+  { name: 'Drilling & Completions', slug: 'drilling-completions', icon: '⛏️' },
+  { name: 'Engineering & Consulting', slug: 'engineering-consulting', icon: '📐' },
   { name: 'Environmental Services', slug: 'environmental-services', icon: '🌿' },
   { name: 'Equipment & Rentals', slug: 'equipment-rentals', icon: '🏗️' },
   { name: 'Pipeline Services', slug: 'pipeline-services', icon: '🔧' },
-  { name: 'Field Services', slug: 'field-services', icon: '🦺' },
+  { name: 'Field Services', slug: 'field-services', icon: '🔩' },
   { name: 'Logistics & Transportation', slug: 'logistics-transportation', icon: '🚛' },
-  { name: 'Health & Safety', slug: 'health-safety', icon: '🔒' },
+  { name: 'Health & Safety', slug: 'health-safety', icon: '🦺' },
 ]
 
 export default async function ForBuyersPage() {
@@ -33,15 +33,15 @@ export default async function ForBuyersPage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="bg-[#0a1628] text-white py-20 px-4">
+      <section className="bg-[#1D1D1F] text-white py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 text-amber-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+          <div className="inline-flex items-center gap-2 bg-[#E8590C]/20 border border-[#E8590C]/30 text-[#E8590C] text-sm font-medium px-4 py-1.5 rounded-full mb-6">
             <span>🇨🇦</span>
             Canadian Energy Procurement Made Simple
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-6">
             Find the Right Energy Vendor —{' '}
-            <span className="text-amber-400">Fast</span>
+            <span className="text-[#E8590C]">Fast</span>
           </h1>
           <p className="text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto mb-10">
             Browse Canada&apos;s largest energy vendor directory. Shortlist the best fits.
@@ -49,7 +49,7 @@ export default async function ForBuyersPage() {
           </p>
           <Link
             href="/vendors"
-            className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-bold text-lg px-8 py-4 rounded-xl transition-colors"
+            className="inline-flex items-center gap-2 bg-[#E8590C] hover:bg-[#CC4A08] text-white font-bold text-lg px-8 py-4 rounded-xl transition-colors"
           >
             Start Browsing Vendors →
           </Link>
@@ -60,7 +60,7 @@ export default async function ForBuyersPage() {
       <section id="how-it-works" className="py-20 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold text-[#0a1628] mb-3">How It Works</h2>
+            <h2 className="text-3xl font-bold text-[#1D1D1F] mb-3">How It Works</h2>
             <p className="text-gray-600 text-lg">Three steps to your next energy vendor</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -86,16 +86,16 @@ export default async function ForBuyersPage() {
             ].map((item) => (
               <div key={item.step} className="relative">
                 {/* Step connector line (hidden on mobile) */}
-                <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-amber-200 to-transparent -z-0 last:hidden" />
+                <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-[#E8590C]/20 to-transparent -z-0 last:hidden" />
 
                 <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 relative z-10 h-full">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-3xl">{item.icon}</span>
-                    <span className="text-xs font-bold text-amber-600 bg-amber-50 border border-amber-200 px-2 py-1 rounded-full">
+                    <span className="text-xs font-bold text-[#E8590C] bg-[#FFF5F0] border border-[#E8590C]/30 px-2 py-1 rounded-full">
                       Step {item.step}
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold text-[#0a1628] mb-3">{item.title}</h3>
+                  <h3 className="text-xl font-bold text-[#1D1D1F] mb-3">{item.title}</h3>
                   <p className="text-gray-600 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
@@ -105,19 +105,19 @@ export default async function ForBuyersPage() {
       </section>
 
       {/* Why buyers use us */}
-      <section className="py-20 px-4 bg-gray-50">
+      <section className="py-20 px-4 bg-[#F5F5F7]">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-[#0a1628] mb-4">
+              <h2 className="text-3xl font-bold text-[#1D1D1F] mb-4">
                 Why buyers use EnergyDirectory.ca
               </h2>
               <p className="text-gray-600 mb-8 leading-relaxed">
-                We built the procurement tool that energy buyers actually need — fast, frictionless, and free.
+                We built the procurement tool that energy buyers actually need - fast, frictionless, and free.
               </p>
               <ul className="space-y-4">
                 {[
-                  'Free to use — no account required',
+                  'Free to use - no account required',
                   'Verified Canadian vendors only',
                   `${categoryCount} energy categories covered`,
                   'Oil & Gas, Renewables, Carbon & ESG, Power Generation',
@@ -138,7 +138,7 @@ export default async function ForBuyersPage() {
 
             {/* Visual mockup */}
             <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-              <div className="bg-[#0a1628] rounded-xl p-4 mb-4 text-white">
+              <div className="bg-[#1D1D1F] rounded-xl p-4 mb-4 text-white">
                 <div className="text-xs text-gray-400 mb-1">Sending to 3 vendors</div>
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {['Apex Drilling', 'ProPipe Inc.', 'EnviroTech AB'].map((v) => (
@@ -159,7 +159,7 @@ export default async function ForBuyersPage() {
                 <div>
                   <div className="text-xs text-gray-500 mb-1 font-medium">What do you need?</div>
                   <div className="h-16 bg-gray-100 rounded-lg flex items-start px-3 pt-2">
-                    <span className="text-xs text-gray-400">Describe the service or project…</span>
+                    <span className="text-xs text-gray-400">Describe the service or project.</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
@@ -172,8 +172,8 @@ export default async function ForBuyersPage() {
                     </div>
                   ))}
                 </div>
-                <div className="h-10 bg-amber-500 rounded-lg flex items-center justify-center">
-                  <span className="text-[#0a1628] text-xs font-bold">Send Request to 3 Vendors</span>
+                <div className="h-10 bg-[#E8590C] rounded-lg flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">Send Request to 3 Vendors</span>
                 </div>
               </div>
             </div>
@@ -185,7 +185,7 @@ export default async function ForBuyersPage() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#0a1628] mb-3">Browse by Category</h2>
+            <h2 className="text-3xl font-bold text-[#1D1D1F] mb-3">Browse by Category</h2>
             <p className="text-gray-600">Find vendors across all energy sectors</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -193,10 +193,10 @@ export default async function ForBuyersPage() {
               <Link
                 key={cat.slug}
                 href={`/categories/${cat.slug}`}
-                className="group bg-gray-50 hover:bg-amber-50 border border-gray-200 hover:border-amber-300 rounded-xl p-5 text-center transition-all"
+                className="group bg-[#F5F5F7] hover:bg-[#FFF5F0] border border-gray-200 hover:border-[#E8590C]/30 rounded-xl p-5 text-center transition-all"
               >
                 <div className="text-3xl mb-2">{cat.icon}</div>
-                <p className="text-sm font-medium text-gray-700 group-hover:text-amber-800 leading-tight">
+                <p className="text-sm font-medium text-gray-700 group-hover:text-[#E8590C] leading-tight">
                   {cat.name}
                 </p>
               </Link>
@@ -205,7 +205,7 @@ export default async function ForBuyersPage() {
           <div className="text-center mt-8">
             <Link
               href="/vendors"
-              className="text-amber-600 hover:text-amber-500 font-medium text-sm"
+              className="text-[#E8590C] hover:text-[#CC4A08] font-medium text-sm"
             >
               View all {categoryCount} categories →
             </Link>
@@ -214,7 +214,7 @@ export default async function ForBuyersPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-4 bg-[#0a1628] text-white">
+      <section className="py-20 px-4 bg-[#1D1D1F] text-white">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to find your next vendor?</h2>
           <p className="text-gray-300 text-lg mb-8 leading-relaxed">
@@ -222,7 +222,7 @@ export default async function ForBuyersPage() {
           </p>
           <Link
             href="/vendors"
-            className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-bold text-lg px-8 py-4 rounded-xl transition-colors"
+            className="inline-flex items-center gap-2 bg-[#E8590C] hover:bg-[#CC4A08] text-white font-bold text-lg px-8 py-4 rounded-xl transition-colors"
           >
             Browse Vendors →
           </Link>
