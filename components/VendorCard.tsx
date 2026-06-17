@@ -73,10 +73,7 @@ export default function VendorCard({ vendor }: VendorCardProps) {
             </span>
           )}
           {isFeatured && (
-            <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#E8590C] bg-[#E8590C]/10 px-2 py-0.5 rounded-full border border-[#E8590C]/20">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="#E8590C"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
-              Featured
-            </span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#E8590C" title="Featured"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
           )}
         </div>
       </div>
