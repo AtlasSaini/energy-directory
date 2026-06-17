@@ -77,9 +77,6 @@ export default function VendorCard({ vendor }: VendorCardProps) {
               Featured
             </span>
           )}
-          <span className={`text-xs font-semibold ${isFeatured ? 'text-[#E8590C]' : 'text-[#6E6E73] group-hover:text-[#1D1D1F]'} transition-colors whitespace-nowrap`}>
-            View →
-          </span>
         </div>
       </div>
     </Link>
