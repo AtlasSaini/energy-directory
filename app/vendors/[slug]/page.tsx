@@ -141,7 +141,7 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
       </nav>
 
       {/* Banner */}
-      <div className={`h-28 rounded-2xl overflow-hidden mb-6 ${vendor.banner_url ? '' : 'bg-gradient-to-r from-[#E8590C]/20 via-[#1D1D1F]/60 to-[#1D1D1F]'}`}>
+      <div className={`h-28 rounded-2xl overflow-hidden mb-6 ${vendor.banner_url ? '' : 'bg-gradient-to-r from-[#F5F5F7] to-[#E8E8ED]'}`}>
         {vendor.banner_url && (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={vendor.banner_url} alt="" className="w-full h-full object-cover" />
