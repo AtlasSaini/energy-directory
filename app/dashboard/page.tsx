@@ -1,9 +1,9 @@
-'use client'
+use client'
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
+import Logo from '@/components/Logo'
 import { createClient } from '@/lib/supabase-browser'
 import LogoUpload from '@/components/LogoUpload'
 
@@ -38,7 +38,7 @@ type Vendor = {
 
 const TIER_STYLES: Record<string, string> = {
   premium: 'bg-purple-100 text-purple-700 border-purple-200',
-  featured: 'bg-amber-100 text-amber-700 border-amber-200',
+  featured: 'bg-[#E8590C]/10 text-[#E8590C] border-[#E8590C]/20',
   free: 'bg-gray-100 text-gray-600 border-gray-200',
 }
 
@@ -221,15 +221,10 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top bar */}
-      <div className="bg-[#0a1628] text-white">
+      <div className="bg-[#1D1D1F] text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center">
-            <Image
-              src="/logo/logo-medium-dark.svg"
-              alt="Energy Directory"
-              width={160}
-              height={43}
-            />
+            <Logo variant="light" size="md" />
           </Link>
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-400 hidden sm:block">{userEmail}</span>
@@ -267,14 +262,14 @@ export default function DashboardPage() {
             <div className="flex items-center gap-2 flex-wrap">
               <Link
                 href="/dashboard/leads"
-                className="inline-flex items-center gap-1.5 text-sm bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold px-3 py-1.5 rounded-lg transition-colors"
+                className="inline-flex items-center gap-1.5 text-sm bg-[#E8590C] hover:bg-[#CC4A08] text-white font-semibold px-3 py-1.5 rounded-lg transition-colors"
               >
                 📋 View Inquiries
               </Link>
               <Link
                 href={`/vendors/${vendor.slug}`}
                 target="_blank"
-                className="inline-flex items-center gap-1.5 text-sm text-amber-600 hover:text-amber-500 font-medium border border-amber-200 px-3 py-1.5 rounded-lg hover:bg-amber-50 transition-colors"
+                className="inline-flex items-center gap-1.5 text-sm text-[#E8590C] hover:text-[#CC4A08] font-medium border border-[#E8590C]/20 px-3 py-1.5 rounded-lg hover:bg-[#FFF5F0] transition-colors"
               >
                 View live listing
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -306,7 +301,7 @@ export default function DashboardPage() {
                 <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center gap-2 bg-gray-50">
                   <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">🖼️</div>
                   <p className="text-sm font-medium text-gray-500 text-center">Logo upload is available on Basic and above</p>
-                  <Link href="/list-your-business" className="text-xs text-amber-600 font-semibold hover:underline">Upgrade to add your logo →</Link>
+                  <Link href="/list-your-business" className="text-xs text-[#E8590C] font-semibold hover:underline">Upgrade to add your logo →</Link>
                 </div>
               ) : (
                 <LogoUpload
@@ -322,7 +317,7 @@ export default function DashboardPage() {
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   rows={4}
                   placeholder="Tell potential clients what your company does…"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm resize-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8590C] focus:border-transparent text-sm resize-none"
                 />
               </div>
 
@@ -334,7 +329,7 @@ export default function DashboardPage() {
                     value={form.website}
                     onChange={(e) => setForm({ ...form, website: e.target.value })}
                     placeholder="https://yourcompany.com"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8590C] focus:border-transparent text-sm"
                   />
                 </div>
                 <div>
@@ -344,7 +339,7 @@ export default function DashboardPage() {
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
                     placeholder="Phone number (optional)"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8590C] focus:border-transparent text-sm"
                   />
                 </div>
               </div>
@@ -357,7 +352,7 @@ export default function DashboardPage() {
                     value={form.city}
                     onChange={(e) => setForm({ ...form, city: e.target.value })}
                     placeholder="Calgary"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8590C] focus:border-transparent text-sm"
                   />
                 </div>
                 <div>
@@ -365,7 +360,7 @@ export default function DashboardPage() {
                   <select
                     value={form.province}
                     onChange={(e) => setForm({ ...form, province: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm bg-white"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8590C] focus:border-transparent text-sm bg-white"
                   >
                     <option value="">Select province</option>
                     {PROVINCES.map((p) => (
@@ -378,7 +373,7 @@ export default function DashboardPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="bg-amber-500 hover:bg-amber-400 disabled:bg-amber-300 text-[#0a1628] font-semibold px-6 py-2.5 rounded-lg transition-colors text-sm"
+                className="bg-[#E8590C] hover:bg-[#CC4A08] disabled:bg-[#E8590C]/50 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors text-sm"
               >
                 {saving ? 'Saving…' : 'Save Changes'}
               </button>
@@ -388,7 +383,7 @@ export default function DashboardPage() {
           {/* Category picker */}
           <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-1">Your Categories</h2>
-            <p className="text-sm text-gray-500 mb-4">Select up to 2 categories that best describe your business. <span className="font-medium text-amber-600">{selectedCategoryIds.length}/2 selected</span></p>
+            <p className="text-sm text-gray-500 mb-4">Select up to 2 categories that best describe your business. <span className="font-medium text-[#E8590C]">{selectedCategoryIds.length}/2 selected</span></p>
 
             {categorySaveError && (
               <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{categorySaveError}</div>
@@ -409,10 +404,10 @@ export default function DashboardPage() {
                       onClick={() => toggleCategory(cat.id)}
                       className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
                         selectedCategoryIds.includes(cat.id)
-                          ? 'bg-amber-500 border-amber-500 text-[#0a1628] font-semibold'
+                          ? 'bg-[#E8590C] border-[#E8590C] text-white font-semibold'
                           : selectedCategoryIds.length >= 2
                           ? 'bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed'
-                          : 'bg-white border-gray-200 text-gray-600 hover:border-amber-300 hover:text-amber-700'
+                          : 'bg-white border-gray-200 text-gray-600 hover:border-[#E8590C]/30 hover:text-[#E8590C]'
                       }`}
                     >
                       {cat.name}
@@ -434,10 +429,10 @@ export default function DashboardPage() {
                       onClick={() => toggleCategory(cat.id)}
                       className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
                         selectedCategoryIds.includes(cat.id)
-                          ? 'bg-amber-500 border-amber-500 text-[#0a1628] font-semibold'
+                          ? 'bg-[#E8590C] border-[#E8590C] text-white font-semibold'
                           : selectedCategoryIds.length >= 2
                           ? 'bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed'
-                          : 'bg-white border-gray-200 text-gray-600 hover:border-amber-300 hover:text-amber-700'
+                          : 'bg-white border-gray-200 text-gray-600 hover:border-[#E8590C]/30 hover:text-[#E8590C]'
                       }`}
                     >
                       {cat.name}
@@ -451,7 +446,7 @@ export default function DashboardPage() {
               type="button"
               onClick={handleSaveCategories}
               disabled={savingCategories || selectedCategoryIds.length === 0}
-              className="mt-2 bg-amber-500 hover:bg-amber-400 disabled:bg-amber-300 text-[#0a1628] font-semibold px-6 py-2.5 rounded-lg transition-colors text-sm"
+              className="mt-2 bg-[#E8590C] hover:bg-[#CC4A08] disabled:bg-[#E8590C]/50 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors text-sm"
             >
               {savingCategories ? 'Saving…' : 'Save Categories'}
             </button>
@@ -503,7 +498,7 @@ export default function DashboardPage() {
                   </p>
                   <Link
                     href="/list-your-business"
-                    className="block w-full text-center bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold py-2.5 rounded-lg text-sm transition-colors"
+                    className="block w-full text-center bg-[#E8590C] hover:bg-[#CC4A08] text-white font-semibold py-2.5 rounded-lg text-sm transition-colors"
                   >
                     Upgrade Listing ↑
                   </Link>
@@ -515,7 +510,7 @@ export default function DashboardPage() {
 
             {/* Analytics card */}
             {(vendor.tier === 'featured' || vendor.tier === 'premium') ? (
-              <div className="bg-gradient-to-br from-[#0a1628] to-[#1a3a6b] text-white rounded-2xl shadow-sm p-6">
+              <div className="bg-gradient-to-br from-[#1D1D1F] to-[#1a3a6b] text-white rounded-2xl shadow-sm p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xl">📊</span>
                   <h2 className="text-base font-semibold">Analytics</h2>
@@ -525,7 +520,7 @@ export default function DashboardPage() {
                 </p>
                 <Link
                   href="/dashboard/analytics"
-                  className="block w-full text-center bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold py-2.5 rounded-lg text-sm transition-colors"
+                  className="block w-full text-center bg-[#E8590C] hover:bg-[#CC4A08] text-white font-semibold py-2.5 rounded-lg text-sm transition-colors"
                 >
                   View Analytics →
                 </Link>
@@ -541,7 +536,7 @@ export default function DashboardPage() {
                 </p>
                 <Link
                   href="/list-your-business"
-                  className="block w-full text-center bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold py-2.5 rounded-lg text-sm transition-colors"
+                  className="block w-full text-center bg-[#E8590C] hover:bg-[#CC4A08] text-white font-semibold py-2.5 rounded-lg text-sm transition-colors"
                 >
                   Upgrade to Featured →
                 </Link>
@@ -555,33 +550,33 @@ export default function DashboardPage() {
                 <Link
                   href={`/vendors/${vendor.slug}`}
                   target="_blank"
-                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#E8590C] transition-colors"
                 >
                   <span>🔗</span> View public listing
                 </Link>
                 <Link
                   href="/dashboard/leads"
-                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#E8590C] transition-colors"
                 >
                   <span>📋</span> Inquiries
                 </Link>
                 {(vendor.tier === 'featured' || vendor.tier === 'premium') && (
                   <Link
                     href="/dashboard/analytics"
-                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#E8590C] transition-colors"
                   >
                     <span>📊</span> Analytics
                   </Link>
                 )}
                 <Link
                   href="/auth/claim"
-                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#E8590C] transition-colors"
                 >
                   <span>📋</span> Claim another listing
                 </Link>
                 <Link
                   href="/list-your-business"
-                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#E8590C] transition-colors"
                 >
                   <span>📈</span> Upgrade plan
                 </Link>
