@@ -1,9 +1,9 @@
-'use client'
+use client'
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
+import Logo from '@/components/Logo'
 import { createClient } from '@/lib/supabase-browser'
 
 type AnalyticsVendor = {
@@ -41,7 +41,7 @@ function CopyButton({ text }: { text: string }) {
           setTimeout(() => setCopied(false), 2000)
         })
       }}
-      className="ml-2 text-xs bg-amber-100 hover:bg-amber-200 text-amber-800 px-2 py-1 rounded transition-colors"
+      className="ml-2 text-xs bg-[#E8590C]/10 hover:bg-[#E8590C]/20 text-[#E8590C] px-2 py-1 rounded transition-colors"
     >
       {copied ? '✓ Copied' : 'Copy'}
     </button>
@@ -57,7 +57,7 @@ function BarChart({ weeks }: { weeks: number[] }) {
         <div key={i} className="flex-1 flex flex-col items-center gap-1">
           <span className="text-xs text-gray-500">{v}</span>
           <div
-            className="w-full bg-amber-400 rounded-t transition-all"
+            className="w-full bg-[#E8590C] rounded-t transition-all"
             style={{ height: `${Math.max((v / max) * 80, 4)}px` }}
           />
           <span className="text-xs text-gray-400">{labels[i]}</span>
@@ -93,7 +93,7 @@ export default function AnalyticsDashboardPage() {
         'id, company_name, slug, tier, verified, views, subscription_expires_at'
       )
       .eq('user_id', user.id)
-      .single()
+      .maybeSingle()
 
     if (!vendorData) {
       router.push('/auth/claim')
@@ -192,10 +192,10 @@ export default function AnalyticsDashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top bar */}
-      <div className="bg-[#0a1628] text-white">
+      <div className="bg-[#1D1D1F] text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center">
-            <Image src="/logo/logo-medium-dark.svg" alt="Energy Directory" width={140} height={38} />
+            <Logo variant="light" size="md" />
           </Link>
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-400 hidden sm:block">{userEmail}</span>
@@ -213,7 +213,7 @@ export default function AnalyticsDashboardPage() {
 
         {/* Breadcrumb nav */}
         <nav className="flex items-center gap-2 text-sm text-gray-500">
-          <Link href="/dashboard" className="hover:text-amber-600">Dashboard</Link>
+          <Link href="/dashboard" className="hover:text-[#E8590C]">Dashboard</Link>
           <span>/</span>
           <span className="text-gray-800">Analytics</span>
         </nav>
@@ -226,7 +226,7 @@ export default function AnalyticsDashboardPage() {
           </div>
           <Link
             href="/dashboard"
-            className="text-sm text-amber-600 hover:text-amber-500 border border-amber-200 px-3 py-1.5 rounded-lg hover:bg-amber-50 transition-colors"
+            className="text-sm text-[#E8590C] hover:text-[#CC4A08] border border-[#E8590C]/20 px-3 py-1.5 rounded-lg hover:bg-[#FFF5F0] transition-colors"
           >
             ← Back to Dashboard
           </Link>
@@ -234,9 +234,9 @@ export default function AnalyticsDashboardPage() {
 
         {/* Non-premium gate */}
         {!['featured', 'premium'].includes(vendor.tier) && (
-          <div className="bg-white border border-amber-200 rounded-2xl p-8 text-center shadow-sm">
+          <div className="bg-white border border-[#E8590C]/20 rounded-2xl p-8 text-center shadow-sm">
             <div className="text-4xl mb-4">📊</div>
-            <h2 className="text-xl font-bold text-[#0a1628] mb-2">
+            <h2 className="text-xl font-bold text-[#1D1D1F] mb-2">
               Analytics are available on Featured
             </h2>
             <p className="text-gray-600 mb-6 max-w-md mx-auto">
@@ -245,7 +245,7 @@ export default function AnalyticsDashboardPage() {
             </p>
             <Link
               href="/list-your-business"
-              className="inline-block bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold px-6 py-3 rounded-xl transition-colors"
+              className="inline-block bg-[#E8590C] hover:bg-[#CC4A08] text-white font-semibold px-6 py-3 rounded-xl transition-colors"
             >
               Upgrade to Featured — $49/mo →
             </Link>
@@ -264,7 +264,7 @@ export default function AnalyticsDashboardPage() {
                     Active
                   </span>
                   <span className="text-gray-300">|</span>
-                  <span className="text-amber-700 font-medium">{vendor.tier === 'premium' ? '⭐ Premium' : '⭐ Featured'}</span>
+                  <span className="text-[#E8590C] font-medium">{vendor.tier === 'premium' ? '⭐ Premium' : '⭐ Featured'}</span>
                   <span className="text-gray-300">|</span>
                   {vendor.verified ? (
                     <span className="text-green-700 font-medium">✓ Verified</span>
@@ -280,7 +280,7 @@ export default function AnalyticsDashboardPage() {
                 </div>
                 <Link
                   href={`/dashboard`}
-                  className="text-sm text-amber-600 hover:text-amber-500 font-medium"
+                  className="text-sm text-[#E8590C] hover:text-[#CC4A08] font-medium"
                 >
                   Update your listing →
                 </Link>
@@ -288,14 +288,14 @@ export default function AnalyticsDashboardPage() {
             </div>
 
             {/* Share your listing */}
-            <div className="bg-[#0a1628] text-white rounded-2xl p-5 shadow-sm">
+            <div className="bg-[#1D1D1F] text-white rounded-2xl p-5 shadow-sm">
               <p className="text-sm text-gray-300 mb-1">Share your profile</p>
               <div className="flex items-center gap-2 flex-wrap">
                 <a
                   href={listingHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-amber-400 hover:text-amber-300 font-medium text-sm break-all"
+                  className="text-[#E8590C] hover:text-[#CC4A08] font-medium text-sm break-all"
                 >
                   {listingUrl}
                 </a>
@@ -309,7 +309,7 @@ export default function AnalyticsDashboardPage() {
                 <div className="flex items-start gap-3 mb-5">
                   <span className="text-3xl">🚀</span>
                   <div>
-                    <h2 className="text-lg font-bold text-[#0a1628]">
+                    <h2 className="text-lg font-bold text-[#1D1D1F]">
                       Your listing is live and getting discovered
                     </h2>
                     <p className="text-gray-600 text-sm mt-1">
@@ -324,7 +324,7 @@ export default function AnalyticsDashboardPage() {
                     href={`https://twitter.com/intent/tweet?text=Find%20us%20on%20EnergyDirectory.ca%20%E2%80%94%20${encodeURIComponent(listingHref)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
+                    className="bg-[#E8590C] hover:bg-[#CC4A08] text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
                   >
                     Share your listing
                   </a>
@@ -337,24 +337,24 @@ export default function AnalyticsDashboardPage() {
                 </div>
 
                 <div className="border-t border-gray-100 pt-5">
-                  <h3 className="font-semibold text-[#0a1628] text-sm mb-3">
+                  <h3 className="font-semibold text-[#1D1D1F] text-sm mb-3">
                     💡 Tips to boost visibility
                   </h3>
                   <ul className="space-y-2 text-sm text-gray-600">
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-500 mt-0.5">•</span>
+                      <span className="text-[#E8590C] mt-0.5">•</span>
                       Add your direct listing URL to your email signature
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-500 mt-0.5">•</span>
+                      <span className="text-[#E8590C] mt-0.5">•</span>
                       Share your profile on LinkedIn — tag it as your company&apos;s official directory page
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-500 mt-0.5">•</span>
+                      <span className="text-[#E8590C] mt-0.5">•</span>
                       Ask satisfied clients to visit and bookmark your listing
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-500 mt-0.5">•</span>
+                      <span className="text-[#E8590C] mt-0.5">•</span>
                       Make sure your description mentions your key services and target markets
                     </li>
                   </ul>
@@ -367,11 +367,11 @@ export default function AnalyticsDashboardPage() {
               <div className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center">
-                    <div className="text-3xl font-bold text-[#0a1628]">{views.toLocaleString()}</div>
+                    <div className="text-3xl font-bold text-[#1D1D1F]">{views.toLocaleString()}</div>
                     <div className="text-sm text-gray-500 mt-1">Total profile views</div>
                   </div>
                   <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center">
-                    <div className="text-3xl font-bold text-amber-600">{monthlyEstimate}</div>
+                    <div className="text-3xl font-bold text-[#E8590C]">{monthlyEstimate}</div>
                     <div className="text-sm text-gray-500 mt-1">Views this month</div>
                   </div>
                   <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center">
@@ -382,7 +382,7 @@ export default function AnalyticsDashboardPage() {
 
                 {category && (
                   <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
-                    <h3 className="font-semibold text-[#0a1628] mb-1">Your Category</h3>
+                    <h3 className="font-semibold text-[#1D1D1F] mb-1">Your Category</h3>
                     <p className="text-gray-600 text-sm">
                       <span className="font-medium">{category.name}</span> —{' '}
                       {category.vendorCount} vendors competing for attention
@@ -396,24 +396,24 @@ export default function AnalyticsDashboardPage() {
                 )}
 
                 <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
-                  <h3 className="font-semibold text-[#0a1628] mb-3">
+                  <h3 className="font-semibold text-[#1D1D1F] mb-3">
                     📈 Your listing is gaining momentum — keep it going
                   </h3>
                   <ul className="space-y-2 text-sm text-gray-600">
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-500 mt-0.5">•</span>
+                      <span className="text-[#E8590C] mt-0.5">•</span>
                       Add your direct listing URL to your email signature
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-500 mt-0.5">•</span>
+                      <span className="text-[#E8590C] mt-0.5">•</span>
                       Share your profile on LinkedIn — tag it as your company&apos;s official directory page
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-500 mt-0.5">•</span>
+                      <span className="text-[#E8590C] mt-0.5">•</span>
                       Ask satisfied clients to visit and bookmark your listing
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-500 mt-0.5">•</span>
+                      <span className="text-[#E8590C] mt-0.5">•</span>
                       Make sure your description mentions your key services and target markets
                     </li>
                   </ul>
@@ -426,11 +426,11 @@ export default function AnalyticsDashboardPage() {
               <div className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center">
-                    <div className="text-3xl font-bold text-[#0a1628]">{views.toLocaleString()}</div>
+                    <div className="text-3xl font-bold text-[#1D1D1F]">{views.toLocaleString()}</div>
                     <div className="text-sm text-gray-500 mt-1">Total views since listed</div>
                   </div>
                   <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center">
-                    <div className="text-3xl font-bold text-amber-600">{monthlyEstimate}</div>
+                    <div className="text-3xl font-bold text-[#E8590C]">{monthlyEstimate}</div>
                     <div className="text-sm text-gray-500 mt-1">Views this month</div>
                   </div>
                   <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center">
@@ -441,14 +441,14 @@ export default function AnalyticsDashboardPage() {
 
                 {/* Bar chart */}
                 <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-                  <h3 className="font-semibold text-[#0a1628] mb-1">Views — Last 4 Weeks</h3>
+                  <h3 className="font-semibold text-[#1D1D1F] mb-1">Views — Last 4 Weeks</h3>
                   <p className="text-xs text-gray-400 mb-2">Estimated weekly distribution</p>
                   <BarChart weeks={weeklyBreakdown} />
                 </div>
 
                 {category && (
                   <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
-                    <h3 className="font-semibold text-[#0a1628] mb-2">Category Standing</h3>
+                    <h3 className="font-semibold text-[#1D1D1F] mb-2">Category Standing</h3>
                     <p className="text-gray-600 text-sm">
                       <span className="font-medium">{category.name}</span> —{' '}
                       {category.vendorCount} total vendors
@@ -461,8 +461,8 @@ export default function AnalyticsDashboardPage() {
                   </div>
                 )}
 
-                <div className="bg-gradient-to-r from-amber-50 to-amber-100 border border-amber-200 rounded-2xl p-5 shadow-sm">
-                  <h3 className="font-semibold text-[#0a1628]">
+                <div className="bg-[#FFF5F0] border border-[#E8590C]/15 rounded-2xl p-5 shadow-sm">
+                  <h3 className="font-semibold text-[#1D1D1F]">
                     ✅ Your profile is performing well
                   </h3>
                   <p className="text-sm text-gray-700 mt-1">
