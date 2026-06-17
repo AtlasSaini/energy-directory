@@ -124,7 +124,7 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
     ? vendor.reviews.reduce((sum, r) => sum + r.rating, 0) / vendor.reviews.length
     : null
 
-  const tierColor = vendor.tier === 'premium' ? 'text-amber-600 bg-amber-50 border-amber-200' : vendor.tier === 'featured' ? 'text-blue-600 bg-blue-50 border-blue-200' : ''
+  const tierColor = vendor.tier === 'premium' ? 'text-[#E8590C] bg-[#E8590C]/10 border-[#E8590C]/30' : vendor.tier === 'featured' ? 'text-blue-600 bg-blue-50 border-blue-200' : ''
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -133,15 +133,15 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
 
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-500 mb-6 flex items-center gap-2">
-        <Link href="/" className="hover:text-amber-600">Home</Link>
+        <Link href="/" className="hover:text-[#E8590C]">Home</Link>
         <span>/</span>
-        <Link href="/vendors" className="hover:text-amber-600">Vendors</Link>
+        <Link href="/vendors" className="hover:text-[#E8590C]">Vendors</Link>
         <span>/</span>
         <span className="text-gray-800">{vendor.company_name}</span>
       </nav>
 
       {/* Banner */}
-      <div className={`h-48 rounded-2xl overflow-hidden mb-6 ${vendor.banner_url ? '' : 'bg-gradient-to-r from-[#0a1628] to-[#1a3a6b]'}`}>
+      <div className={`h-48 rounded-2xl overflow-hidden mb-6 ${vendor.banner_url ? '' : 'bg-gradient-to-r from-[#1D1D1F] to-[#3a3a3f]'}`}>
         {vendor.banner_url && (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={vendor.banner_url} alt="" className="w-full h-full object-cover" />
@@ -159,12 +159,12 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={vendor.logo_url} alt={vendor.company_name} className="w-full h-full object-contain p-1" />
                 ) : (
-                  <span className="text-3xl font-bold text-[#0a1628]">{vendor.company_name.charAt(0)}</span>
+                  <span className="text-3xl font-bold text-[#1D1D1F]">{vendor.company_name.charAt(0)}</span>
                 )}
               </div>
               <div className="pt-6 lg:pt-0 flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h1 className="text-2xl font-bold text-[#0a1628]">{vendor.company_name}</h1>
+                  <h1 className="text-2xl font-bold text-[#1D1D1F]">{vendor.company_name}</h1>
                   {vendor.tier !== 'free' && (
                     <span className={`text-xs px-2 py-0.5 rounded-full border font-medium capitalize ${tierColor}`}>
                       {vendor.tier}
@@ -183,13 +183,13 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
                     </span>
                   )}
                 </div>
-                {/* Verified badge — prominent, standalone row */}
+                {/* Verified badge - prominent, standalone row */}
                 {vendor.verified && (
                   <div className="mt-3 inline-flex items-center gap-2 bg-green-50 border border-green-200 text-green-800 text-sm px-4 py-2 rounded-lg font-medium">
                     <svg className="w-4 h-4 text-green-600 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    Verified Business — domain ownership confirmed
+                    Verified Business - domain ownership confirmed
                   </div>
                 )}
 
@@ -198,14 +198,14 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
                   <VendorActions vendor={{ id: vendor.id, company_name: vendor.company_name, slug: vendor.slug }} isClaimed={!!vendor.user_id} />
                 </div>
 
-                {/* Dispute link — shown on claimed listings */}
+                {/* Dispute link - shown on claimed listings */}
                 {vendor.user_id && (
                   <div className="mt-3">
                     <a
                       href={`mailto:support@energydirectory.ca?subject=Listing Dispute: ${encodeURIComponent(vendor.company_name)}&body=I would like to dispute the ownership of the listing for ${encodeURIComponent(vendor.company_name)} (energydirectory.ca/vendors/${vendor.slug}). Please contact me to resolve this.`}
                       className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
                     >
-                      ⚑ Dispute this listing
+                      ⚠️ Dispute this listing
                     </a>
                   </div>
                 )}
@@ -216,7 +216,7 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
           {/* About */}
           {vendor.description && (
             <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6">
-              <h2 className="font-semibold text-[#0a1628] mb-3">About</h2>
+              <h2 className="font-semibold text-[#1D1D1F] mb-3">About</h2>
               <p className="text-gray-700 leading-relaxed whitespace-pre-line">{vendor.description}</p>
             </div>
           )}
@@ -224,13 +224,13 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
           {/* Categories */}
           {vendor.categories.length > 0 && (
             <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6">
-              <h2 className="font-semibold text-[#0a1628] mb-3">Services & Categories</h2>
+              <h2 className="font-semibold text-[#1D1D1F] mb-3">Services & Categories</h2>
               <div className="flex flex-wrap gap-2">
                 {vendor.categories.map((cat) => (
                   <Link
                     key={cat.id}
                     href={`/categories/${cat.slug}`}
-                    className="bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 text-sm px-3 py-1.5 rounded-full transition-colors"
+                    className="bg-[#FFF5F0] text-[#E8590C] border border-[#E8590C]/30 hover:bg-[#E8590C]/10 text-sm px-3 py-1.5 rounded-full transition-colors"
                   >
                     {cat.name}
                   </Link>
@@ -242,7 +242,7 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
           {/* Photos */}
           {vendor.photos && vendor.photos.length > 0 && (
             <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6">
-              <h2 className="font-semibold text-[#0a1628] mb-3">Photos</h2>
+              <h2 className="font-semibold text-[#1D1D1F] mb-3">Photos</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {vendor.photos.map((photo, i) => (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -255,16 +255,16 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
           {/* Reviews */}
           {vendor.reviews.length > 0 && (
             <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <h2 className="font-semibold text-[#0a1628] mb-4">
+              <h2 className="font-semibold text-[#1D1D1F] mb-4">
                 Reviews ({vendor.reviews.length})
-                {avgRating !== null && <span className="text-amber-500 ml-2">{'⭐'.repeat(Math.round(avgRating))}</span>}
+                {avgRating !== null && <span className="text-[#E8590C] ml-2">{'⭐'.repeat(Math.round(avgRating))}</span>}
               </h2>
               <div className="space-y-4">
                 {vendor.reviews.map((review) => (
                   <div key={review.id} className="border-b border-gray-100 pb-4 last:border-0">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-medium text-[#0a1628] text-sm">{review.reviewer_name}</span>
-                      <span className="text-amber-500 text-sm">{'⭐'.repeat(review.rating)}</span>
+                      <span className="font-medium text-[#1D1D1F] text-sm">{review.reviewer_name}</span>
+                      <span className="text-[#E8590C] text-sm">{'⭐'.repeat(review.rating)}</span>
                     </div>
                     {review.comment && <p className="text-gray-600 text-sm">{review.comment}</p>}
                   </div>
@@ -278,21 +278,21 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
         <aside className="lg:w-72 flex-shrink-0 space-y-4">
           {/* Contact Card */}
           <div className="bg-white border border-gray-200 rounded-xl p-5">
-            <h3 className="font-semibold text-[#0a1628] mb-4">Contact & Links</h3>
+            <h3 className="font-semibold text-[#1D1D1F] mb-4">Contact & Links</h3>
             <div className="space-y-3">
               {vendor.website && (
-                <a href={vendor.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-amber-600 hover:text-amber-500 transition-colors">
+                <a href={vendor.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-[#E8590C] hover:text-[#CC4A08] transition-colors">
                   <span>🌐</span>
                   <span className="truncate">{vendor.website.replace(/^https?:\/\//, '')}</span>
                 </a>
               )}
               {vendor.phone && (
-                <a href={`tel:${vendor.phone}`} className="flex items-center gap-2 text-sm text-gray-700 hover:text-[#0a1628] transition-colors">
+                <a href={`tel:${vendor.phone}`} className="flex items-center gap-2 text-sm text-gray-700 hover:text-[#1D1D1F] transition-colors">
                   <span>📞</span>
                   <span>{vendor.phone}</span>
                 </a>
               )}
-              {/* Email hidden — users must use the inquiry tool */}
+              {/* Email hidden - users must use the inquiry tool */}
             </div>
 
             {vendor.website && (
@@ -300,23 +300,23 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
                 href={vendor.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 block w-full bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold text-sm px-4 py-2.5 rounded-lg text-center transition-colors"
+                className="mt-4 block w-full bg-[#E8590C] hover:bg-[#CC4A08] text-white font-semibold text-sm px-4 py-2.5 rounded-lg text-center transition-colors"
               >
                 Visit Website →
               </a>
             )}
           </div>
 
-          {/* CTA — only show if not yet claimed */}
+          {/* CTA - only show if not yet claimed */}
           {!vendor.user_id && (
-            <div className="bg-[#0a1628] text-white rounded-xl p-5">
+            <div className="bg-[#1D1D1F] text-white rounded-xl p-5">
               <h3 className="font-semibold mb-2">Are you this vendor?</h3>
               <p className="text-gray-300 text-sm mb-4">
                 Claim your listing with your company email to get verified and unlock your dashboard.
               </p>
               <Link
                 href="/auth/signup"
-                className="block w-full bg-amber-500 hover:bg-amber-400 text-[#0a1628] font-semibold text-sm px-4 py-2.5 rounded-lg text-center transition-colors"
+                className="block w-full bg-[#E8590C] hover:bg-[#CC4A08] text-white font-semibold text-sm px-4 py-2.5 rounded-lg text-center transition-colors"
               >
                 Claim This Listing →
               </Link>
