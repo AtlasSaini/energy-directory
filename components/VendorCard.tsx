@@ -55,7 +55,11 @@ export default function VendorCard({ vendor }: VendorCardProps) {
           <p className="text-xs text-[#6E6E73] truncate mb-1.5">
             {[vendor.city, vendor.province ? (PROVINCE_LABELS[vendor.province] || vendor.province) : null].filter(Boolean).join(', ') || 'Canada'}
           </p>
-          {/* Category pills — max 2 */}
+          {/* Description — featured/premium only */}
+      {isFeatured && vendor.description && (
+        <p className="text-xs text-[#6E6E73] line-clamp-2 mt-1 mb-0.5 leading-relaxed">{vendor.description}</p>
+      )}
+      {/* Category pills — max 2 */}
           {vendor.categories && vendor.categories.length > 0 && (
             <div className="flex gap-1 flex-wrap">
               {vendor.categories.slice(0, 2).map(cat => (
