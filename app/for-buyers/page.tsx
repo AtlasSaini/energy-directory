@@ -1,4 +1,4 @@
-import Link from 'next/link'
+mport Link from 'next/link'
 import type { Metadata } from 'next'
 import { createAdminClient } from '@/lib/supabase'
 
@@ -18,15 +18,95 @@ async function getCategoryCount(): Promise<number> {
 }
 
 const CATEGORIES = [
-  { name: 'Drilling & Completions', slug: 'drilling-completions', icon: '⛏️' },
-  { name: 'Engineering & Consulting', slug: 'engineering-consulting', icon: '📐' },
-  { name: 'Environmental Services', slug: 'environmental-services', icon: '🌿' },
-  { name: 'Equipment & Rentals', slug: 'equipment-rentals', icon: '🏗️' },
-  { name: 'Pipeline Services', slug: 'pipeline-services', icon: '🔧' },
-  { name: 'Field Services', slug: 'field-services', icon: '🔩' },
-  { name: 'Logistics & Transportation', slug: 'logistics-transportation', icon: '🚛' },
-  { name: 'Health & Safety', slug: 'health-safety', icon: '🦺' },
+  { name: 'Drilling & Completions', slug: 'drilling-completions' },
+  { name: 'Engineering & Consulting', slug: 'engineering-consulting' },
+  { name: 'Environmental Services', slug: 'environmental-services' },
+  { name: 'Equipment & Rentals', slug: 'equipment-rentals' },
+  { name: 'Pipeline Services', slug: 'pipeline-services' },
+  { name: 'Field Services', slug: 'field-services' },
+  { name: 'Logistics & Transportation', slug: 'logistics-transportation' },
+  { name: 'Health & Safety', slug: 'health-safety' },
 ]
+
+function CategoryIcon({ slug }: { slug: string }) {
+  const svgProps = {
+    viewBox: '0 0 24 24',
+    width: 28,
+    height: 28,
+    fill: 'none' as const,
+    stroke: 'currentColor',
+    strokeWidth: 1.6,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+  }
+
+  switch (slug) {
+    case 'drilling-completions':
+      return (
+        <svg {...svgProps}>
+          <polyline points="12,3 5,21 19,21 12,3"/>
+          <line x1="8" y1="14" x2="16" y2="14"/>
+          <line x1="11" y1="21" x2="11" y2="18"/>
+          <line x1="13" y1="21" x2="13" y2="18"/>
+        </svg>
+      )
+    case 'engineering-consulting':
+      return (
+        <svg {...svgProps}>
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <line x1="3" y1="9" x2="21" y2="9"/>
+          <line x1="9" y1="3" x2="9" y2="21"/>
+        </svg>
+      )
+    case 'environmental-services':
+      return (
+        <svg {...svgProps}>
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      )
+    case 'equipment-rentals':
+      return (
+        <svg {...svgProps}>
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>
+        </svg>
+      )
+    case 'pipeline-services':
+      return (
+        <svg {...svgProps}>
+          <path d="M3 12h18"/>
+          <circle cx="7" cy="12" r="3"/>
+          <circle cx="17" cy="12" r="3"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      )
+    case 'field-services':
+      return (
+        <svg {...svgProps}>
+          <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+        </svg>
+      )
+    case 'logistics-transportation':
+      return (
+        <svg {...svgProps}>
+          <rect x="1" y="9" width="14" height="8" rx="1"/>
+          <path d="M15 13h4l3 3v2h-7z"/>
+          <circle cx="5" cy="18" r="1.5"/>
+          <circle cx="18" cy="18" r="1.5"/>
+        </svg>
+      )
+    case 'health-safety':
+      return (
+        <svg {...svgProps}>
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9,12 11,14 15,10"/>
+        </svg>
+      )
+    default:
+      return null
+  }
+}
 
 export default async function ForBuyersPage() {
   const categoryCount = await getCategoryCount()
@@ -195,7 +275,11 @@ export default async function ForBuyersPage() {
                 href={`/categories/${cat.slug}`}
                 className="group bg-[#F5F5F7] hover:bg-[#FFF5F0] border border-gray-200 hover:border-[#E8590C]/30 rounded-xl p-5 text-center transition-all"
               >
-                <div className="text-3xl mb-2">{cat.icon}</div>
+                <div className="flex justify-center mb-2">
+                  <span className="text-[#6E6E73]">
+                    <CategoryIcon slug={cat.slug} />
+                  </span>
+                </div>
                 <p className="text-sm font-medium text-gray-700 group-hover:text-[#E8590C] leading-tight">
                   {cat.name}
                 </p>
