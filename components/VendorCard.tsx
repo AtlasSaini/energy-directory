@@ -41,7 +41,7 @@ export default function VendorCard({ vendor }: VendorCardProps) {
         <div className="flex-1 min-w-0">
           {/* Name + verified badge */}
           <div className="flex items-center gap-1.5 mb-0.5">
-            <h3 className="text-sm font-semibold text-[#1D1D1F] truncate">{vendor.company_name}</h3>
+            <h3 className="text-sm font-semibold text-[#1D1D1F] leading-tight line-clamp-2">{vendor.company_name}</h3>
 
           </div>
           {/* Location */}
@@ -50,7 +50,7 @@ export default function VendorCard({ vendor }: VendorCardProps) {
           </p>
           {/* Description — featured/premium only */}
       {isFeatured && vendor.description && (
-        <p className="text-xs text-[#6E6E73] line-clamp-2 mt-1 mb-0.5 leading-relaxed">{vendor.description}</p>
+        <p className="text-[11px] text-[#6E6E73] line-clamp-3 mt-1 mb-0.5 leading-relaxed">{vendor.description}</p>
       )}
       {/* Category pills — max 2 */}
           {vendor.categories && vendor.categories.length > 0 && (
