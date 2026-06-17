@@ -77,12 +77,12 @@ async function getVendors(params: SearchParams): Promise<{ vendors: Vendor[]; to
       .map(({ vendor_categories: _vc, ...vendor }: { vendor_categories: unknown } & Vendor) => vendor)
       .sort((a: Vendor, b: Vendor) => (tierRank[a.tier] ?? 4) - (tierRank[b.tier] ?? 4) || a.company_name.localeCompare(b.company_name)) as Vendor[]
 
-    // Cap gifted featured vendors at 3 per category — paying vendors (have stripe_subscription_id) are always shown
+    // Cap gifted featured vendors at 3 per category - paying vendors (have stripe_subscription_id) are always shown
     if (!params.tier) {
       let giftedFeaturedCount = 0
       vendors = vendors.filter((v: Vendor) => {
         if (v.tier !== 'featured') return true
-        if (v.stripe_subscription_id) return true // paying — always show
+        if (v.stripe_subscription_id) return true // paying - always show
         giftedFeaturedCount++
         return giftedFeaturedCount <= 3
       })
@@ -168,16 +168,16 @@ export default async function VendorsPage({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-      {/* Claim banner — shown on full unfiltered list to drive vendor registrations */}
+      {/* Claim banner - shown on full unfiltered list to drive vendor registrations */}
       {!isCuratedView && !params.q && !params.province && !params.category && !params.tier && (
-        <div className="mb-5 flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-5 py-3">
-          <p className="text-sm text-amber-800">
+        <div className="mb-5 flex items-center justify-between bg-[#FFF5F0] border border-[#E8590C]/30 rounded-xl px-5 py-3">
+          <p className="text-sm text-[#1D1D1F]">
             <span className="font-semibold">Is your business listed here?</span>{' '}
-            Claim your listing to add your website, description, and contact info — it&apos;s free.
+            Claim your listing to add your website, description, and contact info - it&apos;s free.
           </p>
           <Link
             href="/auth/claim"
-            className="ml-4 shrink-0 text-sm font-semibold text-amber-700 hover:text-amber-600 underline underline-offset-2"
+            className="ml-4 shrink-0 text-sm font-semibold text-[#E8590C] hover:text-[#CC4A08] underline underline-offset-2"
           >
             Claim it →
           </Link>
@@ -188,7 +188,7 @@ export default async function VendorsPage({
       {isCuratedView && (
         <div className="mb-5 flex items-center justify-between bg-blue-50 border border-blue-200 rounded-xl px-5 py-3">
           <p className="text-sm text-blue-800">
-            <span className="font-semibold">Curated view</span> — showing vendors with at least a website or description.
+            <span className="font-semibold">Curated view</span> - showing vendors with at least a website or description.
           </p>
           <Link href="/vendors" className="ml-4 shrink-0 text-sm font-medium text-blue-600 hover:text-blue-500">
             Show all →
@@ -198,9 +198,9 @@ export default async function VendorsPage({
 
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[#0a1628] mb-1">Energy Vendor Directory</h1>
+        <h1 className="text-2xl font-bold text-[#1D1D1F] mb-1">Energy Vendor Directory</h1>
         <p className="text-gray-500 text-sm">
-          {total > 0 ? `${total} vendor${total !== 1 ? 's' : ''} found${totalPages > 1 ? ` — page ${page} of ${totalPages}` : ''}` : 'Browse Canadian energy vendors'}
+          {total > 0 ? `${total} vendor${total !== 1 ? 's' : ''} found${totalPages > 1 ? ` - page ${page} of ${totalPages}` : ''}` : 'Browse Canadian energy vendors'}
           {params.q && ` for "${params.q}"`}
           {params.province && ` in ${PROVINCES.find(p => p.code === params.province)?.name || params.province}`}
         </p>
@@ -216,9 +216,9 @@ export default async function VendorsPage({
         <aside className="lg:w-64 flex-shrink-0">
           <div className="bg-white border border-gray-200 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-semibold text-[#0a1628] text-sm">Filters</h2>
+              <h2 className="font-semibold text-[#1D1D1F] text-sm">Filters</h2>
               {activeFilters > 0 && (
-                <Link href="/vendors" className="text-xs text-amber-600 hover:text-amber-500">
+                <Link href="/vendors" className="text-xs text-[#E8590C] hover:text-[#CC4A08]">
                   Clear all ({activeFilters})
                 </Link>
               )}
@@ -230,14 +230,14 @@ export default async function VendorsPage({
               <div className="space-y-1.5">
                 {[
                   { value: '', label: 'All Vendors' },
-                  { value: 'featured', label: '✨ Featured' },
+                  { value: 'featured', label: '⭐ Featured' },
                 ].map(({ value, label }) => (
                   <Link
                     key={value}
                     href={`/vendors?${buildQueryString({ ...params, tier: value, province: params.province || '' })}`}
                     className={`block text-sm px-3 py-2 rounded-lg transition-colors ${
                       (params.tier || '') === value
-                        ? 'bg-[#0a1628] text-white'
+                        ? 'bg-[#1D1D1F] text-white'
                         : 'text-gray-700 hover:bg-gray-100'
                     }`}
                   >
@@ -253,7 +253,7 @@ export default async function VendorsPage({
               <div className="space-y-1">
                 <Link
                   href={`/vendors?${buildQueryString({ ...params, province: '' })}`}
-                  className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${!params.province ? 'bg-[#0a1628] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                  className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${!params.province ? 'bg-[#1D1D1F] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
                 >
                   All Provinces
                 </Link>
@@ -261,7 +261,7 @@ export default async function VendorsPage({
                   <Link
                     key={code}
                     href={`/vendors?${buildQueryString({ ...params, province: code })}`}
-                    className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${params.province === code ? 'bg-[#0a1628] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                    className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${params.province === code ? 'bg-[#1D1D1F] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
                   >
                     {name}
                   </Link>
@@ -276,7 +276,7 @@ export default async function VendorsPage({
                 <div className="space-y-1">
                   <Link
                     href={`/vendors?${buildQueryString({ ...params, category: '' })}`}
-                    className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${!params.category ? 'bg-[#0a1628] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                    className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${!params.category ? 'bg-[#1D1D1F] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
                   >
                     All Categories
                   </Link>
@@ -284,7 +284,7 @@ export default async function VendorsPage({
                     <Link
                       key={cat.id}
                       href={`/vendors?${buildQueryString({ ...params, category: cat.slug })}`}
-                      className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${params.category === cat.slug ? 'bg-[#0a1628] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                      className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${params.category === cat.slug ? 'bg-[#1D1D1F] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
                     >
                       {cat.name}
                     </Link>
@@ -322,7 +322,7 @@ export default async function VendorsPage({
                   {page < totalPages && (
                     <Link
                       href={`/vendors?${buildQueryString({ ...params, page: String(page + 1) })}`}
-                      className="px-4 py-2 text-sm font-medium rounded-lg bg-[#0a1628] text-white hover:bg-[#0d1f3c] transition-colors"
+                      className="px-4 py-2 text-sm font-medium rounded-lg bg-[#1D1D1F] text-white hover:opacity-80 transition-opacity"
                     >
                       Next →
                     </Link>
@@ -333,7 +333,7 @@ export default async function VendorsPage({
           ) : (
             <div className="bg-white border border-gray-200 rounded-xl p-12 text-center">
               <div className="text-4xl mb-4">🔍</div>
-              <h3 className="text-lg font-semibold text-[#0a1628] mb-2">No vendors found</h3>
+              <h3 className="text-lg font-semibold text-[#1D1D1F] mb-2">No vendors found</h3>
               <p className="text-gray-500 text-sm mb-4">
                 {activeFilters > 0
                   ? 'Try adjusting your filters or search terms.'
@@ -341,11 +341,11 @@ export default async function VendorsPage({
               </p>
               <div className="flex gap-3 justify-center">
                 {activeFilters > 0 && (
-                  <Link href="/vendors" className="text-sm text-amber-600 hover:text-amber-500 font-medium">
+                  <Link href="/vendors" className="text-sm text-[#E8590C] hover:text-[#CC4A08] font-medium">
                     Clear filters
                   </Link>
                 )}
-                <Link href="/list-your-business" className="bg-[#0a1628] text-white text-sm px-4 py-2 rounded-lg hover:bg-[#0d1f3c] transition-colors">
+                <Link href="/list-your-business" className="bg-[#1D1D1F] text-white text-sm px-4 py-2 rounded-lg hover:opacity-80 transition-opacity">
                   List your business
                 </Link>
               </div>
