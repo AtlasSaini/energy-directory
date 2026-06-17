@@ -124,7 +124,7 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
     ? vendor.reviews.reduce((sum, r) => sum + r.rating, 0) / vendor.reviews.length
     : null
 
-  const tierColor = vendor.tier === 'premium' ? 'text-[#E8590C] bg-[#E8590C]/10 border-[#E8590C]/30' : vendor.tier === 'featured' ? 'text-blue-600 bg-blue-50 border-blue-200' : ''
+  const tierColor = vendor.tier === 'premium' ? 'text-[#E8590C] bg-[#E8590C]/10 border-[#E8590C]/30' : vendor.tier === 'featured' ? 'text-[#E8590C] bg-[#E8590C]/10 border-[#E8590C]/30' : ''
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -185,8 +185,8 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
                 </div>
                 {/* Verified badge - prominent, standalone row */}
                 {vendor.verified && (
-                  <div className="mt-3 inline-flex items-center gap-2 bg-green-50 border border-green-200 text-green-800 text-sm px-4 py-2 rounded-lg font-medium">
-                    <svg className="w-4 h-4 text-green-600 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                  <div className="mt-3 inline-flex items-center gap-2 bg-blue-50 border border-[#0066CC]/30 text-[#0066CC] text-sm px-4 py-2 rounded-lg font-medium">
+                    <svg className="w-4 h-4 text-[#0066CC] shrink-0" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     Verified Business - domain ownership confirmed
