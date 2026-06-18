@@ -43,6 +43,13 @@ export const metadata = {
     description: 'Canada\'s largest energy sector vendor directory. Find verified oil & gas, mining, pipeline, renewables, and engineering suppliers.',
     url: 'https://energydirectory.ca',
     siteName: 'Canadian Energy Directory',
+    images: [{ url: 'https://energydirectory.ca/og-image.png', width: 1200, height: 630, alt: 'Canadian Energy Directory' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Canadian Energy Directory | Find Verified Energy & Mining Vendors',
+    description: 'Canada\'s largest energy sector vendor directory.',
+    images: ['https://energydirectory.ca/og-image.png'],
   },
   alternates: {
     canonical: 'https://energydirectory.ca',
