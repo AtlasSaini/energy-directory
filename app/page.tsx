@@ -22,7 +22,7 @@ async function getHomeData() {
       .or('website.not.is.null,description.not.is.null'),
   ])
 
-  const vendorCount = countRes.count || 365
+  const vendorCount = Math.floor(Number(String(countRes.count ?? 365).replace('+', ''))) || 365
 
   return {
     categories: (categoriesRes.data || []) as Category[],
